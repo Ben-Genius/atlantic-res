@@ -5,20 +5,20 @@
 @tailwind utilities;
 
 :root {
-  --color-ink: #0d0d0d;
-  --color-ink-soft: #1a1a1a;
-  --color-surface: #111111;
-  --color-surface-2: #181818;
-  --color-surface-3: #202020;
-  --color-border: rgba(255,255,255,0.08);
-  --color-brand-green: #67ba67;
-  --color-brand-green-light: #85ca85;
-  --color-brand-green-dim: rgba(103, 186, 103, 0.15);
-  --color-brand-orange: #f9a825;
+  --color-ink: #ffffff;
+  --color-ink-soft: #f7f7f5;
+  --color-surface: #f5f5f3;
+  --color-surface-2: #ebebea;
+  --color-surface-3: #e2e2e0;
+  --color-border: rgba(0,0,0,0.08);
+  --color-brand-green: #67BA67;
+  --color-brand-green-light: #7bc97b;
+  --color-brand-green-dim: rgba(103,186,103,0.12);
+  --color-brand-orange: #F9A825;
   --color-cream: #f5f0e8;
-  --color-white: #ffffff;
-  --color-muted: rgba(255,255,255,0.5);
-  --color-muted-2: rgba(255,255,255,0.3);
+  --color-white: #1a1a1a;
+  --color-muted: rgba(26,26,26,0.55);
+  --color-muted-2: rgba(26,26,26,0.35);
 }
 
 * {
@@ -34,7 +34,7 @@ html {
 
 body {
   background-color: var(--color-ink);
-  color: var(--color-white);
+  color: #0d0d0d;
   font-family: 'DM Sans', 'Inter', sans-serif;
   font-weight: 400;
   line-height: 1.6;
@@ -63,12 +63,12 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.4;
+  opacity: 0.15;
 }
 
 /* ─── Scrollbar ──────────────────────────────── */
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--color-ink); }
+::-webkit-scrollbar-track { background: var(--color-surface); }
 ::-webkit-scrollbar-thumb { background: var(--color-brand-green); border-radius: 2px; }
 
 /* ─── Layout utilities ───────────────────────── */
@@ -84,7 +84,7 @@ body::before {
 
 /* ─── Gradient Text ──────────────────────────── */
 .text-gradient {
-  background: linear-gradient(135deg, #85ca85 0%, #67ba67 50%, #4a944a 100%);
+  background: linear-gradient(135deg, #67BA67 0%, #F9A825 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -98,6 +98,7 @@ body::before {
   background: var(--color-brand-green);
   vertical-align: middle;
   margin-right: 12px;
+  opacity: 0.7;
 }
 
 /* ─── Buttons ────────────────────────────────── */
@@ -144,14 +145,14 @@ body::before {
   gap: 10px;
   padding: 13px 31px;
   background: transparent;
-  color: var(--color-white);
+  color: #1a1a1a;
   font-family: 'DM Sans', sans-serif;
   font-weight: 500;
   font-size: 0.875rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   text-decoration: none;
-  border: 1px solid rgba(255,255,255,0.25);
+  border: 1px solid rgba(26,26,26,0.2);
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -182,9 +183,9 @@ body::before {
 }
 
 .card-dark:hover {
-  border-color: rgba(201,168,76,0.3);
+  border-color: rgba(103,186,103,0.25);
   transform: translateY(-4px);
-  box-shadow: 0 32px 64px rgba(0,0,0,0.4);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.08);
 }
 
 /* ─── Reveal animation ───────────────────────── */
@@ -255,7 +256,7 @@ body::before {
 .rule-gold {
   border: none;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-brand-green), transparent);
+  background: linear-gradient(90deg, transparent, rgba(103,186,103,0.4), transparent);
 }
 
 /* ─── Footer utilities ───────────────────────── */

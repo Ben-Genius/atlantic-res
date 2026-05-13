@@ -27,10 +27,10 @@ export default function Header() {
         zIndex: 100,
         transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
         background: scrolled
-          ? 'rgba(13,13,13,0.95)'
+          ? 'rgba(255,255,255,0.95)'
           : 'transparent',
         backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : '1px solid transparent',
+        borderBottom: scrolled ? '1px solid rgba(0,0,0,0.06)' : '1px solid transparent',
       }}
     >
       <div className="container-xl">
@@ -59,12 +59,12 @@ export default function Header() {
                   fontWeight: 500,
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
-                  color: 'rgba(255,255,255,0.7)',
+                  color: scrolled ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.85)',
                   textDecoration: 'none',
                   transition: 'color 0.2s',
                 }}
                 onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-brand-green)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.7)')}
+                onMouseLeave={e => (e.currentTarget.style.color = scrolled ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.85)')}
               >
                 {item.label}
               </Link>
@@ -85,11 +85,11 @@ export default function Header() {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden"
             style={{
-              background: 'rgba(255,255,255,0.08)',
-              border: '1px solid rgba(255,255,255,0.1)',
+              background: scrolled ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.12)',
+              border: scrolled ? '1px solid rgba(0,0,0,0.1)' : '1px solid rgba(255,255,255,0.15)',
               padding: '8px',
               cursor: 'pointer',
-              color: 'white',
+              color: scrolled ? '#0d0d0d' : 'white',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -112,9 +112,9 @@ export default function Header() {
             transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
             style={{
               overflow: 'hidden',
-              background: 'rgba(13,13,13,0.98)',
+              background: 'rgba(255,255,255,0.97)',
               backdropFilter: 'blur(20px)',
-              borderTop: '1px solid rgba(255,255,255,0.06)',
+              borderTop: '1px solid rgba(0,0,0,0.06)',
             }}
           >
             <div className="container-xl" style={{ padding: '2rem' }}>
@@ -128,9 +128,9 @@ export default function Header() {
                       fontFamily: 'Cormorant Garamond, serif',
                       fontSize: '1.75rem',
                       fontWeight: 500,
-                      color: 'rgba(255,255,255,0.8)',
+                      color: 'rgba(0,0,0,0.85)',
                       textDecoration: 'none',
-                      borderBottom: '1px solid rgba(255,255,255,0.06)',
+                      borderBottom: '1px solid rgba(0,0,0,0.06)',
                       paddingBottom: '1.25rem',
                       transition: 'color 0.2s',
                     }}

@@ -21,10 +21,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body style={{ background: '#0d0d0d' }}>
+      <body style={{ background: '#ffffff' }}>
         <GsapProvider>
           <Header />
-          <main>{children}</main>
+          <div style={{ position: 'relative', zIndex: 1, background: 'transparent' }}>{children}</div>
           <Footer />
         </GsapProvider>
       </body>
