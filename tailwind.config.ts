@@ -29,9 +29,10 @@ const config: Config = {
         cream: '#f5f0e8',
       },
       fontFamily: {
-        display: ['Cormorant Garamond', 'Georgia', 'serif'],
+        display: ['Antonio', 'sans-serif'],
         sans: ['DM Sans', 'Inter', 'sans-serif'],
         serif: ['Cormorant Garamond', 'serif'],
+        antonio: ['Antonio', 'sans-serif'],
       },
       fontSize: {
         'display-xl': ['clamp(4rem, 10vw, 9rem)', { lineHeight: '0.95', letterSpacing: '-0.03em' }],

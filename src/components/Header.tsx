@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Phone } from 'lucide-react'
+import { Phone, ArrowRight } from 'lucide-react'
 import { navigation } from '@/lib/constants'
+import { cn } from '@/lib/utils'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -18,86 +18,72 @@ export default function Header() {
   }, [])
 
   return (
-    <header
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 100,
-        transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-        background: scrolled
-          ? 'rgba(255,255,255,0.95)'
-          : 'transparent',
-        backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(0,0,0,0.06)' : '1px solid transparent',
-      }}
-    >
-      <div className="container-xl">
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.25rem 0' }}>
+    <header style={{
+      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+      background: 'transparent',
+    }}>
+      <div className="mx-auto px-16">
+        <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-            <Image
-              src="/images/logo.png"
-              alt="Atlantic Catering & Logistics"
-              width={200}
-              height={80}
-              priority
-              style={{ height: 'auto', width: 'auto', maxWidth: '200px' }}
+          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+            <object
+              data="/svg/logoA.svg"
+              type="image/svg+xml"
+              aria-label="Atlantic Catering & Logistics"
+              style={{ width: 140, height: 86, pointerEvents: 'none', display: 'block' }}
             />
           </Link>
+          <svg
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className={cn(
+              "h-[1.5rem] text-orange-600 w-[1.5rem] transform origin-center transition-transform duration-300 ease-linear",
+              isMenuOpen ? "rotate-45 text-black" : (scrolled ? "text-black" : "text-white")
+            )}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            style={{ cursor: 'pointer' }}
+          >
+            <path d="M12.0005 5.49894V6.99894H8.50047V5.49894H12.0005Z" fill="currentColor"></path>
+            <path d="M3.5 5.49756V6.99756L0 6.99756L6.55637e-08 5.49756L3.5 5.49756Z" fill="currentColor"></path>
+            <path d="M6.50106 11.9982H5.00106V8.49824H6.50106V11.9982Z" fill="currentColor"></path>
+            <path d="M6.49968 3.49777L4.99968 3.49777L4.99968 -0.00222778L6.49968 -0.00222759L6.49968 3.49777Z" fill="currentColor"></path>
+          </svg>
 
-          {/* Desktop Nav */}
-          <nav style={{ display: 'flex', alignItems: 'center', gap: '2.5rem' }} className="hidden md:flex">
-            {navigation.slice(0, 5).map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                style={{
-                  fontFamily: 'DM Sans, sans-serif',
-                  fontSize: '0.78rem',
-                  fontWeight: 500,
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  color: scrolled ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.85)',
-                  textDecoration: 'none',
-                  transition: 'color 0.2s',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-brand-green)')}
-                onMouseLeave={e => (e.currentTarget.style.color = scrolled ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.85)')}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
 
           {/* CTA */}
-          <div className="hidden md:flex" style={{ alignItems: 'center', gap: '1rem' }}>
-            <a href="tel:+233501502441" className="btn-brand" style={{ padding: '10px 22px', fontSize: '0.75rem' }}>
-              <Phone style={{ width: 14, height: 14 }} />
-              Contact Us
-            </a>
+          <div className="hidden md:flex" style={{ alignItems: 'center' }}>
+            <Link
+              href="tel:+233501502441"
+              className={cn(
+                "relative flex items-center justify-between gap-3 p-3 overflow-hidden group/btn rounded-md",
+                "bg-[#67BA67] text-white font-bold uppercase tracking-[0.2em] text-[11px]",
+                "transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
+                "hover:bg-[#F9A825]"
+              )}
+              style={{
+                clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%)"
+              }}
+            >
+              <span className="flex items-center gap-2">
+                <Phone size={13} strokeWidth={3} />
+                Contact Us
+              </span>
+              <div className="relative w-7 h-7 flex items-center justify-center bg-white/20 rounded-sm overflow-hidden">
+                <ArrowRight
+                  size={13}
+                  strokeWidth={3}
+                  className="absolute transition-all duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] group-hover/btn:translate-x-8 group-hover/btn:-translate-y-8"
+                />
+                <ArrowRight
+                  size={13}
+                  strokeWidth={3}
+                  className="absolute -translate-x-8 translate-y-8 transition-all duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] group-hover/btn:translate-x-0 group-hover/btn:translate-y-0"
+                />
+              </div>
+            </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            id="mobile-menu-toggle"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden"
-            style={{
-              background: scrolled ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.12)',
-              border: scrolled ? '1px solid rgba(0,0,0,0.1)' : '1px solid rgba(255,255,255,0.15)',
-              padding: '8px',
-              cursor: 'pointer',
-              color: scrolled ? '#0d0d0d' : 'white',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X style={{ width: 20, height: 20 }} /> : <Menu style={{ width: 20, height: 20 }} />}
-          </button>
         </div>
       </div>
 
@@ -138,9 +124,32 @@ export default function Header() {
                     {item.label}
                   </Link>
                 ))}
-                <a href="tel:+233501502441" className="btn-brand" style={{ textAlign: 'center', justifyContent: 'center' }}>
-                  Call Us: +233 501 502 441
-                </a>
+                <Link
+                  href="tel:+233501502441"
+                  className={cn(
+                    "relative flex items-center justify-between gap-3 pl-6 pr-2 py-4 overflow-hidden group/mbtn",
+                    "bg-[#67BA67] text-white font-bold uppercase tracking-[0.2em] text-[10px]",
+                    "transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
+                    "hover:bg-[#F9A825]"
+                  )}
+                  style={{
+                    clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)"
+                  }}
+                >
+                  <span>Call Us: +233 501 502 441</span>
+                  <div className="relative w-8 h-8 flex items-center justify-center bg-white/20 rounded-sm overflow-hidden">
+                    <ArrowRight
+                      size={16}
+                      strokeWidth={3}
+                      className="absolute transition-all duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] group-hover/mbtn:translate-x-8 group-hover/mbtn:-translate-y-8"
+                    />
+                    <ArrowRight
+                      size={16}
+                      strokeWidth={3}
+                      className="absolute -translate-x-8 translate-y-8 transition-all duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] group-hover/mbtn:translate-x-0 group-hover/mbtn:translate-y-0"
+                    />
+                  </div>
+                </Link>
               </div>
             </div>
           </motion.div>

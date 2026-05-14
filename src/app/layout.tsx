@@ -3,6 +3,7 @@ import '@/styles/globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import GsapProvider from '@/components/GsapProvider'
+import Loader from '@/components/Loader'
 
 export const metadata: Metadata = {
   title: 'Atlantic Catering & Logistics — Premium Culinary Excellence, Ghana',
@@ -22,6 +23,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body style={{ background: '#ffffff' }}>
+        <Loader />
         <GsapProvider>
           <Header />
           <div style={{ position: 'relative', zIndex: 1, background: 'transparent' }}>{children}</div>
