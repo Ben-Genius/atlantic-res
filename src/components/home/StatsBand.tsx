@@ -58,12 +58,45 @@ export default function StatsBand() {
       }
     );
 
+    // Custom Cursor Logic
+    const cursor = document.querySelector('.stats-cursor') as HTMLElement;
+    const section = containerRef.current;
+
+    const moveCursor = (e: MouseEvent) => {
+      gsap.to(cursor, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.1,
+        ease: "power2.out"
+      });
+    };
+
+    const enterSection = () => gsap.to(cursor, { autoAlpha: 1, duration: 0.3 });
+    const leaveSection = () => gsap.to(cursor, { autoAlpha: 0, duration: 0.3 });
+
+    section.addEventListener('mousemove', moveCursor);
+    section.addEventListener('mouseenter', enterSection);
+    section.addEventListener('mouseleave', leaveSection);
+
+    // Expand cursor on interactive elements
+    const interactables = gsap.utils.toArray('.word, .stats-badge, .stats-subtitle') as HTMLElement[];
+    interactables.forEach(el => {
+      el.addEventListener('mouseenter', () => gsap.to(cursor, { width: 80, height: 80, duration: 0.3 }));
+      el.addEventListener('mouseleave', () => gsap.to(cursor, { width: 20, height: 20, duration: 0.3 }));
+    });
+
+    return () => {
+      section.removeEventListener('mousemove', moveCursor);
+      section.removeEventListener('mouseenter', enterSection);
+      section.removeEventListener('mouseleave', leaveSection);
+    };
+
   }, { scope: containerRef });
 
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[100vh] flex items-center justify-center px-4 text-white overflow-hidden"
+      className="relative min-h-[100vh] flex items-center justify-center px-4 text-white overflow-hidden cursor-none"
       style={{
         backgroundImage: "url('/images/premium-green-texture.png')",
         backgroundSize: 'cover',
@@ -71,6 +104,11 @@ export default function StatsBand() {
         backgroundAttachment: 'fixed'
       }}
     >
+      {/* Custom Cinematic Cursor */}
+      <div 
+        className="stats-cursor fixed top-0 left-0 w-5 h-5 bg-[#EF9419] rounded-full pointer-events-none z-[9999] mix-blend-difference -translate-x-1/2 -translate-y-1/2 opacity-0 transition-[width,height] duration-300 ease-out will-change-transform"
+      />
+
       {/* Color Overlay: Multiplies the primary brand green into the texture to make it much greener and perfectly on-brand */}
       <div className="absolute inset-0 bg-[#35b435] mix-blend-multiply opacity-90 pointer-events-none z-0" />
       {/* Subtle dark overlay for text contrast */}
