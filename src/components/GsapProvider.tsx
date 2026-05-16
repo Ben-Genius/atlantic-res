@@ -3,12 +3,13 @@
 import { useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { Observer } from 'gsap/Observer'
 import { SplitText } from 'gsap/SplitText'
 import Lenis from 'lenis'
 
 export default function GsapProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger, SplitText)
+    gsap.registerPlugin(ScrollTrigger, Observer, SplitText)
 
     const lenis = new Lenis({
       duration: 1.2,
