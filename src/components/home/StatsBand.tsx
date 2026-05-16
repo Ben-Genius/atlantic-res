@@ -12,18 +12,22 @@ export default function StatsBand() {
 
     const words = gsap.utils.toArray('.word') as HTMLElement[];
 
-    // Scrubbed Opacity Reveal for the stats words (increases/reduces with scroll)
-    gsap.to(words, {
-      scrollTrigger: {
-        trigger: ".stats-reveal-text",
-        start: "top 80%",
-        end: "bottom 40%",
-        scrub: 0.5
-      },
-      opacity: 1,
-      stagger: 0.1,
-      ease: "none"
-    });
+    // Scrubbed Slide-Up Reveal for the stats words (like Hero section)
+    gsap.fromTo(words, 
+      { y: 30, opacity: 0 },
+      {
+        scrollTrigger: {
+          trigger: ".stats-reveal-text",
+          start: "top 80%",
+          end: "bottom 40%",
+          scrub: 0.5
+        },
+        y: 0,
+        opacity: 1,
+        stagger: 0.1,
+        ease: "power2.out"
+      }
+    );
 
     // The Badge Pop (tied to scroll)
     gsap.fromTo('.stats-badge',
@@ -120,15 +124,15 @@ export default function StatsBand() {
         style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}
       />
 
-      <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center py-20">
+      <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center py-20">
         <h2
-          className="stats-reveal-text text-[clamp(3.5rem,8.5vw,7.5rem)] leading-[1.3] font-black tracking-tight uppercase text-center m-0 flex flex-wrap justify-center gap-x-[0.15em] gap-y-[0.2em]"
+          className="stats-reveal-text text-[clamp(3.5rem,8.5vw,7.5rem)] leading-[1.1] font-black tracking-tight uppercase text-center m-0 flex flex-wrap justify-center gap-x-[0.15em] gap-y-[0.2em]"
           style={{ fontFamily: 'Antonio, sans-serif' }}
         >
-          <span className="word opacity-10 will-change-opacity">10+</span>
-          <span className="word opacity-10 will-change-opacity">YEARS</span>
-          <span className="word opacity-10 will-change-opacity">OPERATING</span>
-          <span className="word opacity-10 will-change-opacity">WITH</span>
+          <span className="word opacity-0 inline-block will-change-transform">10+</span>
+          <span className="word opacity-0 inline-block will-change-transform">YEARS</span>
+          <span className="word opacity-0 inline-block will-change-transform">OPERATING</span>
+          <span className="word opacity-0 inline-block will-change-transform">WITH</span>
 
           {/* The Pop-in Badge (Moved to middle with higher z-index and size) */}
           <span className="stats-badge-wrapper relative inline-flex items-center justify-center px-[0.2em] mx-[0.1em] z-50">
@@ -137,15 +141,15 @@ export default function StatsBand() {
             </span>
           </span>
 
-          <span className="word opacity-10 will-change-opacity">2</span>
-          <span className="word opacity-10 will-change-opacity">FPSOS</span>
-          <span className="word opacity-10 will-change-opacity">SERVICED</span>
-          <span className="word opacity-10 will-change-opacity">BY</span>
+          <span className="word opacity-0 inline-block will-change-transform">2</span>
+          <span className="word opacity-0 inline-block will-change-transform">FPSOS</span>
+          <span className="word opacity-0 inline-block will-change-transform">SERVICED</span>
+          <span className="word opacity-0 inline-block will-change-transform">BY</span>
 
-          <span className="word opacity-10 will-change-opacity">A</span>
-          <span className="word opacity-10 will-change-opacity">99.9%</span>
-          <span className="word opacity-10 will-change-opacity">GHANAIAN</span>
-          <span className="word opacity-10 will-change-opacity">WORKFORCE</span>
+          <span className="word opacity-0 inline-block will-change-transform">A</span>
+          <span className="word opacity-0 inline-block will-change-transform">99.9%</span>
+          <span className="word opacity-0 inline-block will-change-transform">GHANAIAN</span>
+          <span className="word opacity-0 inline-block will-change-transform">WORKFORCE</span>
         </h2>
 
         <p className="stats-subtitle text-center mt-16 max-w-2xl text-base md:text-lg leading-relaxed tracking-wide text-white/90 mix-blend-screen font-medium">
