@@ -16,14 +16,18 @@ export default function GsapProvider({ children }: { children: React.ReactNode }
       smoothWheel: true,
     })
 
-    // Keep ScrollTrigger in sync with Lenis scroll position
     lenis.on('scroll', ScrollTrigger.update)
-
-    // Drive Lenis via GSAP ticker so they share the same frame loop
     gsap.ticker.add((time) => lenis.raf(time * 1000))
     gsap.ticker.lagSmoothing(0)
 
+    const stopLenis = () => lenis.stop()
+    const startLenis = () => lenis.start()
+    window.addEventListener('lenis:stop', stopLenis)
+    window.addEventListener('lenis:start', startLenis)
+
     return () => {
+      window.removeEventListener('lenis:stop', stopLenis)
+      window.removeEventListener('lenis:start', startLenis)
       lenis.destroy()
       gsap.ticker.remove((time) => lenis.raf(time * 1000))
     }
