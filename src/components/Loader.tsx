@@ -58,7 +58,7 @@ export default function Loader() {
             <div className="flex items-baseline">
               <span
                 className="text-orange-600 font-black tracking-tighter tabular-nums"
-                style={{ fontSize: 'clamp(60px, 8vw, 50px)', lineHeight: 0.8, fontFamily: 'Antonio, sans-serif' }}
+                style={{ fontSize: 'clamp(50px, 8vw, 40px)', lineHeight: 0.8, fontFamily: 'Antonio, sans-serif' }}
               >
                 {displayProgress}
               </span>
