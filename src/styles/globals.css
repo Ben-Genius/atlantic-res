@@ -5,17 +5,20 @@
 @tailwind utilities;
 
 :root {
-  --color-ink: #ffffff;
-  --color-ink-soft: #f7f7f5;
-  --color-surface: #f5f5f3;
-  --color-surface-2: #ebebea;
-  --color-surface-3: #e2e2e0;
+  --color-ink: #FAFAF8;
+  --color-ink-soft: #F2F0EC;
+  --color-surface: #F0EDE8;
+  --color-surface-2: #E8E4DE;
+  --color-surface-3: #DEDBD4;
   --color-border: rgba(0,0,0,0.08);
-  --color-brand-green: #67BA67;
-  --color-brand-green-light: #7bc97b;
-  --color-brand-green-dim: rgba(103,186,103,0.12);
-  --color-brand-orange: #F9A825;
-  --color-cream: #f5f0e8;
+  --color-brand-green: #35b435;
+  --color-brand-green-light: #2D6A4F;
+  --color-brand-green-mid: #52B788;
+  --color-brand-green-dim: rgba(27,67,50,0.12);
+  --color-brand-orange: #EF9419;
+  --color-brand-orange-light: #FBC02D;
+  --color-cream: #FAFAF8;
+  --color-charcoal: #1A2330;
   --color-white: #1a1a1a;
   --color-muted: rgba(26,26,26,0.55);
   --color-muted-2: rgba(26,26,26,0.35);
@@ -84,7 +87,7 @@ body::before {
 
 /* ─── Gradient Text ──────────────────────────── */
 .text-gradient {
-  background: linear-gradient(135deg, #67BA67 0%, #F9A825 100%);
+  background: linear-gradient(135deg, #2D6A4F 0%, #C8960C 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -134,7 +137,7 @@ body::before {
 .btn-brand:hover {
   background: var(--color-brand-green-light);
   transform: translateY(-1px);
-  box-shadow: 0 20px 40px rgba(103, 186, 103, 0.3);
+  box-shadow: 0 20px 40px rgba(27, 67, 50, 0.35);
 }
 
 .btn-brand:hover::after { opacity: 1; }
@@ -183,7 +186,7 @@ body::before {
 }
 
 .card-dark:hover {
-  border-color: rgba(103,186,103,0.25);
+  border-color: rgba(27,67,50,0.25);
   transform: translateY(-4px);
   box-shadow: 0 24px 48px rgba(0,0,0,0.08);
 }
@@ -256,7 +259,7 @@ body::before {
 .rule-gold {
   border: none;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(103,186,103,0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(200,150,12,0.4), transparent);
 }
 
 /* ─── Footer utilities ───────────────────────── */
@@ -319,6 +322,6 @@ body::before {
 
 .value-card .icon-container {
   background: var(--color-brand-green-dim);
-  border: 1px solid rgba(103, 186, 103, 0.3);
+  border: 1px solid rgba(27, 67, 50, 0.3);
 }
 

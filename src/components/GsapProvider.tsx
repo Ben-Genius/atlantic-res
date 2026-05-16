@@ -17,19 +17,22 @@ export default function GsapProvider({ children }: { children: React.ReactNode }
     })
 
     lenis.on('scroll', ScrollTrigger.update)
-    gsap.ticker.add((time) => lenis.raf(time * 1000))
+
+    // Store reference so the same fn can be removed on cleanup
+    const lenisRaf = (time: number) => lenis.raf(time * 1000)
+    gsap.ticker.add(lenisRaf)
     gsap.ticker.lagSmoothing(0)
 
-    const stopLenis = () => lenis.stop()
+    const stopLenis  = () => lenis.stop()
     const startLenis = () => lenis.start()
-    window.addEventListener('lenis:stop', stopLenis)
+    window.addEventListener('lenis:stop',  stopLenis)
     window.addEventListener('lenis:start', startLenis)
 
     return () => {
-      window.removeEventListener('lenis:stop', stopLenis)
+      window.removeEventListener('lenis:stop',  stopLenis)
       window.removeEventListener('lenis:start', startLenis)
+      gsap.ticker.remove(lenisRaf)   // same reference — actually removed
       lenis.destroy()
-      gsap.ticker.remove((time) => lenis.raf(time * 1000))
     }
   }, [])
 

@@ -51,11 +51,9 @@ export const companyInfo = {
 }
 
 export const navigation = [
-  { label: 'Home', href: '/' },
-  { label: 'Our Expertise', href: '/expertise' },
-  { label: 'Services', href: '/services' },
-  { label: 'News & Updates', href: '/news-updates' },
-  { label: 'Work We\'ve Done', href: '/portfolio' },
-  { label: 'Impact', href: '/impact' },
+  { label: 'Our Solutions', href: '/services' },
+  { label: 'Sustainability', href: '/sustainability' },
+  { label: 'News', href: '/news-updates' },
+  { label: 'About Us', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ]

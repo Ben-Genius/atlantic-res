@@ -27,6 +27,7 @@ export default function Header() {
   const tlRef = useRef<gsap.core.Timeline | null>(null)
   const imageRefs = useRef<Record<string, HTMLImageElement | null>>({})
   const activeImg = useRef<string>('/')
+  const hasOpened = useRef(false)
 
   /* ─── scroll listener ───────────────────────────────────── */
   useEffect(() => {
@@ -39,41 +40,36 @@ export default function Header() {
   useGSAP(() => {
     if (!overlayRef.current) return
 
-    // clipPath: inset(top right bottom left)
-    // bottom=100% = fully clipped → invisible; bottom=0% = fully visible
-    gsap.set(overlayRef.current, { clipPath: 'inset(0 0 100% 0)' })
-    gsap.set('.menu-nav-inner', { yPercent: 115 })
+    // Hide overlay: slide it fully above the viewport
+    gsap.set(overlayRef.current, { yPercent: -100 })
+    gsap.set('.menu-nav-inner', { yPercent: -115 })
     gsap.set('.menu-image-panel', { scale: 1.06, opacity: 0 })
     gsap.set('.menu-meta', { opacity: 0, y: 22 })
 
     const tl = gsap.timeline({ paused: true })
 
-    // Curtain unfolds top→bottom with deliberate slow start
     tl.to(overlayRef.current, {
-      clipPath: 'inset(0 0 0% 0)',
-      duration: 1.05,
-      ease: 'power4.inOut',
+      yPercent: 0,
+      duration: 0.85,
+      ease: 'power4.out',
     })
-      // Nav items unmask while curtain is still opening
       .to('.menu-nav-inner', {
         yPercent: 0,
         duration: 0.9,
-        stagger: 0.075,
-        ease: 'power3.out',
-      }, '-=0.65')
-      // Image scales in from slightly enlarged
+        stagger: 0.1,
+        ease: 'power4.out',
+      }, '-=0.45')
       .to('.menu-image-panel', {
         scale: 1, opacity: 1,
-        duration: 1.05,
+        duration: 1.0,
         ease: 'power3.out',
-      }, '-=0.85')
-      // Footer meta fades up last
+      }, '-=0.75')
       .to('.menu-meta', {
         opacity: 1, y: 0,
-        duration: 0.5,
+        duration: 0.45,
         stagger: 0.06,
         ease: 'power2.out',
-      }, '-=0.45')
+      }, '-=0.35')
 
     tlRef.current = tl
   }, { scope: overlayRef })
@@ -85,9 +81,12 @@ export default function Header() {
     let resetId: ReturnType<typeof setTimeout> | undefined
 
     if (isMenuOpen) {
+      hasOpened.current = true
       tlRef.current.play()
       window.dispatchEvent(new Event('lenis:stop'))
     } else {
+      // skip reverse on initial mount — timeline has never played
+      if (!hasOpened.current) return
       tlRef.current.reverse()
       window.dispatchEvent(new Event('lenis:start'))
 
@@ -163,17 +162,18 @@ export default function Header() {
             <button
               onClick={() => setIsMenuOpen(v => !v)}
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', lineHeight: 0 }}
+              className="rounded-md bg-green"
+              style={{ border: 'none', cursor: 'pointer', padding: '7px', lineHeight: 0 }}
             >
               <svg
                 viewBox="0 0 12 12"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 className={cn(
-                  'h-8 w-8 transform origin-center transition-transform duration-300 ease-linear',
+                  'h-6 w-6 transform origin-center transition-transform duration-300 ease-linear',
                   isMenuOpen ? 'rotate-45' : ''
                 )}
-                style={{ color: isMenuOpen ? '#FF6600' : scrolled ? '#FF6600' : '#FF6600' }}
+                style={{ color: isMenuOpen ? 'white' : scrolled ? 'white' : 'white' }}
               >
                 <path d="M12.0005 5.49894V6.99894H8.50047V5.49894H12.0005Z" fill="currentColor" />
                 <path d="M3.5 5.49756V6.99756L0 6.99756L6.55637e-08 5.49756L3.5 5.49756Z" fill="currentColor" />
@@ -186,16 +186,15 @@ export default function Header() {
               <Link
                 href="tel:+233501502441"
                 className={cn(
-                  'relative flex items-center justify-between gap-3 p-3 overflow-hidden group/btn rounded-md',
-                  'bg-[#67BA67] text-white font-bold uppercase tracking-[0.2em] text-[11px]',
+                  'relative flex items-center justify-between gap-3 p-2 overflow-hidden group/btn rounded-md',
+                  'bg-green text-white font-bold uppercase tracking-[0.2em] text-[11px]',
                   'transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]',
-                  'hover:bg-[#F9A825]'
+                  'hover:bg-gold'
                 )}
                 style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%)' }}
               >
                 <span className="flex items-center gap-2">
-                  <Phone size={13} strokeWidth={3} />
-                  Contact Us
+                  eCommerce
                 </span>
                 <div className="relative w-7 h-7 flex items-center justify-center bg-white/20 rounded-sm overflow-hidden">
                   <ArrowRight size={13} strokeWidth={3} className="absolute transition-all duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] group-hover/btn:translate-x-8 group-hover/btn:-translate-y-8" />
@@ -213,7 +212,7 @@ export default function Header() {
         ref={overlayRef}
         style={{
           position: 'fixed', inset: 0, zIndex: 90,
-          background: '#f5f0e8',
+          background: '#fef6e6ff',
           display: 'flex', overflow: 'hidden',
           willChange: 'transform',
         }}
@@ -226,7 +225,7 @@ export default function Header() {
         }}>
 
           <nav
-            style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '0.04em' }}
+            style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '0' }}
             onMouseLeave={handleNavGroupLeave}
           >
             {navigation.map((item) => (
@@ -236,19 +235,21 @@ export default function Header() {
                   onClick={closeMenu}
                   className="menu-nav-inner block"
                   style={{
-                    fontFamily: '"Big Shoulders Display", sans-serif',
-                    fontSize: 'clamp(3rem, 5.8vw, 5.8rem)',
-                    fontWeight: 900,
+                    fontFamily: 'Antonio, sans-serif',
+                    fontSize: '5.7vw',
+                    fontWeight: 700,
                     textTransform: 'uppercase',
-                    color: hoveredItem === item.href ? '#67BA67' : '#1a1a1a',
+                    textAlign: 'center',
+                    letterSpacing: '-0.35vw',
+                    lineHeight: '120%',
+                    marginTop: 0,
+                    marginBottom: 0,
+                    color: hoveredItem === item.href ? '#35b435' : '#35b435',
                     opacity: hoveredItem === null ? 1 : hoveredItem === item.href ? 1 : 0.2,
                     textDecoration: 'none',
-                    lineHeight: 1.0,
-                    letterSpacing: '-0.01em',
                     display: 'block',
-                    paddingBottom: '0.2em',
+                    paddingBottom: '0.15em',
                     borderBottom: '1px solid rgba(0,0,0,0.07)',
-                    marginBottom: '0.1em',
                     transition: 'color 0.22s ease, opacity 0.22s ease',
                     willChange: 'transform',
                   }}
@@ -279,7 +280,7 @@ export default function Header() {
                   color: 'rgba(26,26,26,0.45)', textDecoration: 'none',
                   transition: 'color 0.2s',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.color = '#67BA67' }}
+                onMouseEnter={e => { e.currentTarget.style.color = '#35b435' }}
                 onMouseLeave={e => { e.currentTarget.style.color = 'rgba(26,26,26,0.45)' }}
               >
                 {s}

@@ -19,14 +19,16 @@ const config: Config = {
           3: '#202020',
         },
         green: {
-          DEFAULT: '#67ba67',
-          light: '#85ca85',
-          dim: 'rgba(103, 186, 103, 0.15)',
+          DEFAULT: '#35b435',
+          light: '#2D6A4F',
+          mid: '#52B788',
+          dim: 'rgba(27, 67, 50, 0.15)',
         },
-        orange: {
-          DEFAULT: '#f9a825',
+        gold: {
+          DEFAULT: '#EF9419',
+          light: '#FBC02D',
         },
-        cream: '#f5f0e8',
+        cream: '#FAFAF8',
       },
       fontFamily: {
         display: ['Antonio', 'sans-serif'],

@@ -7,11 +7,15 @@
 - **Icons:** Lucide or inline SVG
 - **Build:** npm run dev / npm run build
 
-## Brand Colors (from logo)
-- **Primary Green:** #67ba67
-- **Accent Gold/Orange:** #f9a825
-- **Background:** White (#ffffff)
-- **Text:** Dark gray (#333333)
+## Brand Colors
+- **Primary Green:** #1B4332 (deep forest green)
+- **Green Hover:** #2D6A4F
+- **Green Mid:** #52B788 (for dim/accent use)
+- **Gold:** #C8960C (warm antique gold)
+- **Gold Light:** #E8B020
+- **Background:** #FAFAF8 (warm off-white)
+- **Dark Sections:** #1A2330 (deep charcoal)
+- **Text:** Dark gray (#0d0d0d)
 
 ## Design Language
 - **Theme:** Light background, green + gold accents
