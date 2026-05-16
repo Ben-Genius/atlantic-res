@@ -10,12 +10,22 @@ import type { LucideIcon } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
+// ⚠️ Update this number to match the actual frames in /public/frames/hero/
+// after you trimmed the empty plates.
 const FRAME_COUNT = 104
 const FRAME_PATH = (i: number) =>
   `/frames/hero/ezgif-frame-${String(i).padStart(3, '0')}.png`
 
-const TITLE_LINE_1 = 'A Ghanaian Legacy'
-const TITLE_LINE_2 = 'of Culinary Pride'
+const TITLE_LINE_1 = 'A Ghanaian Legacy of'
+const TITLE_LINE_2 = 'Culinary Pride'
+
+// Secondary dish stack — cross-fades on scroll behind/beside the copy.
+const SIDE_DISHES = [
+  '/assets/images/dishes/seafood.png',
+  '/assets/images/dishes/lobster-cutout.png',
+  '/assets/images/dishes/steak.png',
+  '/assets/images/dishes/dessert.png',
+]
 
 // Chroma-aware luma key — kills near-white background without eating
 // into bright food highlights.
@@ -50,9 +60,7 @@ function keyImage(
 }
 
 export default function AboutSection() {
-  // Outer scroll-root controls scroll length ("scroll budget" for animation)
   const scrollRootRef = useRef<HTMLDivElement>(null)
-  // Inner stage gets pinned and holds content
   const stageRef = useRef<HTMLElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const canvasWrapRef = useRef<HTMLDivElement>(null)
@@ -60,6 +68,11 @@ export default function AboutSection() {
   const titleLine2Ref = useRef<HTMLSpanElement>(null)
   const descRef = useRef<HTMLDivElement>(null)
   const valuesRef = useRef<HTMLDivElement>(null)
+  const sideDishesWrapRef = useRef<HTMLDivElement>(null)
+  const sideDishesFloatRef = useRef<HTMLDivElement>(null)
+  const sideDishCanvasRefs = useRef<(HTMLCanvasElement | null)[]>(
+    new Array(SIDE_DISHES.length).fill(null),
+  )
   const [loaded, setLoaded] = useState(0)
 
   useGSAP(
@@ -94,17 +107,12 @@ export default function AboutSection() {
         },
       })
 
-      revealTl.from('.about-label', {
+      revealTl.from('.about-label-wrap', {
         opacity: 0,
         y: 20,
         duration: 0.6,
         ease: 'power2.out',
       })
-      revealTl.from(
-        '.about-wordmark',
-        { opacity: 0, y: -30, duration: 1.2, ease: 'power3.out' },
-        '<',
-      )
       revealTl.to(
         line1Chars,
         { opacity: 1, duration: 0.01, stagger: 0.025, ease: 'none' },
@@ -132,7 +140,7 @@ export default function AboutSection() {
         '>-0.4',
       )
 
-      // ----- Stop-motion dish setup -----
+      // ----- Hero stop-motion dish setup -----
       const canvas = canvasRef.current
       if (!canvas) return
       const ctx = canvas.getContext('2d')
@@ -155,7 +163,12 @@ export default function AboutSection() {
         const h = ih * scale
         const x = (rect.width - w) / 2
         const y = (rect.height - h) / 2
-        ctx.drawImage(src, x, y, w, h)
+
+        // Horizontally flip — anchors dish toward the left edge
+        ctx.save()
+        ctx.scale(-1, 1)
+        ctx.drawImage(src, -x - w, y, w, h)
+        ctx.restore()
       }
 
       const resize = () => {
@@ -192,12 +205,30 @@ export default function AboutSection() {
         img.onerror = finish
       }
 
+      // ----- Side dish keying (cross-fade stack) -----
+      SIDE_DISHES.forEach((src, i) => {
+        const target = sideDishCanvasRefs.current[i]
+        if (!target) return
+        const img = new window.Image()
+        img.decoding = 'async'
+        img.src = src
+        img.onload = () => {
+          try {
+            const keyed = keyImage(img, 245, 195)
+            target.width = keyed.width
+            target.height = keyed.height
+            const tctx = target.getContext('2d')
+            tctx?.drawImage(keyed, 0, 0)
+          } catch {
+            /* swallow */
+          }
+        }
+      })
+
       window.addEventListener('resize', resize)
       resize()
 
-      // ----- PINNED scroll-scrubbed frame playback -----
-      // Stage is pinned while user scrolls through scrollRoot's extra height.
-      // Frames must fully complete before pin releases and page advances.
+      // ----- PINNED scroll-scrubbed hero frames -----
       const scrub = gsap.to(frameState, {
         index: FRAME_COUNT - 1,
         ease: 'none',
@@ -206,7 +237,7 @@ export default function AboutSection() {
           trigger: scrollRootRef.current,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 0.5,
+          scrub: 0.4,
           pin: stageRef.current,
           pinSpacing: false,
           anticipatePin: 1,
@@ -214,11 +245,72 @@ export default function AboutSection() {
         onUpdate: render,
       })
 
-      // Description "breathing" — opacity tied to pinned scroll range
+      // ----- Side dish cross-fade tied to pinned scroll -----
+      if (sideDishesWrapRef.current) {
+        const dishEls =
+          sideDishesWrapRef.current.querySelectorAll<HTMLElement>(
+            '[data-side-dish]',
+          )
+        if (dishEls.length) {
+          gsap.set(dishEls, { autoAlpha: 0, scale: 0.9, yPercent: 6 })
+          gsap.set(dishEls[0], { autoAlpha: 1, scale: 1, yPercent: 0 })
+
+          const sideTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: scrollRootRef.current,
+              start: 'top top',
+              end: 'bottom bottom',
+              scrub: 0.6,
+            },
+          })
+
+          const seg = 1 / dishEls.length
+          dishEls.forEach((el, i) => {
+            if (i === 0) return
+            const prev = dishEls[i - 1]
+            sideTl
+              .to(
+                prev,
+                {
+                  autoAlpha: 0,
+                  scale: 0.92,
+                  yPercent: -8,
+                  duration: seg * 0.55,
+                  ease: 'power2.inOut',
+                },
+                i * seg,
+              )
+              .to(
+                el,
+                {
+                  autoAlpha: 1,
+                  scale: 1,
+                  yPercent: 0,
+                  duration: seg * 0.55,
+                  ease: 'power2.out',
+                },
+                i * seg,
+              )
+          })
+
+          gsap.to(sideDishesWrapRef.current, {
+            yPercent: -10,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: scrollRootRef.current,
+              start: 'top top',
+              end: 'bottom bottom',
+              scrub: 1,
+            },
+          })
+        }
+      }
+
+      // Description breathing
       if (descRef.current) {
         gsap.fromTo(
           descRef.current,
-          { opacity: 0.75 },
+          { opacity: 0.6 },
           {
             opacity: 1,
             ease: 'none',
@@ -234,7 +326,7 @@ export default function AboutSection() {
           descRef.current,
           { opacity: 1 },
           {
-            opacity: 0.3,
+            opacity: 0.4,
             ease: 'none',
             scrollTrigger: {
               trigger: scrollRootRef.current,
@@ -246,7 +338,7 @@ export default function AboutSection() {
         )
       }
 
-      // Values reveal — fires after pin releases and they enter view
+      // Values reveal
       if (valuesRef.current) {
         gsap.from(valuesRef.current.querySelectorAll('.about-value-card'), {
           opacity: 0,
@@ -256,13 +348,13 @@ export default function AboutSection() {
           stagger: 0.08,
           scrollTrigger: {
             trigger: valuesRef.current,
-            start: 'top 85%',
+            start: 'top 90%',
             once: true,
           },
         })
       }
 
-      // Idle float
+      // Idle floats
       if (canvasWrapRef.current) {
         gsap.to(canvasWrapRef.current, {
           y: -10,
@@ -270,6 +362,16 @@ export default function AboutSection() {
           yoyo: true,
           repeat: -1,
           ease: 'sine.inOut',
+        })
+      }
+      if (sideDishesFloatRef.current) {
+        gsap.to(sideDishesFloatRef.current, {
+          y: -16,
+          duration: 6.5,
+          yoyo: true,
+          repeat: -1,
+          ease: 'sine.inOut',
+          delay: 0.4,
         })
       }
 
@@ -285,37 +387,25 @@ export default function AboutSection() {
 
   return (
     <>
-      {/* scroll-root provides 250vh of scroll budget; stage stays pinned */}
-      <div ref={scrollRootRef} className="relative h-[250vh] bg-white">
+      {/* scroll-root: extra height = the pin's scroll budget */}
+      <div ref={scrollRootRef} className="relative h-[200vh] bg-white border border-red-500">
         <section
           ref={stageRef}
           className="relative h-screen w-full overflow-hidden bg-white"
         >
-          {/* Backdrop wordmark */}
-          <div className="pointer-events-none absolute inset-x-0 -top-4 z-10 flex justify-center z-0">
-            <span
-              aria-hidden
-              className="about-wordmark select-none whitespace-nowrap font-black uppercase text-green/[0.5] leading-none tracking-wider"
-              style={{
-                fontFamily: "'Antonio', sans-serif",
-                fontSize: 'clamp(30px, 10vw, 100px)',
-                transform: 'scaleY(1.2)',
-                letterSpacing: '-0.02em',
-              }}
-            >
-              <span className="brand-line" />
-
+          {/* Section label — centered, flush top, brand lines on both sides */}
+          <div className="absolute top-8 lg:top-10 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+            <div className="about-label-wrap inline-flex items-center gap-3 text-[18px]  tracking-[0.25em] uppercase text-[#57C157]">
+              <span className="h-px w-10 bg-[#57C157]" />
               About Atlantic
-              <span className="brand-line" />
-
-            </span>
+              <span className="h-px w-10 bg-[#57C157]" />
+            </div>
           </div>
 
-
-          {/* MAIN GRID — fills the full pinned stage height */}
-          <div className="relative z-10 h-full w-full pt-20 lg:pt-24 pb-10">
+          {/* MAIN GRID — full stage height, consistent white throughout */}
+          <div className="relative z-10 h-full w-full pt-24 lg:pt-28 pb-10 bg-white">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 h-full items-stretch">
-              {/* LEFT — dish bleeds off left edge, fills full column height */}
+              {/* LEFT — hero dish bleeds off left edge */}
               <div className="relative order-2 lg:order-1 lg:col-span-7 lg:-ml-[3vw] h-full">
                 <div className="relative h-full w-full">
                   {loaded < FRAME_COUNT && (
@@ -340,11 +430,11 @@ export default function AboutSection() {
                   >
                     <canvas
                       ref={canvasRef}
-                      className="block h-full w-full object-contain mix-blend-multiply drop-shadow-[0_30px_45px_rgba(0,0,0,0.12)]"
+                      className="block h-full w-full object-contain "
                     />
                   </div>
 
-                  {/* Soft right-edge fade into copy column */}
+                  {/* Right-edge fade — blends hero into copy column */}
                   <div
                     className="pointer-events-none absolute inset-y-0 right-0 w-[28%]"
                     style={{
@@ -353,22 +443,44 @@ export default function AboutSection() {
                     }}
                   />
 
-                  <div className="absolute bottom-4 left-[8vw] text-[10px] tracking-[0.35em] text-black/40 uppercase">
-                    <span className="inline-block w-6 h-px bg-[#57C157] mr-2 align-middle" />
-                    Scroll to plate
-                  </div>
+
                 </div>
               </div>
 
-              {/* RIGHT — copy vertically centered in the column */}
-              <div className="order-1 lg:order-2 lg:col-span-5 px-6 lg:pr-[6vw] lg:pl-0 flex items-center">
-                <div className="w-full">
+              {/* RIGHT — copy column on white, with side dish behind it */}
+              <div className="relative order-1 lg:order-2 lg:col-span-5 px-6 lg:pr-[6vw] lg:pl-0 flex items-center bg-white">
+                {/* Side dish stack — behind the copy, cross-fades on scroll */}
+                <div
+                  ref={sideDishesFloatRef}
+                  className="pointer-events-none absolute right-[-6vw] top-0 z-0 h-[18vw] w-[18vw] will-change-transform"
+                  aria-hidden
+                >
+                  <div
+                    ref={sideDishesWrapRef}
+                    className="relative h-full w-full"
+                  >
+                    {SIDE_DISHES.map((src, i) => (
+                      <div
+                        key={src}
+                        data-side-dish
+                        className="absolute inset-0 flex items-center justify-center"
+                      >
+                        <canvas
+                          ref={(el) => {
+                            sideDishCanvasRefs.current[i] = el
+                          }}
+                          className="block h-auto max-h-full w-auto max-w-full mix-blend-multiply drop-shadow-[0_25px_35px_rgba(0,0,0,0.18)]"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+
+                {/* Copy sits above the side dish */}
+                <div className="relative z-10 w-full mb-32">
                   <h2
-                    className="font-serif font-semibold text-[#1a1a1a] mb-8"
-                    style={{
-                      fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-                      lineHeight: 1.05,
-                    }}
+                    className="font-display font-bold text-display-md text-[#1a1a1a] mb-8"
                   >
                     <span
                       ref={titleLine1Ref}
@@ -387,7 +499,7 @@ export default function AboutSection() {
                   </h2>
 
                   <div ref={descRef}>
-                    <p className="about-desc-para text-[rgba(26,26,26,0.65)] leading-[1.85] mb-5 max-w-[560px] bg-white">
+                    <p className="about-desc-para text-[rgba(26,26,26,0.65)] leading-[1.85] mb-5 max-w-[560px]">
                       Atlantic Catering and Logistics Limited is a wholly-owned
                       Ghanaian professional corporate catering company
                       established in 2014. We specialize in onshore and
@@ -407,24 +519,25 @@ export default function AboutSection() {
                   </div>
                 </div>
               </div>
+
+            </div>
+          </div>
+
+          {/* VALUES — Absolutely positioned at the bottom of the pinned stage */}
+          <div className="absolute bottom-5 inset-x-0 z-30 bg-white">
+            <div className="container-fluid px-0">
+              <div
+                ref={valuesRef}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white"
+              >
+                {values.map(({ Icon, title, desc }) => (
+                  <ValueCard key={title} Icon={Icon} title={title} desc={desc} />
+                ))}
+              </div>
             </div>
           </div>
         </section>
       </div>
-
-      {/* VALUES — separate section AFTER pinned stage, normal flow */}
-      <section className="bg-white py-section">
-        <div className="container-xl">
-          <div
-            ref={valuesRef}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-black/[.07]"
-          >
-            {values.map(({ Icon, title, desc }) => (
-              <ValueCard key={title} Icon={Icon} title={title} desc={desc} />
-            ))}
-          </div>
-        </div>
-      </section>
     </>
   )
 }
@@ -439,7 +552,7 @@ function ValueCard({
   desc: string
 }) {
   return (
-    <div className="about-value-card flex gap-5 p-8 bg-[#fafaf8] hover:bg-[#f2f2f0] transition-colors duration-300">
+    <div className="about-value-card flex gap-5 p-8 bg-white hover:bg-[#f2f2f0] transition-colors duration-300">
       <div className="w-11 h-11 bg-[rgba(103,186,103,0.12)] border border-[rgba(103,186,103,0.3)] flex items-center justify-center shrink-0">
         <Icon className="w-5 h-5 text-[#57C157]" />
       </div>
