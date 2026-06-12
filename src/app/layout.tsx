@@ -4,6 +4,10 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import GsapProvider from '@/components/GsapProvider'
 import Loader from '@/components/Loader'
+import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: 'Atlantic Catering & Logistics — Premium Culinary Excellence, Ghana',
@@ -16,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", inter.variable)}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -1,93 +1,97 @@
 'use client'
 
 import { useRef } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { services } from '@/data/home'
-import CtaButton from '@/components/ui/CtaButton'
+import CircularGallery, { CircularGalleryRef } from '@/components/ui/CircularGallery'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const serviceItems = [
+  { text: 'Onshore & Offshore Catering', image: '/images/services/atlantic/offshore catering.jpg' },
+  { text: 'Contract Catering', image: '/images/services/atlantic/Contract Catering.jpg' },
+  { text: 'Camp Design & Management', image: '/images/services/atlantic/camp design.jpg' },
+  { text: 'Event Management & Planning', image: '/images/services/atlantic/event management.avif' },
+  { text: 'Ship & Store Supplies', image: '/images/services/atlantic/ship supplies.jpg' },
+  { text: 'Housekeeping & Laundry Services', image: '/images/services/atlantic/laundry & housekeeping.jpg' },
+  { text: 'Janitorial Services', image: '/images/services/atlantic/janitorial services.avif' },
+  { text: 'Pest Control Management Services', image: '/images/services/atlantic/pest control 1.avif' },
+  { text: 'Waste Disposal', image: '/images/services/atlantic/waste disposal.jpg' }
+];
+
 export default function ServicesSection() {
-  const sectionRef = useRef<HTMLElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const galleryRef = useRef<CircularGalleryRef>(null)
 
   useGSAP(() => {
-    gsap.from(sectionRef.current!.querySelectorAll('.reveal'), {
-      opacity: 0,
-      y: 40,
-      duration: 0.8,
-      ease: 'power3.out',
-      stagger: 0.08,
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top 80%',
-        once: true,
-      },
-    })
-  }, { scope: sectionRef })
+    if (!containerRef.current) return;
+
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: 'top top',
+      end: '+=250%', // pin for 2.5 viewports worth of scroll to scroll through all 9 services
+      pin: true,
+      scrub: true,
+      onUpdate: (self) => {
+        if (galleryRef.current) {
+          galleryRef.current.setScroll(self.progress);
+        }
+      }
+    });
+  }, { scope: containerRef });
 
   return (
-    <section ref={sectionRef} id="services" className="py-section bg-[#f5f5f3]">
-      <div className="container-xl">
-        <div className="reveal flex flex-wrap justify-between items-end gap-8 mb-16">
-          <div>
-            <div className="section-label">
-              <span className="brand-line" />
-              What We Do
-            </div>
-            <h2
-              className="font-serif font-semibold text-[#1a1a1a]"
-              style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1.05 }}
-            >
-              Our Service<br />Segments
-            </h2>
-          </div>
-          <CtaButton href="/services" label="All Services" variant="outline" />
-        </div>
+    <div ref={containerRef} className="w-full h-screen bg-[#111827] flex flex-col justify-between py-12 relative overflow-hidden select-none">
+      {/* Background radial highlight */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.08)_0%,transparent_70%)] pointer-events-none" />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-black/[.08]">
-          {services.map((svc) => (
-            <ServiceCard key={svc.tag} {...svc} />
-          ))}
+      {/* Header */}
+      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row md:items-end md:justify-between z-10 mt-4">
+        <div>
+          <span className="text-emerald-500 font-outfit text-sm font-semibold uppercase tracking-widest block mb-2">
+            Our Core Services
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white font-outfit tracking-tight leading-none">
+            Tailored Excellence.
+          </h2>
+        </div>
+        <p className="mt-4 md:mt-0 text-gray-400 font-inter max-w-md text-sm md:text-base leading-relaxed">
+          Explore our wide array of premium service divisions. Scroll down to browse through each segment mapped dynamically in our 3D space.
+        </p>
+      </div>
+
+      {/* 3D WebGL Gallery Container */}
+      <div className="w-full flex-grow relative z-10 flex items-center justify-center">
+        <div className="w-full h-[65vh]">
+          <CircularGallery
+            ref={galleryRef}
+            items={serviceItems}
+            bend={3}
+            textColor="#10b981" // emerald green text color
+            borderRadius={0.05}
+            font="bold 28px Outfit"
+            fontUrl="https://fonts.googleapis.com/css2?family=Outfit:wght@700&display=swap"
+            scrollEase={0.08}
+            disableInternalScroll={true}
+            isInfinite={false}
+          />
         </div>
       </div>
-    </section>
-  )
-}
 
-interface ServiceCardProps {
-  tag: string
-  title: string
-  desc: string
-  href: string
-  img?: string
-}
-
-function ServiceCard({ tag, title, desc, href, img }: ServiceCardProps) {
-  return (
-    <div className="reveal">
-      <Link href={href} className="block h-full no-underline group/card">
-        <div className="h-full bg-white border border-transparent hover:border-[rgba(103,186,103,0.3)] hover:-translate-y-1 hover:shadow-[0_24px_48px_rgba(0,0,0,0.08)] transition-all duration-[400ms] ease-premium">
-          {img && (
-            <div className="relative h-[220px] overflow-hidden">
-              <Image src={img} alt={title} fill className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/60" />
-            </div>
-          )}
-          <div className="p-8">
-            <div className="text-[0.65rem] font-bold tracking-[0.2em] text-[#EF9419] mb-3">{tag}</div>
-            <h3 className="font-serif text-2xl font-semibold text-[#1a1a1a] mb-3 leading-[1.2]">{title}</h3>
-            <p className="text-sm text-[rgba(26,26,26,0.55)] leading-[1.7]">{desc}</p>
-            <div className="flex items-center gap-1.5 mt-6 text-[#57C157] text-xs font-semibold tracking-[0.1em] uppercase">
-              Learn More <ArrowRight className="w-3.5 h-3.5" />
-            </div>
-          </div>
+      {/* Scroll indicator footer */}
+      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 z-10 flex justify-between items-center text-xs uppercase tracking-widest font-semibold font-outfit text-gray-500">
+        <div className="flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span>Interactive 3D Space</span>
         </div>
-      </Link>
+        <div className="flex items-center gap-2">
+          <span>Scroll down to explore</span>
+          <svg className="w-4 h-4 animate-bounce text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </div>
+      </div>
     </div>
   )
 }

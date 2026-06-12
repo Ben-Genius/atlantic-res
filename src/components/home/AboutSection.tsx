@@ -1,6 +1,7 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
+import Image from 'next/image'
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -10,559 +11,379 @@ import type { LucideIcon } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
-// ⚠️ Update this number to match the actual frames in /public/frames/hero/
-// after you trimmed the empty plates.
-const FRAME_COUNT = 104
-const FRAME_PATH = (i: number) =>
-  `/frames/hero/ezgif-frame-${String(i).padStart(3, '0')}.png`
+const TITLE_LINE_1 = 'Focus on work,'
+const TITLE_LINE_2 = "we'll take care of"
+const TITLE_LINE_3 = "everything else"
 
-const TITLE_LINE_1 = 'A Ghanaian Legacy of'
-const TITLE_LINE_2 = 'Culinary Pride'
-
-// Secondary dish stack — cross-fades on scroll behind/beside the copy.
-const SIDE_DISHES = [
-  '/assets/images/dishes/seafood.png',
-  '/assets/images/dishes/lobster-cutout.png',
-  '/assets/images/dishes/steak.png',
-  '/assets/images/dishes/dessert.png',
-]
-
-// Chroma-aware luma key — kills near-white background without eating
-// into bright food highlights.
-function keyImage(
-  img: HTMLImageElement,
-  hi: number,
-  lo: number,
-): HTMLCanvasElement {
-  const c = document.createElement('canvas')
-  c.width = img.naturalWidth
-  c.height = img.naturalHeight
-  const cx = c.getContext('2d')
-  if (!cx) return c
-  cx.drawImage(img, 0, 0)
-  const data = cx.getImageData(0, 0, c.width, c.height)
-  const px = data.data
-  for (let i = 0; i < px.length; i += 4) {
-    const r = px[i]
-    const g = px[i + 1]
-    const b = px[i + 2]
-    const lum = 0.299 * r + 0.587 * g + 0.114 * b
-    const chroma = Math.max(r, g, b) - Math.min(r, g, b)
-    if (lum >= hi && chroma < 20) {
-      px[i + 3] = 0
-    } else if (lum > lo && chroma < 35) {
-      const t = (hi - lum) / (hi - lo)
-      px[i + 3] = px[i + 3] * Math.max(0, Math.min(1, t))
-    }
-  }
-  cx.putImageData(data, 0, 0)
-  return c
-}
 
 export default function AboutSection() {
-  const scrollRootRef = useRef<HTMLDivElement>(null)
-  const stageRef = useRef<HTMLElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const canvasWrapRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
+  const imageWrapRef = useRef<HTMLDivElement>(null)
   const titleLine1Ref = useRef<HTMLSpanElement>(null)
   const titleLine2Ref = useRef<HTMLSpanElement>(null)
+  const titleLine3Ref = useRef<HTMLSpanElement>(null)
   const descRef = useRef<HTMLDivElement>(null)
   const valuesRef = useRef<HTMLDivElement>(null)
-  const sideDishesWrapRef = useRef<HTMLDivElement>(null)
-  const sideDishesFloatRef = useRef<HTMLDivElement>(null)
-  const sideDishCanvasRefs = useRef<(HTMLCanvasElement | null)[]>(
-    new Array(SIDE_DISHES.length).fill(null),
-  )
-  const [loaded, setLoaded] = useState(0)
 
   useGSAP(
     () => {
-      // ----- Typewriter setup -----
-      const setupTypewriter = (
-        el: HTMLSpanElement | null,
-        text: string,
-      ): HTMLSpanElement[] => {
+      const setupTypewriter = (el: HTMLSpanElement | null, text: string) => {
         if (!el) return []
         el.innerHTML = ''
-        const spans: HTMLSpanElement[] = []
-        text.split('').forEach((ch) => {
+        return text.split('').map((ch) => {
           const s = document.createElement('span')
           s.textContent = ch === ' ' ? '\u00A0' : ch
           s.style.display = 'inline-block'
           s.style.opacity = '0'
           el.appendChild(s)
-          spans.push(s)
+          return s
         })
-        return spans
       }
       const line1Chars = setupTypewriter(titleLine1Ref.current, TITLE_LINE_1)
       const line2Chars = setupTypewriter(titleLine2Ref.current, TITLE_LINE_2)
+      const line3Chars = setupTypewriter(titleLine3Ref.current, TITLE_LINE_3)
 
-      // ----- Master reveal timeline -----
+      // Reveal timeline (Eyebrow -> Heading first -> Body copy follows)
       const revealTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: stageRef.current,
-          start: 'top 75%',
-          once: true,
-        },
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true },
       })
+      revealTl
+        .from('.about-eyebrow', { opacity: 0, y: 16, duration: 0.5, ease: 'power2.out' })
+        .to(line1Chars, { opacity: 1, duration: 0.01, stagger: 0.025, ease: 'none' }, '-=0.2')
+        .to(line2Chars, { opacity: 1, duration: 0.01, stagger: 0.025, ease: 'none' }, '>-0.05')
+        .to(line3Chars, { opacity: 1, duration: 0.01, stagger: 0.025, ease: 'none' }, '>-0.05')
+        .from('.about-desc-para', { opacity: 0, y: 24, duration: 0.7, ease: 'power3.out', stagger: 0.15 }, '>-0.1')
+        .from('.about-cta-row', { opacity: 0, y: 16, duration: 0.6, ease: 'power3.out' }, '>-0.2')
+        .from(imageWrapRef.current, { opacity: 0, scale: 0.94, duration: 1.2, ease: 'power3.out' }, '<-0.8')
 
-      revealTl.from('.about-label-wrap', {
-        opacity: 0,
-        y: 20,
-        duration: 0.6,
-        ease: 'power2.out',
-      })
-      revealTl.to(
-        line1Chars,
-        { opacity: 1, duration: 0.01, stagger: 0.025, ease: 'none' },
-        '-=0.2',
-      )
-      revealTl.to(
-        line2Chars,
-        { opacity: 1, duration: 0.01, stagger: 0.025, ease: 'none' },
-        '>-0.1',
-      )
-      revealTl.from(
-        '.about-desc-para',
+      if (imageWrapRef.current) {
+        gsap.to(imageWrapRef.current, {
+          y: -14,
+          duration: 12,
+          yoyo: true,
+          repeat: -1,
+          ease: 'sine.inOut',
+        })
+      }
+
+      // Watermark zoom/scale animation on scroll
+      gsap.fromTo('.watermark-text',
+        { scale: 0.8, opacity: 0.4 },
         {
-          opacity: 0,
-          y: 30,
-          duration: 0.8,
-          ease: 'power3.out',
-          stagger: 0.15,
-        },
-        '>-0.2',
-      )
-      revealTl.from(
-        '.about-cta',
-        { opacity: 0, y: 20, duration: 0.7, ease: 'power3.out' },
-        '>-0.4',
-      )
-
-      // ----- Hero stop-motion dish setup -----
-      const canvas = canvasRef.current
-      if (!canvas) return
-      const ctx = canvas.getContext('2d')
-      if (!ctx) return
-
-      const frames: (HTMLCanvasElement | null)[] = new Array(FRAME_COUNT).fill(
-        null,
-      )
-      const frameState = { index: 0 }
-
-      const render = () => {
-        const src = frames[Math.round(frameState.index)]
-        if (!src) return
-        const rect = canvas.getBoundingClientRect()
-        ctx.clearRect(0, 0, rect.width, rect.height)
-        const iw = src.width
-        const ih = src.height
-        const scale = Math.min(rect.width / iw, rect.height / ih) * 1.0
-        const w = iw * scale
-        const h = ih * scale
-        const x = (rect.width - w) / 2
-        const y = (rect.height - h) / 2
-
-        // Horizontally flip — anchors dish toward the left edge
-        ctx.save()
-        ctx.scale(-1, 1)
-        ctx.drawImage(src, -x - w, y, w, h)
-        ctx.restore()
-      }
-
-      const resize = () => {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2)
-        const rect = canvas.getBoundingClientRect()
-        canvas.width = rect.width * dpr
-        canvas.height = rect.height * dpr
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-        render()
-      }
-
-      let loadedCount = 0
-      for (let i = 0; i < FRAME_COUNT; i++) {
-        const idx = i
-        const img = new window.Image()
-        img.decoding = 'async'
-        img.src = FRAME_PATH(idx + 1)
-        const finish = () => {
-          if (img.complete && img.naturalWidth > 0) {
-            try {
-              frames[idx] = keyImage(img, 245, 180)
-            } catch {
-              /* swallow */
-            }
-          }
-          loadedCount += 1
-          setLoaded(loadedCount)
-          if (loadedCount === FRAME_COUNT) {
-            resize()
-            ScrollTrigger.refresh()
+          scale: 1.15,
+          opacity: 1,
+          ease: 'power1.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
           }
         }
-        img.onload = finish
-        img.onerror = finish
-      }
+      )
 
-      // ----- Side dish keying (cross-fade stack) -----
-      SIDE_DISHES.forEach((src, i) => {
-        const target = sideDishCanvasRefs.current[i]
-        if (!target) return
-        const img = new window.Image()
-        img.decoding = 'async'
-        img.src = src
-        img.onload = () => {
-          try {
-            const keyed = keyImage(img, 245, 195)
-            target.width = keyed.width
-            target.height = keyed.height
-            const tctx = target.getContext('2d')
-            tctx?.drawImage(keyed, 0, 0)
-          } catch {
-            /* swallow */
+      // Dishes rotate on scroll (slower rotation)
+      if (imageWrapRef.current) {
+        gsap.to(imageWrapRef.current.querySelector('img'), {
+          rotation: 180,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 2,
           }
-        }
-      })
-
-      window.addEventListener('resize', resize)
-      resize()
-
-      // ----- PINNED scroll-scrubbed hero frames -----
-      const scrub = gsap.to(frameState, {
-        index: FRAME_COUNT - 1,
+        })
+      }
+      gsap.to('.float-dish-tr img', {
+        rotation: -360,
         ease: 'none',
-        snap: 'index',
         scrollTrigger: {
-          trigger: scrollRootRef.current,
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 0.4,
-          pin: stageRef.current,
-          pinSpacing: false,
-          anticipatePin: 1,
-        },
-        onUpdate: render,
+          trigger: sectionRef.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        }
+      })
+      gsap.to('.float-dish-bl img', {
+        rotation: 360,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        }
       })
 
-      // ----- Side dish cross-fade tied to pinned scroll -----
-      if (sideDishesWrapRef.current) {
-        const dishEls =
-          sideDishesWrapRef.current.querySelectorAll<HTMLElement>(
-            '[data-side-dish]',
-          )
-        if (dishEls.length) {
-          gsap.set(dishEls, { autoAlpha: 0, scale: 0.9, yPercent: 6 })
-          gsap.set(dishEls[0], { autoAlpha: 1, scale: 1, yPercent: 0 })
-
-          const sideTl = gsap.timeline({
-            scrollTrigger: {
-              trigger: scrollRootRef.current,
-              start: 'top top',
-              end: 'bottom bottom',
-              scrub: 0.6,
-            },
-          })
-
-          const seg = 1 / dishEls.length
-          dishEls.forEach((el, i) => {
-            if (i === 0) return
-            const prev = dishEls[i - 1]
-            sideTl
-              .to(
-                prev,
-                {
-                  autoAlpha: 0,
-                  scale: 0.92,
-                  yPercent: -8,
-                  duration: seg * 0.55,
-                  ease: 'power2.inOut',
-                },
-                i * seg,
-              )
-              .to(
-                el,
-                {
-                  autoAlpha: 1,
-                  scale: 1,
-                  yPercent: 0,
-                  duration: seg * 0.55,
-                  ease: 'power2.out',
-                },
-                i * seg,
-              )
-          })
-
-          gsap.to(sideDishesWrapRef.current, {
-            yPercent: -10,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: scrollRootRef.current,
-              start: 'top top',
-              end: 'bottom bottom',
-              scrub: 1,
-            },
-          })
+      // Add-on dishes image swap/transition on scroll
+      gsap.to('.tr-dish-1', {
+        opacity: 0,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 30%',
+          end: 'top 5%',
+          scrub: true,
         }
-      }
+      })
+      gsap.to('.tr-dish-2', {
+        opacity: 1,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 30%',
+          end: 'top 5%',
+          scrub: true,
+        }
+      })
+      gsap.to('.bl-dish-1', {
+        opacity: 0,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 30%',
+          end: 'top 5%',
+          scrub: true,
+        }
+      })
+      gsap.to('.bl-dish-2', {
+        opacity: 1,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 30%',
+          end: 'top 5%',
+          scrub: true,
+        }
+      })
 
-      // Description breathing
-      if (descRef.current) {
-        gsap.fromTo(
-          descRef.current,
-          { opacity: 0.6 },
-          {
-            opacity: 1,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: scrollRootRef.current,
-              start: 'top top',
-              end: '40% top',
-              scrub: 0.6,
-            },
-          },
-        )
-        gsap.fromTo(
-          descRef.current,
-          { opacity: 1 },
-          {
-            opacity: 0.4,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: scrollRootRef.current,
-              start: '70% top',
-              end: 'bottom bottom',
-              scrub: 0.6,
-            },
-          },
-        )
-      }
+      // Floating animations for add-on dishes
+      gsap.to('.float-dish-tr', {
+        y: 15,
+        x: -8,
+        duration: 8,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut',
+      })
+      gsap.to('.float-dish-bl', {
+        y: -12,
+        x: 6,
+        duration: 7,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut',
+      })
 
-      // Values reveal
       if (valuesRef.current) {
         gsap.from(valuesRef.current.querySelectorAll('.about-value-card'), {
           opacity: 0,
-          y: 40,
-          duration: 0.7,
+          y: 30,
+          duration: 0.6,
           ease: 'power3.out',
-          stagger: 0.08,
-          scrollTrigger: {
-            trigger: valuesRef.current,
-            start: 'top 90%',
-            once: true,
-          },
+          stagger: 0.1,
+          scrollTrigger: { trigger: valuesRef.current, start: 'top 92%', once: true },
         })
-      }
-
-      // Idle floats
-      if (canvasWrapRef.current) {
-        gsap.to(canvasWrapRef.current, {
-          y: -10,
-          duration: 5.5,
-          yoyo: true,
-          repeat: -1,
-          ease: 'sine.inOut',
-        })
-      }
-      if (sideDishesFloatRef.current) {
-        gsap.to(sideDishesFloatRef.current, {
-          y: -16,
-          duration: 6.5,
-          yoyo: true,
-          repeat: -1,
-          ease: 'sine.inOut',
-          delay: 0.4,
-        })
-      }
-
-      return () => {
-        window.removeEventListener('resize', resize)
-        scrub.scrollTrigger?.kill()
       }
     },
-    { scope: scrollRootRef },
+    { scope: sectionRef },
   )
 
-  const progress = Math.round((loaded / FRAME_COUNT) * 100)
-
   return (
-    <>
-      {/* scroll-root: extra height = the pin's scroll budget */}
-      <div ref={scrollRootRef} className="relative h-[200vh] bg-white border border-red-500">
-        <section
-          ref={stageRef}
-          className="relative h-screen w-full overflow-hidden bg-white"
+    <section
+      ref={sectionRef}
+      className="relative w-full overflow-hidden bg-white"
+      style={{ minHeight: '100vh' }}
+    >
+      {/* ─── Watermark — fully visible and smaller ─── */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-[-24px]  z-20 overflow-hidden w-full flex justify-center"
+        style={{ lineHeight: 1, }}
+      >
+        <span
+          className="watermark-text block select-none whitespace-nowrap tracking-[10px] text-center font-black uppercase text-[#dedede]"
+          style={{
+            fontFamily: "'Bebas Neue', sans-serif",
+            fontSize: '10.5rem',
+          }}
         >
-          {/* Section label — centered, flush top, brand lines on both sides */}
-          <div className="absolute top-8 lg:top-10 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-            <div className="about-label-wrap inline-flex items-center gap-3 text-[18px]  tracking-[0.25em] uppercase text-[#57C157]">
-              <span className="h-px w-10 bg-[#57C157]" />
-              About Atlantic
-              <span className="h-px w-10 bg-[#57C157]" />
-            </div>
-          </div>
-
-          {/* MAIN GRID — full stage height, consistent white throughout */}
-          <div className="relative z-10 h-full w-full pt-24 lg:pt-28 pb-10 bg-white">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 h-full items-stretch">
-              {/* LEFT — hero dish bleeds off left edge */}
-              <div className="relative order-2 lg:order-1 lg:col-span-7 lg:-ml-[3vw] h-full">
-                <div className="relative h-full w-full">
-                  {loaded < FRAME_COUNT && (
-                    <div className="absolute inset-0 z-10 flex items-center justify-center">
-                      <div className="flex flex-col items-center gap-3">
-                        <div className="h-px w-32 overflow-hidden bg-black/10">
-                          <div
-                            className="h-full bg-[#57C157] transition-[width] duration-150"
-                            style={{ width: `${progress}%` }}
-                          />
-                        </div>
-                        <span className="text-[10px] tracking-[0.3em] text-black/40">
-                          {progress}%
-                        </span>
-                      </div>
-                    </div>
-                  )}
-
-                  <div
-                    ref={canvasWrapRef}
-                    className="absolute inset-0 will-change-transform"
-                  >
-                    <canvas
-                      ref={canvasRef}
-                      className="block h-full w-full object-contain "
-                    />
-                  </div>
-
-                  {/* Right-edge fade — blends hero into copy column */}
-                  <div
-                    className="pointer-events-none absolute inset-y-0 right-0 w-[28%]"
-                    style={{
-                      background:
-                        'linear-gradient(to right, transparent 0%, rgba(255,255,255,0.5) 60%, white 100%)',
-                    }}
-                  />
-
-
-                </div>
-              </div>
-
-              {/* RIGHT — copy column on white, with side dish behind it */}
-              <div className="relative order-1 lg:order-2 lg:col-span-5 px-6 lg:pr-[6vw] lg:pl-0 flex items-center bg-white">
-                {/* Side dish stack — behind the copy, cross-fades on scroll */}
-                <div
-                  ref={sideDishesFloatRef}
-                  className="pointer-events-none absolute right-[-6vw] top-0 z-0 h-[18vw] w-[18vw] will-change-transform"
-                  aria-hidden
-                >
-                  <div
-                    ref={sideDishesWrapRef}
-                    className="relative h-full w-full"
-                  >
-                    {SIDE_DISHES.map((src, i) => (
-                      <div
-                        key={src}
-                        data-side-dish
-                        className="absolute inset-0 flex items-center justify-center"
-                      >
-                        <canvas
-                          ref={(el) => {
-                            sideDishCanvasRefs.current[i] = el
-                          }}
-                          className="block h-auto max-h-full w-auto max-w-full mix-blend-multiply drop-shadow-[0_25px_35px_rgba(0,0,0,0.18)]"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-
-                {/* Copy sits above the side dish */}
-                <div className="relative z-10 w-full mb-32">
-                  <h2
-                    className="font-display font-bold text-display-md text-[#1a1a1a] mb-8"
-                  >
-                    <span
-                      ref={titleLine1Ref}
-                      className="block"
-                      aria-label={TITLE_LINE_1}
-                    >
-                      {TITLE_LINE_1}
-                    </span>
-                    <span
-                      ref={titleLine2Ref}
-                      className="block"
-                      aria-label={TITLE_LINE_2}
-                    >
-                      {TITLE_LINE_2}
-                    </span>
-                  </h2>
-
-                  <div ref={descRef}>
-                    <p className="about-desc-para text-[rgba(26,26,26,0.65)] leading-[1.85] mb-5 max-w-[560px]">
-                      Atlantic Catering and Logistics Limited is a wholly-owned
-                      Ghanaian professional corporate catering company
-                      established in 2014. We specialize in onshore and
-                      offshore catering, camp management, ship and store
-                      supplies, laundry, housekeeping, and janitorial services.
-                    </p>
-                    <p className="about-desc-para text-[rgba(26,26,26,0.65)] leading-[1.85] mb-10 max-w-[560px]">
-                      Our service model is built for complex environments
-                      where reliability, quality, and compliance matter most —
-                      including operations aboard two FPSOs in Ghana&apos;s
-                      oil and gas sector.
-                    </p>
-                  </div>
-
-                  <div className="about-cta">
-                    <CtaButton href="/expertise" label="Our Expertise" />
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          {/* VALUES — Absolutely positioned at the bottom of the pinned stage */}
-          <div className="absolute bottom-5 inset-x-0 z-30 bg-white">
-            <div className="container-fluid px-0">
-              <div
-                ref={valuesRef}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white"
-              >
-                {values.map(({ Icon, title, desc }) => (
-                  <ValueCard key={title} Icon={Icon} title={title} desc={desc} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+          Reliable. Flexible &amp; Safe
+        </span>
       </div>
-    </>
+
+      {/* ─── Add-on dishes (Top Right & Bottom Left) ─── */}
+      <div className="pointer-events-none absolute right-[-80px] md:right-[-120px] top-[10%] z-10 w-[180px] h-[180px] md:w-[320px] md:h-[320px] aspect-square overflow-hidden will-change-transform float-dish-tr">
+        <Image
+          src="/assets/images/dishes/seafood.png"
+          alt="Top right dish 1"
+          fill
+          className="object-contain rounded-full tr-dish-1"
+        />
+        <Image
+          src="/assets/images/dishes/steak.png"
+          alt="Top right dish 2"
+          fill
+          className="object-contain rounded-full absolute inset-0 opacity-0 tr-dish-2"
+        />
+      </div>
+
+      <div className="pointer-events-none absolute left-[-60px] md:left-[-100px] bottom-[18%] z-10 w-[140px] h-[140px] md:w-[260px] md:h-[260px] aspect-square overflow-hidden will-change-transform float-dish-bl">
+        <Image
+          src="/assets/images/dishes/jollof.png"
+          alt="Bottom left dish 1"
+          fill
+          className="object-contain rounded-full bl-dish-1"
+        />
+        <Image
+          src="/assets/images/dishes/appetizer.png"
+          alt="Bottom left dish 2"
+          fill
+          className="object-contain rounded-full absolute inset-0 opacity-0 bl-dish-2"
+        />
+      </div>
+
+      {/* ─── Main two-column grid ─── */}
+      <div
+        className="relative flex flex-col"
+        style={{ minHeight: 'calc(100vh - 100px)' }}
+      >
+        <div className="flex flex-1 flex-col lg:flex-row">
+
+          {/* LEFT — main dish (centered and closer to copy) */}
+          <div
+            className="relative flex items-center justify-center lg:justify-end mt-30"
+            style={{
+              width: '100%',
+              flex: '0 0 58%',
+              paddingRight: '4vw',
+            }}
+          >
+            <div
+              ref={imageWrapRef}
+              className="relative will-change-transform  top-[4rem]"
+              style={{
+                width: 'clamp(400px, 54vw, 760px)',
+                height: 'clamp(400px, 54vw, 760px)',
+              }}
+            >
+              <Image
+                src="/assets/images/testImage.png"
+                alt="Atlantic — signature dish"
+                fill
+                sizes="(max-width: 1024px) 100vw, 48vw"
+                className="object-cover"
+                priority
+              />
+            </div>
+
+
+          </div>
+
+          {/* RIGHT — copy, vertically centred */}
+          <div
+            className="flex flex-1 flex-col justify-center pb-10 pl-0 pr-8 pt-10
+                        lg:pb-0 lg:pl-4 lg:pr-[7vw] lg:pt-0"
+          >
+            {/* Eyebrow */}
+            <div className="about-eyebrow mb-5 flex items-center gap-3">
+              <span className="h-px w-8 bg-[#57C157]" />
+              <span
+                className="text-xs font-semibold uppercase tracking-[0.22em]"
+                style={{ color: '#57C157' }}
+              >
+                Since 2014
+              </span>
+            </div>
+
+            {/* Headline — bold condensed uppercase, like inspo */}
+            <h1
+              className="mb-6 font-black uppercase leading-[1.05] tracking-tight text-[#1a1a1a] z-10"
+              style={{ fontSize: 'clamp(2.6rem, 4vw, 4.6rem)' }}
+            >
+              <span ref={titleLine1Ref} className="block" aria-label={TITLE_LINE_1}>
+                {TITLE_LINE_1}
+              </span>
+              <span ref={titleLine2Ref} className="block" aria-label={TITLE_LINE_2}>
+                {TITLE_LINE_2}
+              </span>
+              <span ref={titleLine3Ref} className="block" aria-label={TITLE_LINE_3}>
+                {TITLE_LINE_3}
+              </span>
+            </h1>
+
+            {/* Body */}
+            <div ref={descRef} className="mb-8 max-w-[460px]">
+              <p className="about-desc-para mb-4 text-[0.96rem] leading-[1.82] text-[rgba(26,26,26,0.58)]">
+                Atlantic adapts to your business in motion with tailored solutions and certified,
+                safely delivered meals. With safety and cleanliness at our core, we are proud to
+                hold three ISO certifications.
+              </p>
+              <p className="about-desc-para text-[0.96rem] leading-[1.82] text-[rgba(26,26,26,0.58)]">
+                From boardrooms to offshore sites, we deliver world-class catering services and
+                custom support so you can keep your focus entirely on what is important.
+              </p>
+            </div>
+
+            {/* CTA row */}
+            <div className="about-cta-row flex flex-wrap items-center gap-6">
+              <CtaButton href="/expertise" label="Our Expertise" />
+
+              <a
+                href="tel:+233302000000"
+                className="group flex items-center gap-2.5 text-sm font-semibold text-[#1a1a1a] transition-colors hover:text-[#57C157]"
+              >
+                <span
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d9d9d9] transition-colors group-hover:border-[#57C157]"
+                >
+                  <svg
+                    width="15" height="15" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" strokeWidth="1.9"
+                    strokeLinecap="round" strokeLinejoin="round"
+                  >
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.6 12.08 19.79 19.79 0 0 1 1.53 3.5 2 2 0 0 1 3.5 1.32h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.4a16 16 0 0 0 6.29 6.29l1.45-1.45a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                </span>
+                +233 302 000 000
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ─── Bottom value pills — full width, hugs the bottom ─── */}
+      {/* <div
+        ref={valuesRef}
+        className="relative z-20 w-full border-t border-[#e8e8e8] bg-white"
+      >
+        <div className="grid grid-cols-1 divide-y divide-[#e8e8e8] md:grid-cols-3 md:divide-x md:divide-y-0">
+          {values.slice(0, 3).map(({ Icon, title, desc }) => (
+            <ValuePill key={title} Icon={Icon} title={title} desc={desc} />
+          ))}
+        </div>
+      </div> */}
+    </section>
   )
 }
 
-function ValueCard({
-  Icon,
-  title,
-  desc,
+function ValuePill({
+  Icon, title, desc,
 }: {
   Icon: LucideIcon
   title: string
   desc: string
 }) {
   return (
-    <div className="about-value-card flex gap-5 p-8 bg-white hover:bg-[#f2f2f0] transition-colors duration-300">
-      <div className="w-11 h-11 bg-[rgba(103,186,103,0.12)] border border-[rgba(103,186,103,0.3)] flex items-center justify-center shrink-0">
-        <Icon className="w-5 h-5 text-[#57C157]" />
+    <div className="about-value-card flex items-center gap-4 px-10 py-7 transition-colors duration-200 hover:bg-[#f8f8f6]">
+      {/* Circular icon — matches inspo style exactly */}
+      <div
+        className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full"
+        style={{ background: 'rgba(87,193,87,0.10)' }}
+      >
+        <Icon className="h-[22px] w-[22px]" style={{ color: '#57C157' }} />
       </div>
       <div>
-        <div className="font-serif text-[1.2rem] font-semibold text-[#1a1a1a] mb-1.5">
+        <p className="text-[0.78rem] font-bold uppercase tracking-[0.14em] text-[#1a1a1a]">
           {title}
-        </div>
-        <div className="text-sm text-[rgba(26,26,26,0.55)] leading-[1.65]">
-          {desc}
-        </div>
+        </p>
+        <p className="mt-0.5 text-[0.82rem] text-[rgba(26,26,26,0.48)]">{desc}</p>
       </div>
     </div>
   )
