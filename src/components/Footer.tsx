@@ -156,11 +156,11 @@ export default function Footer() {
                     style={{ height: 'auto', width: 'auto', maxWidth: 130 }}
                   />
                 </Link>
-                <p style={{ fontSize: '0.875rem', color: 'rgba(26,26,26,0.55)', lineHeight: 1.85, maxWidth: 260, marginBottom: '1.75rem' }}>
+                <p style={{ fontSize: '0.875rem', color: 'rgba(26,26,26,0.55)', lineHeight: 1.85, maxWidth: 260, marginBottom: '1.95rem' }}>
                   Wholly Ghanaian. ISO-certified. Premium culinary and logistics excellence for offshore, corporate, and event operations since 2014.
                 </p>
 
-                <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+                {/* <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
                   {['GC 100', 'ISO Cert.', 'FPSO Ops'].map(tag => (
                     <span key={tag} style={{
                       padding: '0.3rem 0.7rem',
@@ -172,7 +172,7 @@ export default function Footer() {
                       {tag}
                     </span>
                   ))}
-                </div>
+                </div> */}
 
                 <div style={{ display: 'flex', gap: '0.65rem' }}>
                   {socialLinks.map(({ icon: Icon, href, label }) => (

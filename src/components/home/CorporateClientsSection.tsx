@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { motion } from 'framer-motion'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -56,19 +57,27 @@ export default function CorporateClientsSection() {
     const activeCategory = categories.find(c => c.id === activeCategoryId);
 
     useGSAP(() => {
-        gsap.fromTo(sectionRef.current,
-            { y: 150, opacity: 0 },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 1.2,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse',
-                }
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top 80%',
+                toggleActions: 'play none none none'
             }
+        });
+
+        tl.fromTo('.home-s3-header', 
+            { y: 40, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }
+        )
+        .fromTo('.home-s3-tags',
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: 'back.out(1.2)' },
+            '-=0.6'
+        )
+        .fromTo('#showcase-card',
+            { y: 60, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
+            '-=0.4'
         );
     }, { scope: sectionRef });
 
@@ -112,14 +121,10 @@ export default function CorporateClientsSection() {
         .glow-active-lime { box-shadow: 0 10px 30px -10px rgba(34, 197, 94, 0.25); border-color: rgba(34, 197, 94, 0.3); }
         .glow-active-classic { box-shadow: 0 10px 30px -10px rgba(53, 180, 53, 0.25); border-color: rgba(53, 180, 53, 0.3); }
         .glow-active-olive { box-shadow: 0 10px 30px -10px rgba(101, 163, 13, 0.25); border-color: rgba(101, 163, 13, 0.3); }
-
-        .logo-item {
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
       `}} />
-            <div className="w-full px-4 md:px-10 lg:px-16 xl:px-24 flex flex-col items-center">
+            <div className="w-full px-4 md:px-10 lg:px-16 xl:px-24 flex flex-col items-center bg-white">
                 {/* Header Row */}
-                <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10 pb-6 border-b border-gray-100">
+                <div className="home-s3-header w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10 pb-6 border-b border-gray-100">
                     <div>
                         <h2 className="font-outfit text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight select-none">
                             Our Corporate Clients
@@ -158,13 +163,20 @@ export default function CorporateClientsSection() {
                             {corporateLogos.map((logo, idx) => {
                                 const isMatched = logo.categories.includes(activeCategoryId);
                                 return (
-                                    <div
+                                    <motion.div
                                         key={idx}
                                         className="logo-item w-full flex items-center justify-center p-1.5 select-none"
-                                        style={{
-                                            filter: isMatched ? 'grayscale(0)' : 'grayscale(1)',
+                                        initial={false}
+                                        animate={{
+                                            filter: isMatched ? 'grayscale(0%)' : 'grayscale(100%)',
                                             opacity: isMatched ? 1 : 0.22,
-                                            transform: isMatched ? 'scale(1.05)' : 'scale(0.92)'
+                                            scale: isMatched ? 1.05 : 0.92
+                                        }}
+                                        transition={{
+                                            duration: 0.6,
+                                            type: "spring",
+                                            bounce: 0.4,
+                                            delay: isMatched ? (idx % 10) * 0.03 : 0
                                         }}
                                     >
                                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -181,7 +193,7 @@ export default function CorporateClientsSection() {
                                         <span className="hidden text-[9px] sm:text-[10px] font-bold text-slate-900 uppercase tracking-wider text-center">
                                             {logo.name}
                                         </span>
-                                    </div>
+                                    </motion.div>
                                 )
                             })}
                         </div>

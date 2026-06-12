@@ -12,12 +12,12 @@ const serviceItems = [
   { text: 'Onshore & Offshore Catering', image: '/images/services/atlantic/offshore catering.jpg' },
   { text: 'Contract Catering', image: '/images/services/atlantic/Contract Catering.jpg' },
   { text: 'Camp Design & Management', image: '/images/services/atlantic/camp design.jpg' },
-  { text: 'Event Management & Planning', image: '/images/services/atlantic/event management.avif' },
+  { text: 'Event Management', image: '/images/services/atlantic/event management.avif' },
   { text: 'Ship & Store Supplies', image: '/images/services/atlantic/ship supplies.jpg' },
-  { text: 'Housekeeping & Laundry Services', image: '/images/services/atlantic/laundry & housekeeping.jpg' },
-  { text: 'Janitorial Services', image: '/images/services/atlantic/janitorial services.avif' },
-  { text: 'Pest Control Management Services', image: '/images/services/atlantic/pest control 1.avif' },
-  { text: 'Waste Disposal', image: '/images/services/atlantic/waste disposal.jpg' }
+  { text: 'Housekeeping & Laundry', image: '/images/services/atlantic/laundry & housekeeping.jpg' },
+  { text: 'Janitorial Services', image: '/images/services/atlantic/janitorial services1.jpg' },
+  { text: 'Pest Control  ', image: '/images/services/atlantic/pest control 1.avif' },
+  { text: 'Waste Management', image: '/images/services/atlantic/waste disposal1.jpg' }
 ];
 
 export default function ServicesSection() {
@@ -30,8 +30,9 @@ export default function ServicesSection() {
     ScrollTrigger.create({
       trigger: containerRef.current,
       start: 'top top',
-      end: '+=250%', // pin for 2.5 viewports worth of scroll to scroll through all 9 services
+      end: '+=250%', // Gives ample scroll runtime for the 9 WebGL cards
       pin: true,
+      pinSpacing: true, // FIX: Crucial to force subsequent DOM sections to wait
       scrub: true,
       onUpdate: (self) => {
         if (galleryRef.current) {
@@ -44,7 +45,7 @@ export default function ServicesSection() {
   return (
     <div
       ref={containerRef}
-      className="w-full h-screen flex flex-col justify-between py-12 relative overflow-hidden select-none"
+      className="w-full  flex flex-col justify-between relative overflow-hidden select-none"
       style={{
         backgroundImage: "url('/images/premium-green-texture.png')",
         backgroundSize: 'cover',
@@ -64,13 +65,13 @@ export default function ServicesSection() {
       />
 
       {/* Header */}
-      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row md:items-end md:justify-between z-10 mt-4">
+      <div className="w-full mx-auto px-6 md:px-20 flex flex-col md:flex-row md:items-end md:justify-between z-10 mt-8">
         <div>
           <span className="text-[#EF9419] font-outfit text-sm font-semibold uppercase tracking-widest block mb-2">
-            Our Core Services
+            Core Services
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white font-outfit tracking-tight leading-none">
-            Tailored Excellence.
+            Our Solutions
           </h2>
         </div>
         <p className="mt-4 md:mt-0 text-white/80 font-inter max-w-md text-sm md:text-base leading-relaxed">
@@ -84,8 +85,8 @@ export default function ServicesSection() {
           <CircularGallery
             ref={galleryRef}
             items={serviceItems}
-            bend={3}
-            textColor="#10b981" // emerald green text color
+            bend={5}
+            textColor="#10b981"
             borderRadius={0.05}
             font="bold 28px Outfit"
             fontUrl="https://fonts.googleapis.com/css2?family=Outfit:wght@700&display=swap"
@@ -97,19 +98,8 @@ export default function ServicesSection() {
         </div>
       </div>
 
-      {/* Scroll indicator footer */}
-      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 z-10 flex justify-between items-center text-xs uppercase tracking-widest font-semibold font-outfit text-gray-500">
-        <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span>Interactive 3D Space</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span>Scroll down to explore</span>
-          <svg className="w-4 h-4 animate-bounce text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-        </div>
-      </div>
+
     </div>
   )
 }
+

@@ -134,9 +134,18 @@ function createTextTexture(
   const textHeight = Math.ceil(fontSize * 1.2);
 
   if (drawChip) {
-    // Add extra padding for the chip appearance
-    const paddingX = 40;
-    const paddingY = 24;
+    const fontSize = getFontSize(font);
+    const upperText = text.toUpperCase();
+
+    // Add extra padding for the pill appearance
+    const paddingX = fontSize * 1.5;
+    const paddingY = fontSize * 0.8;
+
+    context.font = font;
+    const metrics = context.measureText(upperText);
+    const textWidth = Math.ceil(metrics.width);
+    const textHeight = Math.ceil(fontSize * 1.2);
+
     canvas.width = textWidth + paddingX * 2;
     canvas.height = textHeight + paddingY * 2;
 
@@ -145,34 +154,28 @@ function createTextTexture(
     context.textAlign = 'center';
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw glassmorphic chip background
-    const x = 2;
-    const y = 2;
-    const w = canvas.width - 4;
-    const h = canvas.height - 4;
-    const r = 16; // border radius
-
+    // Draw chip background (semi-transparent rounded box)
+    const x = 0;
+    const y = 0;
+    const w = canvas.width;
+    const h = canvas.height;
+    const r = 12; // small border radius
+    
     context.beginPath();
-    if (context.roundRect) {
-      context.roundRect(x, y, w, h, r);
-    } else {
-      context.moveTo(x + r, y);
-      context.arcTo(x + w, y, x + w, y + h, r);
-      context.arcTo(x + w, y + h, x, y + h, r);
-      context.arcTo(x, y + h, x, y, r);
-      context.arcTo(x, y, x + w, y, r);
-    }
-    context.fillStyle = 'rgba(0, 0, 0, 0.45)';
+    context.moveTo(x + r, y);
+    context.arcTo(x + w, y, x + w, y + h, r);
+    context.arcTo(x + w, y + h, x, y + h, r);
+    context.arcTo(x, y + h, x, y, r);
+    context.arcTo(x, y, x + w, y, r);
+    context.closePath();
+
+    // Reduced opacity background (glassy dark look to contrast with white text)
+    context.fillStyle = 'rgba(0, 0, 0, 0.4)';
     context.fill();
 
-    // Subtle white border
-    context.strokeStyle = 'rgba(255, 255, 255, 0.15)';
-    context.lineWidth = 1.5;
-    context.stroke();
-
-    // White text inside the chip
+    // Text inside the pill (white)
     context.fillStyle = '#ffffff';
-    context.fillText(text, canvas.width / 2, canvas.height / 2);
+    context.fillText(upperText, canvas.width / 2, canvas.height / 2 + 1);
   } else {
     canvas.width = textWidth + 20;
     canvas.height = textHeight + 20;
@@ -209,6 +212,7 @@ class Title {
   font: string;
   drawChip: boolean;
   mesh!: Mesh;
+  aspect!: number;
 
   constructor({ gl, plane, renderer, text, textColor = '#545050', font = '30px sans-serif', drawChip = false }: TitleProps) {
     autoBind(this);
@@ -248,29 +252,49 @@ class Title {
         }
       `,
       uniforms: { tMap: { value: texture } },
-      transparent: true
+      transparent: true,
+      depthTest: false,
+      depthWrite: false
     });
     this.mesh = new Mesh(this.gl, { geometry, program });
     const aspect = width / height;
-
-    if (this.drawChip) {
-      // Small premium chip placed on the card (top-right)
-      const textHeightScaled = 0.09; // 9% of the card height
-      const textWidthScaled = textHeightScaled * aspect;
-      this.mesh.scale.set(textWidthScaled, textHeightScaled, 1);
-      
-      const margin = 0.06;
-      this.mesh.position.x = 0.5 - textWidthScaled * 0.5 - margin;
-      this.mesh.position.y = 0.5 - textHeightScaled * 0.5 - margin;
-      this.mesh.position.z = 0.01;
-    } else {
-      const textHeightScaled = this.plane.scale.y * 0.15;
-      const textWidthScaled = textHeightScaled * aspect;
-      this.mesh.scale.set(textWidthScaled, textHeightScaled, 1);
-      this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeightScaled * 0.5 - 0.05;
-    }
+    this.aspect = aspect;
 
     this.mesh.setParent(this.plane);
+  }
+
+
+  onResize() {
+    if (this.drawChip) {
+      // Local height: smaller for a neat pill
+      let localHeight = 0.07;
+
+      // Calculate local width to maintain texture aspect ratio
+      let localWidth = (localHeight * this.plane.scale.y * this.aspect) / this.plane.scale.x;
+
+      // If the text pill is too wide (longer than 75% of the card), scale it down
+      if (localWidth > 0.75) {
+        const scaleDown = 0.75 / localWidth;
+        localWidth *= scaleDown;
+        localHeight *= scaleDown;
+      }
+
+      this.mesh.scale.set(localWidth, localHeight, 1);
+
+      // Margin from the edges (increased to ensure it sits inside the rounded corners)
+      const marginX = 0.08;
+      const marginY = 0.08;
+
+      // Position: Top-Right
+      // 0.5 (center to edge) - half of the mesh width - margin
+      this.mesh.position.x = 0.5 - (localWidth / 2) - marginX;
+      this.mesh.position.y = 0.5 - (localHeight / 2) - marginY;
+
+      // Ensure the text is rendered safely in front of the image's wave distortions
+      this.mesh.position.z = 2.0;
+    } else {
+      // ... keep existing bottom-text logic
+    }
   }
 }
 
@@ -392,7 +416,8 @@ class Media {
         void main() {
           vUv = uv;
           vec3 p = position;
-          p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.1 + uSpeed * 0.5);
+          // Subtly reduced wave/liquid effect
+          p.z = (sin(p.x * 4.0 + uTime) * 0.2 + cos(p.y * 2.0 + uTime) * 0.2) * (0.1 + uSpeed * 0.2);
           gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
         }
       `,
@@ -520,13 +545,16 @@ class Media {
       }
     }
     this.scale = this.screen.height / 1500;
-    this.plane.scale.y = (this.viewport.height * (900 * this.scale)) / this.screen.height;
-    this.plane.scale.x = (this.viewport.width * (700 * this.scale)) / this.screen.width;
+    this.plane.scale.y = (this.viewport.height * (950 * this.scale)) / this.screen.height;
+    this.plane.scale.x = (this.viewport.width * (750 * this.scale)) / this.screen.width;
     this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
     this.padding = 2;
     this.width = this.plane.scale.x + this.padding;
     this.widthTotal = this.width * this.length;
     this.x = this.width * this.index;
+    if (this.title) {
+      this.title.onResize();
+    }
   }
 }
 
@@ -686,13 +714,14 @@ class App {
 
   setScroll(progress: number) {
     if (!this.medias || !this.medias[0]) return;
-    const startTarget = this.viewport.width / 2;
     const itemWidth = this.medias[0].width;
     const totalLength = this.medias.length;
-    // The last item (index totalLength - 1) should end up at the bottom-right (viewport.width/2)
-    // x_last = itemWidth * (totalLength - 1)
-    // x_last - scrollTarget = viewport.width/2 => scrollTarget = itemWidth * (totalLength - 1) - viewport.width/2
-    const endTarget = itemWidth * (totalLength - 1) - this.viewport.width / 2;
+
+    // Start with the first card at the center (0)
+    const startTarget = 0;
+
+    // End with the last card at the center
+    const endTarget = itemWidth * (totalLength - 1);
 
     // Smooth transition between startTarget and endTarget based on scroll progress
     this.scroll.target = startTarget + (endTarget - startTarget) * progress;

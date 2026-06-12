@@ -1,5 +1,4 @@
 import HeroSection from '@/components/home/HeroSection'
-import StatsBand from '@/components/home/StatsBand'
 import AboutSection from '@/components/home/AboutSection'
 import ServicesSection from '@/components/home/ServicesSection'
 import MissionSection from '@/components/home/MissionSection'
@@ -11,11 +10,10 @@ export default function Home() {
   return (
     <main>
       <HeroSection />
-      {/* <StatsBand /> */}
       <AboutSection />
       <ServicesSection />
       <CorporateClientsSection />
-      <MissionSection />
+      {/* <MissionSection /> */}
       <TestimonialsSection />
       <CtaSection />
     </main>
