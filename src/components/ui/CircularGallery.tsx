@@ -120,7 +120,8 @@ function createTextTexture(
   gl: GL,
   text: string,
   font: string = 'bold 30px monospace',
-  color: string = 'black'
+  color: string = 'black',
+  drawChip: boolean = false
 ): { texture: Texture; width: number; height: number } {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
@@ -132,15 +133,57 @@ function createTextTexture(
   const fontSize = getFontSize(font);
   const textHeight = Math.ceil(fontSize * 1.2);
 
-  canvas.width = textWidth + 20;
-  canvas.height = textHeight + 20;
+  if (drawChip) {
+    // Add extra padding for the chip appearance
+    const paddingX = 40;
+    const paddingY = 24;
+    canvas.width = textWidth + paddingX * 2;
+    canvas.height = textHeight + paddingY * 2;
 
-  context.font = font;
-  context.fillStyle = color;
-  context.textBaseline = 'middle';
-  context.textAlign = 'center';
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.fillText(text, canvas.width / 2, canvas.height / 2);
+    context.font = font;
+    context.textBaseline = 'middle';
+    context.textAlign = 'center';
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw glassmorphic chip background
+    const x = 2;
+    const y = 2;
+    const w = canvas.width - 4;
+    const h = canvas.height - 4;
+    const r = 16; // border radius
+
+    context.beginPath();
+    if (context.roundRect) {
+      context.roundRect(x, y, w, h, r);
+    } else {
+      context.moveTo(x + r, y);
+      context.arcTo(x + w, y, x + w, y + h, r);
+      context.arcTo(x + w, y + h, x, y + h, r);
+      context.arcTo(x, y + h, x, y, r);
+      context.arcTo(x, y, x + w, y, r);
+    }
+    context.fillStyle = 'rgba(0, 0, 0, 0.45)';
+    context.fill();
+
+    // Subtle white border
+    context.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+    context.lineWidth = 1.5;
+    context.stroke();
+
+    // White text inside the chip
+    context.fillStyle = '#ffffff';
+    context.fillText(text, canvas.width / 2, canvas.height / 2);
+  } else {
+    canvas.width = textWidth + 20;
+    canvas.height = textHeight + 20;
+
+    context.font = font;
+    context.fillStyle = color;
+    context.textBaseline = 'middle';
+    context.textAlign = 'center';
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillText(text, canvas.width / 2, canvas.height / 2);
+  }
 
   const texture = new Texture(gl, { generateMipmaps: false });
   texture.image = canvas;
@@ -154,6 +197,7 @@ interface TitleProps {
   text: string;
   textColor?: string;
   font?: string;
+  drawChip?: boolean;
 }
 
 class Title {
@@ -163,9 +207,10 @@ class Title {
   text: string;
   textColor: string;
   font: string;
+  drawChip: boolean;
   mesh!: Mesh;
 
-  constructor({ gl, plane, renderer, text, textColor = '#545050', font = '30px sans-serif' }: TitleProps) {
+  constructor({ gl, plane, renderer, text, textColor = '#545050', font = '30px sans-serif', drawChip = false }: TitleProps) {
     autoBind(this);
     this.gl = gl;
     this.plane = plane;
@@ -173,11 +218,12 @@ class Title {
     this.text = text;
     this.textColor = textColor;
     this.font = font;
+    this.drawChip = drawChip;
     this.createMesh();
   }
 
   createMesh() {
-    const { texture, width, height } = createTextTexture(this.gl, this.text, this.font, this.textColor);
+    const { texture, width, height } = createTextTexture(this.gl, this.text, this.font, this.textColor, this.drawChip);
     const geometry = new Plane(this.gl);
     const program = new Program(this.gl, {
       vertex: `
@@ -197,7 +243,7 @@ class Title {
         varying vec2 vUv;
         void main() {
           vec4 color = texture2D(tMap, vUv);
-          if (color.a < 0.1) discard;
+          if (color.a < 0.01) discard;
           gl_FragColor = color;
         }
       `,
@@ -206,10 +252,24 @@ class Title {
     });
     this.mesh = new Mesh(this.gl, { geometry, program });
     const aspect = width / height;
-    const textHeightScaled = this.plane.scale.y * 0.15;
-    const textWidthScaled = textHeightScaled * aspect;
-    this.mesh.scale.set(textWidthScaled, textHeightScaled, 1);
-    this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeightScaled * 0.5 - 0.05;
+
+    if (this.drawChip) {
+      // Small premium chip placed on the card (top-right)
+      const textHeightScaled = 0.09; // 9% of the card height
+      const textWidthScaled = textHeightScaled * aspect;
+      this.mesh.scale.set(textWidthScaled, textHeightScaled, 1);
+      
+      const margin = 0.06;
+      this.mesh.position.x = 0.5 - textWidthScaled * 0.5 - margin;
+      this.mesh.position.y = 0.5 - textHeightScaled * 0.5 - margin;
+      this.mesh.position.z = 0.01;
+    } else {
+      const textHeightScaled = this.plane.scale.y * 0.15;
+      const textWidthScaled = textHeightScaled * aspect;
+      this.mesh.scale.set(textWidthScaled, textHeightScaled, 1);
+      this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeightScaled * 0.5 - 0.05;
+    }
+
     this.mesh.setParent(this.plane);
   }
 }
@@ -240,6 +300,7 @@ interface MediaProps {
   borderRadius?: number;
   font?: string;
   isInfinite?: boolean;
+  drawChip?: boolean;
 }
 
 class Media {
@@ -259,6 +320,7 @@ class Media {
   borderRadius: number;
   font?: string;
   isInfinite: boolean;
+  drawChip: boolean;
   program!: Program;
   plane!: Mesh;
   title!: Title;
@@ -286,7 +348,8 @@ class Media {
     textColor,
     borderRadius = 0,
     font,
-    isInfinite = true
+    isInfinite = true,
+    drawChip = false
   }: MediaProps) {
     this.geometry = geometry;
     this.gl = gl;
@@ -303,6 +366,7 @@ class Media {
     this.borderRadius = borderRadius;
     this.font = font;
     this.isInfinite = isInfinite;
+    this.drawChip = drawChip;
     this.createShader();
     this.createMesh();
     this.createTitle();
@@ -398,7 +462,8 @@ class Media {
       renderer: this.renderer,
       text: this.text,
       textColor: this.textColor,
-      font: this.font
+      font: this.font,
+      drawChip: this.drawChip
     });
   }
 
@@ -475,6 +540,7 @@ interface AppConfig {
   scrollEase?: number;
   disableInternalScroll?: boolean;
   isInfinite?: boolean;
+  drawChip?: boolean;
 }
 
 class App {
@@ -521,7 +587,8 @@ class App {
       scrollSpeed = 2,
       scrollEase = 0.05,
       disableInternalScroll = false,
-      isInfinite = true
+      isInfinite = true,
+      drawChip = false
     }: AppConfig
   ) {
     document.documentElement.classList.remove('no-js');
@@ -536,7 +603,7 @@ class App {
     this.createScene();
     this.onResize();
     this.createGeometry();
-    this.createMedias(items, bend, textColor, borderRadius, font);
+    this.createMedias(items, bend, textColor, borderRadius, font, drawChip);
     this.update();
     this.addEventListeners();
   }
@@ -574,7 +641,8 @@ class App {
     bend: number = 1,
     textColor: string,
     borderRadius: number,
-    font: string
+    font: string,
+    drawChip: boolean = false
   ) {
     const defaultItems = [
       { image: `https://picsum.photos/seed/1/800/600?grayscale`, text: 'Bridge' },
@@ -600,7 +668,8 @@ class App {
         textColor,
         borderRadius,
         font,
-        isInfinite: this.isInfinite
+        isInfinite: this.isInfinite,
+        drawChip
       });
     });
 
@@ -624,7 +693,7 @@ class App {
     // x_last = itemWidth * (totalLength - 1)
     // x_last - scrollTarget = viewport.width/2 => scrollTarget = itemWidth * (totalLength - 1) - viewport.width/2
     const endTarget = itemWidth * (totalLength - 1) - this.viewport.width / 2;
-    
+
     // Smooth transition between startTarget and endTarget based on scroll progress
     this.scroll.target = startTarget + (endTarget - startTarget) * progress;
   }
@@ -694,7 +763,7 @@ class App {
   addEventListeners() {
     this.boundOnResize = this.onResize.bind(this);
     window.addEventListener('resize', this.boundOnResize);
-    
+
     if (!this.disableInternalScroll) {
       this.boundOnWheel = this.onWheel.bind(this);
       this.boundOnTouchDown = this.onTouchDown.bind(this);
@@ -745,6 +814,7 @@ interface CircularGalleryProps {
   scrollEase?: number;
   disableInternalScroll?: boolean;
   isInfinite?: boolean;
+  drawChip?: boolean;
 }
 
 const CircularGallery = forwardRef<CircularGalleryRef, CircularGalleryProps>(
@@ -759,7 +829,8 @@ const CircularGallery = forwardRef<CircularGalleryRef, CircularGalleryProps>(
       scrollSpeed = 2,
       scrollEase = 0.05,
       disableInternalScroll = false,
-      isInfinite = true
+      isInfinite = true,
+      drawChip = false
     },
     ref
   ) => {
@@ -789,7 +860,8 @@ const CircularGallery = forwardRef<CircularGalleryRef, CircularGalleryProps>(
           scrollSpeed,
           scrollEase,
           disableInternalScroll,
-          isInfinite
+          isInfinite,
+          drawChip
         });
         appRef.current = app;
       });
@@ -798,7 +870,7 @@ const CircularGallery = forwardRef<CircularGalleryRef, CircularGalleryProps>(
         if (app) app.destroy();
         appRef.current = null;
       };
-    }, [items, bend, textColor, borderRadius, font, fontUrl, scrollSpeed, scrollEase, disableInternalScroll, isInfinite]);
+    }, [items, bend, textColor, borderRadius, font, fontUrl, scrollSpeed, scrollEase, disableInternalScroll, isInfinite, drawChip]);
 
     return <div className="w-full h-full overflow-hidden" ref={containerRef} />;
   }

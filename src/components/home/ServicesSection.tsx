@@ -42,21 +42,38 @@ export default function ServicesSection() {
   }, { scope: containerRef });
 
   return (
-    <div ref={containerRef} className="w-full h-screen bg-[#111827] flex flex-col justify-between py-12 relative overflow-hidden select-none">
-      {/* Background radial highlight */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.08)_0%,transparent_70%)] pointer-events-none" />
+    <div
+      ref={containerRef}
+      className="w-full h-screen flex flex-col justify-between py-12 relative overflow-hidden select-none"
+      style={{
+        backgroundImage: "url('/images/premium-green-texture.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
+    >
+      {/* Color Overlay: Multiplies the primary brand green into the texture */}
+      <div className="absolute inset-0 bg-[#35b435] mix-blend-multiply opacity-90 pointer-events-none z-0" />
+      {/* Subtle dark overlay for text contrast */}
+      <div className="absolute inset-0 bg-black/10 pointer-events-none z-0" />
+
+      {/* Noise Texture */}
+      <div
+        className="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}
+      />
 
       {/* Header */}
       <div className="w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row md:items-end md:justify-between z-10 mt-4">
         <div>
-          <span className="text-emerald-500 font-outfit text-sm font-semibold uppercase tracking-widest block mb-2">
+          <span className="text-[#EF9419] font-outfit text-sm font-semibold uppercase tracking-widest block mb-2">
             Our Core Services
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white font-outfit tracking-tight leading-none">
             Tailored Excellence.
           </h2>
         </div>
-        <p className="mt-4 md:mt-0 text-gray-400 font-inter max-w-md text-sm md:text-base leading-relaxed">
+        <p className="mt-4 md:mt-0 text-white/80 font-inter max-w-md text-sm md:text-base leading-relaxed">
           Explore our wide array of premium service divisions. Scroll down to browse through each segment mapped dynamically in our 3D space.
         </p>
       </div>
@@ -75,6 +92,7 @@ export default function ServicesSection() {
             scrollEase={0.08}
             disableInternalScroll={true}
             isInfinite={false}
+            drawChip={true}
           />
         </div>
       </div>
