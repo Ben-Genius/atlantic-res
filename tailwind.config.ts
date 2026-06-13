@@ -68,6 +68,7 @@ const config: Config = {
         sans: ['DM Sans', 'Inter', 'sans-serif'],
         serif: ['Cormorant Garamond', 'serif'],
         antonio: ['Antonio', 'sans-serif'],
+        outfit: ['Outfit', 'sans-serif'],
       },
       fontSize: {
         'display-xl': ['clamp(4rem, 10vw, 9rem)', { lineHeight: '0.95', letterSpacing: '-0.03em' }],
