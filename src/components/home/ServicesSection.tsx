@@ -8,55 +8,94 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 const DISHES = [
   {
     id: 1,
-    name: 'Grilled Salmon',
-    subtitle: 'Atlantic special',
+    name: 'Onshore Catering',
+    subtitle: 'Remote Site Dining',
     img: '/images/services/atlantic/offshore-catering-new.jpg',
     accentColor: '#EF9419',
     arcColor: 'rgba(239, 148, 25, 0.25)',
     rating: '4.8',
     ratingColor: 'bg-[#EF9419]',
-    description: 'Perfect prime cuts of fresh Atlantic salmon, flame-grilled to lock in flavor and nutrients.',
-    tag: '#1 Most requested',
-    division: 'Gourmet Division'
+    description: 'ACLL offers a full suite of timely, dependable onshore catering services for clients across the country.',
+    tag: '#1 Core Service',
+    division: 'Onshore Division'
   },
   {
     id: 2,
     name: 'Offshore Catering',
-    subtitle: 'Most loved dish',
+    subtitle: 'Rig & Platform Catering',
     img: '/images/services/atlantic/offshore-catering-new.jpg',
     accentColor: '#10B981', // emerald green
     arcColor: 'rgba(16, 185, 129, 0.25)',
-    rating: '4.3',
+    rating: '4.9',
     ratingColor: 'bg-[#10B981]',
-    description: 'Premium meals crafted for offshore crews — nutritious, hearty, and served with care on every rig.',
-    tag: '#2 Most loved dish',
+    description: 'ACLL offers a full suite of timely, dependable offshore catering services for the oil and gas industry.',
+    tag: '#2 Core Service',
     division: 'Offshore Division'
   },
   {
     id: 3,
-    name: 'Crew Breakfast',
-    subtitle: 'Morning special',
+    name: 'Contract Catering',
+    subtitle: 'On-site Cafés & Dining',
     img: '/images/services/atlantic/offshore-catering-new.jpg',
     accentColor: '#3B82F6', // blue
     arcColor: 'rgba(59, 130, 246, 0.25)',
     rating: '4.6',
     ratingColor: 'bg-[#3B82F6]',
-    description: 'Full hot breakfast spreads to fuel long shifts with high-quality energy and comfort classics.',
-    tag: '#3 Crew favorite',
-    division: 'Daily Dining'
+    description: 'ACLL is specialized in formal catering services for on-site restaurant and café operations.',
+    tag: '#3 Core Service',
+    division: 'Contract Division'
   },
   {
     id: 4,
-    name: 'Rig Roast',
-    subtitle: 'Sunday classic',
+    name: 'Camp Design',
+    subtitle: 'Top-Tier Construction',
     img: '/images/services/atlantic/offshore-catering-new.jpg',
     accentColor: '#EC4899', // pink
     arcColor: 'rgba(236, 72, 153, 0.25)',
-    rating: '4.9',
+    rating: '4.7',
     ratingColor: 'bg-[#EC4899]',
-    description: 'A traditional Sunday roast featuring prime roasted meats, golden potatoes, and seasonal vegetables.',
-    tag: '#4 Weekend classic',
-    division: 'Weekly Special'
+    description: 'We custom design, build top-tier camps and also manage the daily operations while supplying and distributing the essential goods and services.',
+    tag: '#4 Core Service',
+    division: 'Camp Management & Operations'
+  },
+  {
+    id: 5,
+    name: 'Event Planning',
+    subtitle: 'Galas & Business Events',
+    img: '/images/services/atlantic/offshore-catering-new.jpg',
+    accentColor: '#8B5CF6', // violet
+    arcColor: 'rgba(139, 92, 246, 0.25)',
+    rating: '4.5',
+    ratingColor: 'bg-[#8B5CF6]',
+    description: 'Let us create the fresh, seasonal menus for your upcoming gala, birthday party or office retreat and business events.',
+    tag: '#5 Core Service',
+    division: 'Event Management & Planning'
+  },
+  {
+    id: 6,
+    name: 'Ship Supplies',
+    subtitle: 'Provisions & Store Supply',
+    img: '/images/services/atlantic/offshore-catering-new.jpg',
+    accentColor: '#F59E0B', // amber
+    arcColor: 'rgba(245, 158, 11, 0.25)',
+    rating: '4.9',
+    ratingColor: 'bg-[#F59E0B]',
+    description: 'ACLL is your reliable partner in the supply of provisions and stores to the offshore industry and ships of every kind.',
+    tag: '#6 Core Service',
+    division: 'Ship & Store Supplies'
+  },
+  {
+    id: 7,
+    name: 'Housekeeping Services',
+    subtitle: 'Facility & Laundry Care',
+    img: '/images/services/atlantic/offshore-catering-new.jpg',
+    accentColor: '#06B6D4', // cyan
+    arcColor: 'rgba(6, 182, 212, 0.25)',
+    rating: '4.7',
+    ratingColor: 'bg-[#06B6D4]',
+    description: 'At ACLL, our goal is to provide a safe well-maintained camp or facility to ensure healthy living conditions, including full laundry and housekeeping services.',
+    tag: '#7 Core Service',
+    division: 'Housekeeping & Laundry Services'
   },
 ]
 
@@ -86,7 +125,7 @@ export default function ServicesSection() {
         id: 'services-pin',
         trigger: sectionRef.current,
         start: 'top top',
-        end: `+=${window.innerHeight * 3}`, // 300vh total scroll distance for 4 items
+        end: `+=${window.innerHeight * 6}`, // 600vh total scroll distance for 7 items
         scrub: 1,
         pin: true,
         anticipatePin: 1,
@@ -276,16 +315,16 @@ export default function ServicesSection() {
         <div className="flex items-center ml-4 sm:ml-6 md:ml-[25px] lg:ml-[45px] xl:ml-[65px] gap-[30px] flex-1 relative mt-16 md:mt-24">
 
           {/* A ─ Dish plates stacked absolutely */}
-          <div className="relative z-20 pointer-events-none shrink-0 w-[340px] h-[340px] sm:w-[420px] sm:h-[420px] md:w-[520px] md:h-[520px] lg:w-[620px] lg:h-[620px] xl:w-[700px] xl:h-[700px]">
+          <div className="relative z-20 pointer-events-none shrink-0 w-[340px] h-[340px] sm:w-[420px] sm:h-[420px] md:w-[520px] md:h-[520px] lg:w-[620px] lg:h-[620px] xl:w-[680px] xl:h-[680px]">
             {DISHES.map((dish, idx) => (
               <div
                 key={dish.id}
-                className={`dish-plate dish-plate-${idx} absolute inset-0 rounded-full border-[6px] md:border-[10px] border-white/95 overflow-hidden`}
+                className={`dish-plate dish-plate-${idx} absolute inset-0 rounded-full border-[6px] md:border-[10px] border-white/95 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] overflow-hidden`}
               >
                 <img
                   src={dish.img}
                   alt={dish.name}
-                  className="w-full h-full object-cover scale-[1.02] mt-4"
+                  className="w-full h-full object-cover scale-[1.02] mt-5"
                   draggable={false}
                 />
               </div>
@@ -297,23 +336,25 @@ export default function ServicesSection() {
             {DISHES.map((dish, idx) => (
               <div
                 key={dish.id}
-                className={`dish-content dish-content-${idx} absolute inset-y-0 left-0 flex flex-col justify-center w-full`}
+                className={`dish-content dish-content-${idx} absolute inset-y-0 left-0 flex flex-col justify-start gap-[20%] w-full`}
               >
-                <p className="font-outfit text-xs md:text-sm font-semibold tracking-[0.25em] md:tracking-[0.3em] uppercase text-white/70 mb-2">
-                  {dish.tag}
-                </p>
+                <div>
+                  <p className="font-outfit text-xs md:text-sm font-semibold tracking-[0.25em] md:tracking-[0.3em] uppercase text-white/70 mb-2">
+                    {dish.tag}
+                  </p>
 
-                <h2 className="font-outfit leading-[1.0] uppercase">
-                  <span className="block font-extralight tracking-[0.04em] text-[2rem] sm:text-[2.8rem] md:text-[3.8rem] lg:text-[4.5rem] xl:text-[5.2rem] text-white/95">
-                    {dish.name.split(' ')[0]}
-                  </span>
-                  <span
-                    className="block font-black tracking-tight text-[2.5rem] sm:text-[3.5rem] md:text-[4.8rem] lg:text-[5.8rem] xl:text-[6.8rem] -mt-1 md:-mt-2"
-                    style={{ color: dish.accentColor }}
-                  >
-                    {dish.name.split(' ').slice(1).join(' ')}
-                  </span>
-                </h2>
+                  <h2 className="font-outfit leading-[1.0] uppercase">
+                    <span className="block font-extralight tracking-[0.04em] text-[2rem] sm:text-[2.8rem] md:text-[3.8rem] lg:text-[4.5rem] xl:text-[5.2rem] text-white/95">
+                      {dish.name.split(' ')[0]}
+                    </span>
+                    <span
+                      className="block font-black tracking-tight text-[2.5rem] sm:text-[3.5rem] md:text-[4.8rem] lg:text-[5.8rem] xl:text-[6.8rem] -mt-1 md:-mt-2"
+                      style={{ color: dish.accentColor }}
+                    >
+                      {dish.name.split(' ').slice(1).join(' ')}
+                    </span>
+                  </h2>
+                </div>
 
                 <div className="flex flex-wrap items-center gap-8 sm:gap-12 mt-8 md:mt-10 font-inter">
                   <a href="#" className="group flex items-center gap-3 md:gap-4 text-white/80 hover:text-white transition-all">
@@ -348,85 +389,87 @@ export default function ServicesSection() {
           </div>
 
           {/* E ─ Overview card stacked absolutely */}
-          <div className="relative hidden lg:block w-[300px] xl:w-[320px] h-[400px] shrink-0 ml-auto mr-8 xl:mr-14 self-center">
-            {DISHES.map((dish, idx) => (
-              <div
-                key={dish.id}
-                className={`dish-card dish-card-${idx} absolute inset-0 flex flex-col rounded-2xl overflow-hidden bg-black/50 backdrop-blur-md border border-white/15`}
-              >
-                {/* Tab row */}
-                <div className="flex border-b border-white/15">
-                  <button className="flex-1 py-3 text-[11px] xl:text-xs font-semibold tracking-widest uppercase text-white bg-white/10 font-inter">
-                    Overview
-                  </button>
-                  <button className="flex-1 py-3 text-[11px] xl:text-xs font-semibold tracking-widest uppercase text-white/40 hover:text-white/70 transition-colors font-inter">
-                    Ingredients
-                  </button>
-                </div>
+          <div className="relative hidden lg:block w-[300px] xl:w-[320px] h-[400px] shrink-0 ml-auto mr-8 xl:mr-16 self-center mt-[1rem]">
+            {DISHES.map((dish, idx) => {
+              return (
+                <div
+                  key={dish.id}
+                  className={`dish-card dish-card-${idx} absolute inset-0 flex flex-col rounded-2xl overflow-hidden bg-black/50 backdrop-blur-md border border-white/15`}
+                >
+                  {/* Tab row */}
+                  <div className="flex border-b border-white/15">
+                    <button className="flex-1 py-3 text-[11px] xl:text-xs font-semibold tracking-widest uppercase text-white bg-white/10 font-inter">
+                      Overview
+                    </button>
+                    <button className="flex-1 py-3 text-[11px] xl:text-xs font-semibold tracking-widest uppercase text-white/40 hover:text-white/70 transition-colors font-inter">
+                      Atlantic
+                    </button>
+                  </div>
 
-                <div className="flex flex-col gap-4 p-5 xl:p-6">
-                  {/* Rating */}
-                  <div className="flex items-center gap-4">
-                    <div className={`flex items-center justify-center w-14 h-14 xl:w-16 xl:h-16 rounded-2xl shrink-0 ${dish.ratingColor}`}>
-                      <span className="font-outfit font-black text-white text-xl xl:text-2xl leading-none">{dish.rating}</span>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      <div className="flex gap-0.5">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <svg
-                            key={star}
-                            className="w-3 h-3"
-                            fill={star <= Math.floor(parseFloat(dish.rating)) ? dish.accentColor : 'rgba(255, 255, 255, 0.25)'}
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                          </svg>
-                        ))}
+                  <div className="flex flex-col gap-4 p-5 xl:p-6">
+                    {/* Rating */}
+                    <div className="flex items-center gap-4">
+                      <div className={`flex items-center justify-center w-14 h-14 xl:w-16 xl:h-16 rounded-2xl shrink-0 ${dish.ratingColor}`}>
+                        <span className="font-outfit font-black text-white text-xl xl:text-2xl leading-none">{dish.rating}</span>
                       </div>
-                      <span className="text-[10px] xl:text-[11px] text-white/50 tracking-wide uppercase font-medium font-inter">Rating</span>
+                      <div className="flex flex-col gap-1">
+                        <div className="flex gap-0.5">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <svg
+                              key={star}
+                              className="w-3 h-3"
+                              fill={star <= Math.floor(parseFloat(dish.rating)) ? dish.accentColor : 'rgba(255, 255, 255, 0.25)'}
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                          ))}
+                        </div>
+                        <span className="text-[10px] xl:text-[11px] text-white/50 tracking-wide uppercase font-medium font-inter">Rating</span>
+                      </div>
+                    </div>
+
+                    <div className="w-full h-px bg-white/10" />
+
+                    {/* Name */}
+                    <div className="flex flex-col gap-0.5">
+                      <p className="font-outfit font-bold text-white text-sm xl:text-base leading-snug">
+                        {dish.name}
+                      </p>
+                      <p
+                        className="text-[10px] xl:text-[11px] tracking-widest uppercase font-semibold font-inter"
+                        style={{ color: dish.accentColor }}
+                      >
+                        {dish.division}
+                      </p>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-[11px] xl:text-xs text-white/60 leading-relaxed font-inter">
+                      {dish.description}
+                    </p>
+
+                    <div className="w-full h-px bg-white/10" />
+
+                    {/* Thumbs */}
+                    <div className="flex items-center gap-3">
+                      <button className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/15 transition-colors text-white/70 hover:text-white">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017a2 2 0 01-1.789-1.106L5 10H3V5a2 2 0 012-2h2.5" />
+                        </svg>
+                        <span className="text-[11px] font-semibold font-inter">24</span>
+                      </button>
+                      <button className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/15 transition-colors text-white/70 hover:text-white">
+                        <svg className="w-4 h-4 rotate-180" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017a2 2 0 01-1.789-1.106L5 10H3V5a2 2 0 012-2h2.5" />
+                        </svg>
+                        <span className="text-[11px] font-semibold font-inter">2</span>
+                      </button>
                     </div>
                   </div>
-
-                  <div className="w-full h-px bg-white/10" />
-
-                  {/* Name */}
-                  <div className="flex flex-col gap-0.5">
-                    <p className="font-outfit font-bold text-white text-sm xl:text-base leading-snug">
-                      {dish.name}
-                    </p>
-                    <p
-                      className="text-[10px] xl:text-[11px] tracking-widest uppercase font-semibold font-inter"
-                      style={{ color: dish.accentColor }}
-                    >
-                      {dish.division}
-                    </p>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-[11px] xl:text-xs text-white/60 leading-relaxed font-inter">
-                    {dish.description}
-                  </p>
-
-                  <div className="w-full h-px bg-white/10" />
-
-                  {/* Thumbs */}
-                  <div className="flex items-center gap-3">
-                    <button className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/15 transition-colors text-white/70 hover:text-white">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017a2 2 0 01-1.789-1.106L5 10H3V5a2 2 0 012-2h2.5" />
-                      </svg>
-                      <span className="text-[11px] font-semibold font-inter">24</span>
-                    </button>
-                    <button className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/15 transition-colors text-white/70 hover:text-white">
-                      <svg className="w-4 h-4 rotate-180" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017a2 2 0 01-1.789-1.106L5 10H3V5a2 2 0 012-2h2.5" />
-                      </svg>
-                      <span className="text-[11px] font-semibold font-inter">2</span>
-                    </button>
-                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
 
         </div>

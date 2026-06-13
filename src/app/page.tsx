@@ -5,12 +5,15 @@ import MissionSection from '@/components/home/MissionSection'
 import TestimonialsSection from '@/components/home/TestimonialsSection'
 import CtaSection from '@/components/home/CtaSection'
 import CorporateClientsSection from '@/components/home/CorporateClientsSection'
+import StatsBand from '@/components/home/StatsBand'
 
 export default function Home() {
   return (
     <main>
       <HeroSection />
+      {/* <StatsBand /> */}
       <AboutSection />
+
       <ServicesSection />
       <CorporateClientsSection />
       {/* <MissionSection /> */}
