@@ -40,6 +40,35 @@ export default function ServicesSection() {
         }
       }
     });
+
+    // Entrance Animation
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top 80%',
+      }
+    });
+
+    tl.fromTo('.services-header span', 
+      { y: 30, opacity: 0 }, 
+      { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' }
+    )
+    .fromTo('.services-header h2', 
+      { y: 30, opacity: 0 }, 
+      { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' }, 
+      '-=0.5'
+    )
+    .fromTo('.services-header p', 
+      { y: 30, opacity: 0 }, 
+      { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' }, 
+      '-=0.5'
+    )
+    .fromTo('.services-gallery', 
+      { y: 60, opacity: 0, scale: 0.95 }, 
+      { y: 0, opacity: 1, scale: 1, duration: 1.2, ease: 'power3.out' }, 
+      '-=0.5'
+    );
+
   }, { scope: containerRef });
 
   return (
@@ -65,7 +94,7 @@ export default function ServicesSection() {
       />
 
       {/* Header */}
-      <div className="w-full mx-auto px-6 md:px-20 flex flex-col md:flex-row md:items-end md:justify-between z-10 mt-8">
+      <div className="services-header w-full mx-auto px-6 md:px-20 flex flex-col md:flex-row md:items-end md:justify-between z-10 mt-8">
         <div>
           <span className="text-[#EF9419] font-outfit text-sm font-semibold uppercase tracking-widest block mb-2">
             Core Services
@@ -80,7 +109,7 @@ export default function ServicesSection() {
       </div>
 
       {/* 3D WebGL Gallery Container */}
-      <div className="w-full flex-grow relative z-10 flex items-center justify-center">
+      <div className="services-gallery w-full flex-grow relative z-10 flex items-center justify-center">
         <div className="w-full h-[65vh]">
           <CircularGallery
             ref={galleryRef}

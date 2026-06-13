@@ -160,7 +160,7 @@ export default function Footer() {
                   Wholly Ghanaian. ISO-certified. Premium culinary and logistics excellence for offshore, corporate, and event operations since 2014.
                 </p>
 
-                {/* <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+                <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
                   {['GC 100', 'ISO Cert.', 'FPSO Ops'].map(tag => (
                     <span key={tag} style={{
                       padding: '0.3rem 0.7rem',
@@ -172,7 +172,7 @@ export default function Footer() {
                       {tag}
                     </span>
                   ))}
-                </div> */}
+                </div>
 
                 <div style={{ display: 'flex', gap: '0.65rem' }}>
                   {socialLinks.map(({ icon: Icon, href, label }) => (

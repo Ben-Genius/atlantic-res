@@ -702,10 +702,11 @@ class App {
     });
 
     if (!this.isInfinite && this.medias.length > 0) {
-      // Calculate initial position: start with item 0 positioned at bottom-left (-viewport.width/2)
-      // Since plane.position.x = x - scroll.target, to get item 0 at -viewport.width/2:
-      // -viewport.width/2 = 0 - scroll.target => scroll.target = viewport.width/2
-      const initialScroll = this.viewport.width / 2;
+      // Set the initial scroll position to match the startTarget perfectly
+      // This prevents the gallery from "whipping" or flickering when the ScrollTrigger first engages
+      const itemWidth = this.medias[0].width;
+      const initialScroll = itemWidth * (this.medias.length - 1);
+      
       this.scroll.target = initialScroll;
       this.scroll.current = initialScroll;
       this.scroll.last = initialScroll;
@@ -717,11 +718,11 @@ class App {
     const itemWidth = this.medias[0].width;
     const totalLength = this.medias.length;
 
-    // Start with the first card at the center (0)
-    const startTarget = 0;
-
-    // End with the last card at the center
-    const endTarget = itemWidth * (totalLength - 1);
+    // Start with the last card at the center
+    const startTarget = itemWidth * (totalLength - 1);
+    
+    // End with the first card at the center (0)
+    const endTarget = 0;
 
     // Smooth transition between startTarget and endTarget based on scroll progress
     this.scroll.target = startTarget + (endTarget - startTarget) * progress;
