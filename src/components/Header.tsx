@@ -16,6 +16,7 @@ const navImages: Record<string, string> = {
   '/portfolio': '/images/hero-portfolio.png',
   '/impact': '/images/hero-impact.png',
   '/contact': '/images/hero-contact.png',
+  '/about': '/images/hero-main.png',
 }
 
 export default function Header() {
