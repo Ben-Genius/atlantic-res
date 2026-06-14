@@ -216,7 +216,9 @@ export default function MissionVision() {
               <p className="quote-line font-inter text-white/65 text-sm md:text-base leading-relaxed max-w-lg">
                 At Atlantic, every meal we serve is a promise kept — a commitment to quality,
                 dignity, and care. We believe the standard of catering in Africa can be
-                world-class, and we prove it every single day.
+                world-class, and we prove it every single day. Backed by comprehensive ISO certifications
+                in environmental, health, and food safety management, we guarantee the highest standards
+                in cleanliness and service quality.
               </p>
 
               {/* Closing quote glyph */}

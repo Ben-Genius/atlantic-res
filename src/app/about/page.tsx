@@ -145,7 +145,7 @@ export default function AboutPage() {
         <MissionVision />
         <MeetTheCrew />
         <Sustainability />
-        <AboutMarquee />
+        {/* <AboutMarquee /> */}
         {/* <AboutContact /> */}
 
         {/* ── FOOTER ── */}

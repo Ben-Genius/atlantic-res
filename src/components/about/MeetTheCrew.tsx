@@ -101,8 +101,8 @@ const BOARD_MEMBERS = [
     name: "Maud Lindsay-Gamrat",
     role: "Chief Executive Officer",
     image: "https://atlanticcatering-gh.com/wp-content/uploads/2025/10/ceo-portrat-7-1.jpg",
-    shortBio: "Maud Lindsay-Gamrat is a seasoned business leader with over two decades of experience in the Ghanaian landscape. Her multifaceted expertise encompasses Inflight, Camp and Remote Site, Offshore and Onshore Catering Operations.",
-    fullBio: "As the CEO of Atlantic, Maud has championed local capacity development, leading a team of over 150, with an extraordinary 99.9 percent being Ghanaians. The company, under her guidance, excels in delivering specialized catering and virtual services aboard two FPSOs in Ghana and various onsite corporate operations. Her outstanding achievements have garnered several awards including the Most Outstanding Female Owned Business in Ghana's Upstream Petroleum sector by the Petroleum Commission of Ghana, and Glitz Woman of the Year for Catering & Hospitality. Maud has also appeared on CNN's 'Passion to Portfolio', highlighting emerging and established global entrepreneurs."
+    shortBio: "Maud Lindsay-Gamrat is a seasoned business leader, with over two decades of experience in the Ghanaian landscape. Her multifaceted expertise encompasses key areas such as: Inflight, Camp and Remote Site, Offshore and Onshore Catering Operations.\n\nOver a remarkable twenty-four-year career, Maud has played pivotal roles in Ghana's Inflight and Offshore Catering Operations, contributing significantly to Sales, Marketing, Human Resources and Finance sectors.",
+    fullBio: "Maud Lindsay-Gamrat is a seasoned business leader, with over two decades of experience in the Ghanaian landscape. Her multifaceted expertise encompasses key areas such as: Inflight, Camp and Remote Site, Offshore and Onshore Catering Operations.\n\nOver a remarkable twenty-four-year career, Maud has played pivotal roles in Ghana's Inflight and Offshore Catering Operations, contributing significantly to Sales, Marketing, Human Resources and Finance sectors. Beyond her adeptness in inflight services, she has successfully initiated and managed numerous remote site catering and hospitality projects, all accomplished within the Ghanaian context.\n\nAs the CEO of Atlantic, Maud has championed local capacity development, leading a team of over 150, with an extraordinary 99.9 percent being Ghanaians. The company, under her guidance, excels in delivering specialized catering and virtual services aboard two FPSOs in Ghana and various onsite corporate operations.\n\nHer outstanding achievements have garnered several awards, the most recent including the Most Outstanding Female Owned Business in Ghana’s Upstream Petroleum sector awarded by the Petroleum Commission of Ghana, Glitz Woman of the Year for Catering & Hospitality by Glitz Africa among others.\n\nMaud has also featured on various Business and Entrepreneurship Events, Conferences and Programs, notably appearing on CNN’s \"Passion to Portfolio\", a program highlighting emerging and established global entrepreneurs.\n\nMaud's influence extends beyond the corporate realm. Her fervent advocacy for women’s empowerment is palpable, evidenced by her commitment to empowering female employees for professional and capacity building through self-development training initiatives and courses. She extends this passion to local women food vendors and farmers across Ghana, championing activities that uplift and strengthen local communities.\n\nHer dedication further encompasses environmental sustainability, inclusivity and social responsibility. Maud continually strives to make Atlantic more sustainable and socially responsible.\n\nMaud is married to Jeff, a Co-Founder and Executive Director of Atlantic and blessed with two daughters."
   },
   {
     number: "02",
@@ -110,53 +110,53 @@ const BOARD_MEMBERS = [
     name: "Hubert Tossou",
     role: "Operations Director",
     image: "https://atlanticcatering-gh.com/wp-content/uploads/2025/10/Hubbert.png",
-    shortBio: "Trained Executive Chef with over 20 years in remote site and inflight operations. Certified ISO Food Safety Auditor. Bachelor's in Hotel and Project Management. Fluent in English & French.",
-    fullBio: "Trained Executive Chef with over 20 years in remote site and inflight operations. Certified ISO Food Safety Auditor. Bachelor's in Hotel and Project Management. Fluent in English & French."
+    shortBio: "Hubert Tossou serves as the Operations Director at Atlantic Catering. He has vast knowledge and twenty years of experience in the hospitality industry having worked in some of the most reputable companies in the food industry both in Ghana, Nigeria, and Benin.",
+    fullBio: "Hubert Tossou serves as the Operations Director at Atlantic Catering. He has vast knowledge and twenty years of experience in the hospitality industry having worked in some of the most reputable companies in the food industry both in Ghana, Nigeria, and Benin.\n\nSome of his key responsibilities include Product development, Project start-up, planning and coordination. He is a trained executive Chef with over twelve years experience in in-flight and remote site operations. He holds a Bachelor’s in Hotel and Project Management and is a certified ISO Food Safety Auditor. He is fluent in English and French."
   },
   {
     number: "03",
     initials: "JA",
     name: "John Ansah",
-    role: "BD / Quality & Remote Site Director",
+    role: "BD/ QUALITY & REMOTE SITE DIRECTOR",
     image: "https://atlanticcatering-gh.com/wp-content/uploads/2025/10/John.jpg",
-    shortBio: "Experienced quality and food safety consultant with over 2 decades spanning Guinness Ghana, Pioneer Food Cannery, and Newrest Ghana. MSc in Occupational Health Safety Risk Management.",
-    fullBio: "Experienced quality and food safety consultant with over 2 decades spanning Guinness Ghana, Pioneer Food Cannery, and Newrest Ghana. MSc in Occupational Health Safety Risk Management."
+    shortBio: "John oversees all remote sites of the company. He is an experienced Ghanaian quality and food safety consultant. He started his career as a laboratory technologist and by dint of hard work has risen through the ranks to become a QHSE Director with a career spanning over 2 decades.",
+    fullBio: "John oversees all remote sites of the company. He is an experienced Ghanaian quality and food safety consultant. He started his career as a laboratory technologist and by dint of hard work has risen through the ranks to become a QHSE Director with a career spanning over 2 decades.\n\nJohn has worked with: Apam Hospital, Ghana Armed Forces Recruit Centre, Pioneer Food Cannery, Guinness Ghana Breweries, Everpure Ghana Ltd and First Catering Ltd., a Swiss commercial airline catering company, now Newrest Ghana; where he played a major role and under his impeccable leadership won several contracts.\n\nJohn holds an MSc Degree in Occupational Health Safety Risk Management from Open University of Malaysia."
   },
   {
     number: "04",
     initials: "JT",
     name: "Jemima Tagoe",
-    role: "QHSE Manager",
+    role: "QHSE MANAGER",
     image: "https://atlanticcatering-gh.com/wp-content/uploads/2025/10/JJ.png",
-    shortBio: "Quality, Health, Safety & Environmental Practitioner with close to a decade in food safety and 5 years in Occupational Health. Formerly with First Catering and Newrest Ghana. BSE in Food Science.",
-    fullBio: "Quality, Health, Safety & Environmental Practitioner with close to a decade in food safety and 5 years in Occupational Health. Formerly with First Catering and Newrest Ghana. BSE in Food Science."
+    shortBio: "Jemima Tagoe is a Quality, Health, Safety and Environmental Practitioner and Laboratory Technologist by profession with close to a decade of experience in food safety and five years of experience in Occupational Health & Environmental Safety as well as Internal Auditing.",
+    fullBio: "Jemima Tagoe is a Quality, Health, Safety and Environmental Practitioner and Laboratory Technologist by profession with close to a decade of experience in food safety and five years of experience in Occupational Health & Environmental Safety as well as Internal Auditing.\n\nShe has worked with multinational companies such as First Catering and Newrest Ghana in the capacity of QHSE Manager with key responsibilities such as ensuring the total quality and safety of the company's products and services as well as the health and well-being of its employees before work commences. She is experienced in identifying hazards and providing corrective action for those hazards. She holds a BSE in Food Science."
   },
   {
     number: "05",
     initials: "FO",
     name: "Freda Opoku",
-    role: "Admin Manager",
+    role: "ADMIN MANAGER",
     image: "https://atlanticcatering-gh.com/wp-content/uploads/2025/10/Frida.png",
-    shortBio: "HR professional with 10+ years in People Management, Talent Acquisition, Policy Formulation, and Employee Relations. Executive MBA from University of Ghana Business School.",
-    fullBio: "HR professional with 10+ years in People Management, Talent Acquisition, Policy Formulation, and Employee Relations. Executive MBA from University of Ghana Business School."
+    shortBio: "Freda Opoku is an HR professional with over a decade wealth of experience spanning People Management, Performance Management, Talent Acquisition, Policy Formulation, Performance Management, Employee Relations, Customer Service and Sales Administration.",
+    fullBio: "Freda Opoku is an HR professional with over a decade wealth of experience spanning People Management, Performance Management, Talent Acquisition, Policy Formulation, Performance Management, Employee Relations, Customer Service and Sales Administration.\n\nShe has served in major professional capacities as HR and Admin Manager, HR Generalist, Sales Manager and Customer Service Executive in the Automobile, Insurance and Aviation Industries respectively.\n\nFreda holds an Executive MBA from the University of Ghana Business School and a Bachelor’s Degree from the Central University College. She is passionate about organizational development, Employee Engagement and Capacity Building and a strong advocate of health and wellness."
   },
   {
     number: "06",
-    initials: "SV",
+    initials: "SVD",
     name: "Suzan Valentina Dogbe",
-    role: "Finance Manager",
+    role: "FINANCE MANAGER",
     image: "https://atlanticcatering-gh.com/wp-content/uploads/2025/10/suz.png",
-    shortBio: "Finance professional with proven expertise in financial management, analysis, budgeting, forecasting, and regulatory compliance. Adept at advising senior management on financial matters.",
-    fullBio: "Finance professional with proven expertise in financial management, analysis, budgeting, forecasting, and regulatory compliance. Adept at advising senior management on financial matters."
+    shortBio: "Suzan is a finance professional with proven expertise in financial management, analysis, and reporting, skilled in budgeting, forecasting, and risk management. Proficient in accounting software and Microsoft Office Suite.",
+    fullBio: "Suzan is a finance professional with proven expertise in financial management, analysis, and reporting, skilled in budgeting, forecasting, and risk management. Proficient in accounting software and Microsoft Office Suite. Demonstrated ability to streamline financial processes and ensure regulatory compliance. Adept at collaborating with cross-functional teams and advising senior management on financial matters."
   },
   {
     number: "07",
-    initials: "JS",
+    initials: "JKS",
     name: "Joseph Kwesi Sam",
-    role: "HR Manager",
+    role: "HR MANAGER",
     image: "https://atlanticcatering-gh.com/wp-content/uploads/2025/10/kwasi.png",
-    shortBio: "Strategic HR Management specialist with experience across hospitality, oil & gas, and pharmaceuticals. MBA in HR Management from University of Cape Coast. Chartered Institute of Human Resource Management member.",
-    fullBio: "Strategic HR Management specialist with experience across hospitality, oil & gas, and pharmaceuticals. MBA in HR Management from University of Cape Coast. Chartered Institute of Human Resource Management member."
+    shortBio: "Joseph Kwesi Sam is a seasoned Human Resource professional with expertise in strategic HR management, talent acquisition, and performance optimization. He has extensive experience across various industries, including hospitality, oil and gas, and pharmaceuticals, Fast Moving Consumer Goods and Media.",
+    fullBio: "Joseph Kwesi Sam is a seasoned Human Resource professional with expertise in strategic HR management, talent acquisition, and performance optimization. He has extensive experience across various industries, including hospitality, oil and gas, and pharmaceuticals, Fast Moving Consumer Goods and Media.\n\nCurrently, Joseph serves as HR Manager at Atlantic Catering & Logistics, driving transformative initiatives. He's also a training facilitator, speaker, and volunteer mentor, having worked with Mobile Web Ghana (American Corner) on initiatives like the Get-Ready-for-Work series to equip young professionals with essential skills to prepare them for the world of work. Committed to professional growth and mentorship, Joseph actively volunteers as a workshop facilitator, guiding graduates through the job market, and serves on the selection panel for the Emerging Public Leaders Fellowship of Ghana. With a strong educational foundation, Joseph holds a bachelor’s degree in business administration with specialization in Organization and Human Resource Management, an MBA in HR Management from the University of Cape Coast, and certifications in Alternative Dispute Resolution (ADR) and Project & Innovations Management. He's a Chartered Human Resource Professional and member of the Chartered Institute of Human Resource Management, Ghana.\n\nJoseph is a Project Work Supervisor at the Chartered Institute of Human Resource Management, Ghana, where he mentors Level 4 Human Resource Professionals in developing and submitting insightful, original, and practical projects addressing key HR challenges in their workplaces."
   }
 ];
 
@@ -223,7 +223,7 @@ function MemberContent({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.28, ease: EASE.smooth }}
-              className="text-gray-600 leading-relaxed text-sm sm:text-base font-inter"
+              className="text-gray-600 leading-relaxed text-sm sm:text-base font-inter whitespace-pre-line"
             >
               {member.fullBio}
             </motion.p>
@@ -234,7 +234,7 @@ function MemberContent({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.28, ease: EASE.smooth }}
-              className="text-gray-600 leading-relaxed text-sm sm:text-base font-inter"
+              className="text-gray-600 leading-relaxed text-sm sm:text-base font-inter whitespace-pre-line"
             >
               {member.shortBio}
             </motion.p>
@@ -341,7 +341,7 @@ export default function MeetTheCrew() {
           />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10" >
+        <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col lg:flex-row gap-12 lg:items-start justify-between">
           <div className="max-w-3xl">
             <Reveal variants={scaleIn} className="mb-8">
               <span className="inline-flex items-center px-4 py-1.5 rounded-md border border-gray-300 text-[13px] font-bold tracking-widest uppercase text-[#EF9419] bg-gray-50">
@@ -376,6 +376,14 @@ export default function MeetTheCrew() {
               </p>
             </Reveal>
           </div>
+
+          <Reveal variants={fadeInUp} className="flex-shrink-0">
+            <img
+              src="/assets/images/About Us/cert.png"
+              alt="Certification"
+              className="w-full max-w-[350px] lg:max-w-[400px] h-auto object-contain mix-blend-multiply"
+            />
+          </Reveal>
         </div>
       </section>
 
