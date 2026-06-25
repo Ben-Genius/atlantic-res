@@ -169,10 +169,34 @@ export default function ContactPage() {
             Ready to plan your offshore operations catering, corporate dining logistics, or premium events? Reach out and we will help you build a bespoke solution.
           </p>
         </div>
+
+        {/* B2B Certifications Seam Tab */}
+        <div className="absolute bottom-0 left-0 z-30 w-full md:w-max bg-white rounded-tr-lg border-t border-r border-slate-100/90 py-4 pl-6 md:pl-12 pr-10 flex flex-wrap items-center justify-start gap-6 md:gap-8 shadow-[4px_-4px_15px_rgba(0,0,0,0.05)] select-none">
+          {/* Cert 1 */}
+          <div className="flex items-center gap-1.5 opacity-90 hover:opacity-100 transition-opacity">
+            <ShieldCheck size={14} className="text-green" />
+            <span className="text-[10px] font-extrabold text-slate-700 uppercase tracking-wider">ISO 9001:2015</span>
+          </div>
+          {/* Cert 2 */}
+          <div className="flex items-center gap-1.5 opacity-90 hover:opacity-100 transition-opacity">
+            <Award size={14} className="text-green" />
+            <span className="text-[10px] font-extrabold text-slate-700 uppercase tracking-wider">ISO 22000:2018</span>
+          </div>
+          {/* Cert 3 */}
+          <div className="flex items-center gap-1.5 opacity-90 hover:opacity-100 transition-opacity">
+            <ShieldCheck size={14} className="text-green" />
+            <span className="text-[10px] font-extrabold text-slate-700 uppercase tracking-wider">ISO 45001:2018</span>
+          </div>
+          {/* Cert 4 */}
+          <div className="flex items-center gap-1.5 opacity-90 hover:opacity-100 transition-opacity">
+            <CheckSquare size={14} className="text-green" />
+            <span className="text-[10px] font-extrabold text-slate-700 uppercase tracking-wider">FDA Certified</span>
+          </div>
+        </div>
       </section>
 
       {/* ── Content Body Section ── */}
-      <section className="relative w-full bg-white px-6 md:px-12 pb-16 overflow-hidden">
+      <section className="relative w-full bg-white px-6 md:px-12 pt-16 pb-16 overflow-hidden">
         {/* Subtle background watermarks (specific dishes from assets) */}
         {/* Left Side: Ghanaian Jollof Rice */}
         <motion.div
@@ -215,34 +239,10 @@ export default function ContactPage() {
             className="object-contain"
           />
         </motion.div>
-        <div className="relative z-20 -translate-y-8 w-full md:w-[84%] lg:w-[76%] bg-white rounded-r-lg border-t border-r border-b border-slate-100/90 py-4 pl-6 md:pl-8 pr-10 flex flex-wrap items-center justify-start gap-6 md:gap-8 shadow-md mb-12 select-none mr-auto">
-          {/* Cert 1 */}
-          <div className="flex items-center gap-1.5 opacity-90 hover:opacity-100 transition-opacity">
-            <ShieldCheck size={14} className="text-green" />
-            <span className="text-[10px] font-extrabold text-slate-700 uppercase tracking-wider">ISO 9001:2015</span>
-          </div>
-          {/* Cert 2 */}
-          <div className="flex items-center gap-1.5 opacity-90 hover:opacity-100 transition-opacity">
-            <Award size={14} className="text-green" />
-            <span className="text-[10px] font-extrabold text-slate-700 uppercase tracking-wider">ISO 22000:2018</span>
-          </div>
-          {/* Cert 3 */}
-          <div className="flex items-center gap-1.5 opacity-90 hover:opacity-100 transition-opacity">
-            <ShieldCheck size={14} className="text-green" />
-            <span className="text-[10px] font-extrabold text-slate-700 uppercase tracking-wider">ISO 45001:2018</span>
-          </div>
-          {/* Cert 4 */}
-          <div className="flex items-center gap-1.5 opacity-90 hover:opacity-100 transition-opacity">
-            <CheckSquare size={14} className="text-green" />
-            <span className="text-[10px] font-extrabold text-slate-700 uppercase tracking-wider">FDA Certified</span>
-          </div>
-        </div>
+
         <div className="max-w-6xl mx-auto relative z-10">
-          {/* B2B Certifications Seam Tab (Reduced Rounded Corners to rounded-r-lg) */}
-
-
           {/* Form & Newsletter Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mt-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
             {/* Left Form Area (col span 7) */}
             <form onSubmit={handleFormSubmission} className="lg:col-span-7 space-y-4">
