@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Project Progress Report - June 15, 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons for premium visual depth -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Calibrating exact A4 printable layouts */
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                font-size: 11pt;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .print-container {
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                background: transparent !important;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
+
+            /* Preserve background colors in PDF output */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        /* Custom progress bar animations and styles */
+        .progress-bar-fill {
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+
+<body class="bg-slate-100 min-h-screen text-slate-800 antialiased print:bg-white">
+
+    <div class="no-print bg-slate-900 text-white py-4 px-6 sticky top-0 z-50 shadow-md">
+        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="p-2 bg-blue-600 rounded-lg text-white">
+                    <i data-lucide="file-text" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">Executive PDF Generator</h1>
+                    <p class="text-xs text-slate-400">Click the button on the right to export this updated report as a
+                        PDF</p>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="window.print()"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg flex items-center gap-2 shadow-lg transition-all transform active:scale-95">
+                    <i data-lucide="printer" class="w-4 h-4"></i>
+                    Print / Save as PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="max-w-4xl mx-auto my-8 p-6 sm:p-12 bg-white rounded-xl shadow-xl border border-slate-200 print-container print:shadow-none print:border-none print:my-0 print:p-0">
+
+        <!-- Document Header / Letterhead -->
+        <div class="border-b-4 border-blue-900 pb-6 mb-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <span class="text-xs font-bold tracking-widest text-blue-600 uppercase">Daily Progress Report</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">Ada Projects &
+                        Agyanoa Center</h2>
+                </div>
+                <div class="text-left sm:text-right">
+                    <span
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-emerald-100 text-emerald-800 print:bg-slate-100 print:text-slate-800 print:border print:border-slate-300">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 print:hidden"></span>
+                        Active Progress
+                    </span>
+                </div>
+            </div>
+
+            <!-- Metadata Box -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 pt-6 border-t border-slate-100 text-sm">
+                <div class="space-y-2">
+                    <div class="flex"><span class="w-24 font-semibold text-slate-500">Date:</span> <span
+                            class="text-slate-900 font-medium">June 15, 2026</span></div>
+                    <div class="flex"><span class="w-24 font-semibold text-slate-500">To:</span> <span
+                            class="text-slate-900 font-semibold">Managing Director / Project Boss</span></div>
+                </div>
+                <div class="space-y-2 sm:text-right sm:ml-auto">
+                    <div class="flex justify-start sm:justify-end"><span
+                            class="w-24 sm:w-auto sm:mr-4 font-semibold text-slate-500 text-left sm:text-right">From:</span>
+                        <span class="text-slate-900 font-medium">Project Management Team</span></div>
+                    <div class="flex justify-start sm:justify-end"><span
+                            class="w-24 sm:w-auto sm:mr-4 font-semibold text-slate-500 text-left sm:text-right">Status:</span>
+                        <span class="text-blue-700 font-semibold">Ready for Review</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-10">
+            <div class="flex items-center gap-2 bg-blue-900 text-white py-2 px-4 rounded-lg mb-6">
+                <i data-lucide="building-2" class="w-5 h-5"></i>
+                <h3 class="font-bold uppercase tracking-wider text-sm">Section 1: Ada District Projects (Ada SHS & Ada
+                    SHTS)</h3>
+            </div>
+
+            <!-- Ada SHS (ADASCO) Progress -->
+            <div class="mb-8">
+                <div
+                    class="flex flex-col sm:flex-row sm:items-center justify-between border-b-2 border-slate-100 pb-2 mb-4 gap-2">
+                    <h4 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <span class="w-2 h-6 bg-blue-600 rounded"></span>
+                        1.1 Ada SHS (ADASCO) Site Status
+                    </h4>
+                    <span
+                        class="text-xs font-semibold bg-blue-50 text-blue-800 px-2.5 py-1 rounded-full border border-blue-100">Ada
+                        Senior High School</span>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 flex items-start gap-3">
+                        <div class="mt-1 text-blue-600 font-bold text-lg">01.</div>
+                        <div>
+                            <span class="font-semibold text-slate-900 block">Classroom Block Foundation</span>
+                            <p class="text-slate-700 text-sm mt-1">Foundation works have successfully resumed. Following
+                                recent waterlogging, ponded water has been fully pumped out, allowing excavation tasks
+                                to continue without hindrance.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 flex items-start gap-3">
+                        <div class="mt-1 text-blue-600 font-bold text-lg">02.</div>
+                        <div>
+                            <span class="font-semibold text-slate-900 block">Dormitory Block Profiling</span>
+                            <p class="text-slate-700 text-sm mt-1">Site profiling has been successfully completed.
+                                Ground marking out and raw excavation operations are finalized to commence on Thursday.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50/50 p-4 rounded-lg border border-blue-100 flex items-start gap-3">
+                        <i data-lucide="settings" class="w-5 h-5 text-blue-600 mt-1 flex-shrink-0"></i>
+                        <div>
+                            <span class="font-semibold text-blue-900 block">Operational Shift (Excavation
+                                Methodology)</span>
+                            <p class="text-blue-800 text-sm mt-1">Due to dynamic mud and site conditions, heavy
+                                machinery (Backhoe) has been suspended in favor of manual labor/digging. The site is
+                                currently highly active with manual excavation crews.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ada SHTS Progress -->
+            <div class="mb-8">
+                <div
+                    class="flex flex-col sm:flex-row sm:items-center justify-between border-b-2 border-slate-100 pb-2 mb-4 gap-2">
+                    <h4 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <span class="w-2 h-6 bg-blue-600 rounded"></span>
+                        1.2 Ada SHTS Site Status
+                    </h4>
+                    <span
+                        class="text-xs font-semibold bg-blue-50 text-blue-800 px-2.5 py-1 rounded-full border border-blue-100">Ada
+                        Senior High Technical School</span>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Progress Metric Card -->
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-semibold text-slate-900">Classroom Block Excavation</span>
+                            <span class="font-bold text-blue-600 text-sm">98% Complete</span>
+                        </div>
+                        <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                            <div class="progress-bar-fill bg-blue-600 h-2.5 rounded-full" style="width: 98%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 flex items-start gap-3">
+                            <i data-lucide="layout-grid" class="w-5 h-5 text-slate-500 mt-1 flex-shrink-0"></i>
+                            <div>
+                                <span class="font-semibold text-slate-900 block">Block Laying Works</span>
+                                <p class="text-slate-700 text-sm mt-1">Block laying is currently in progress. Today's
+                                    output was unfortunately constrained due to a temporary shortage of blocks.
+                                    Quantities are being compiled and will be confirmed in tomorrow's report.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 flex items-start gap-3">
+                            <i data-lucide="truck" class="w-5 h-5 text-amber-600 mt-1 flex-shrink-0"></i>
+                            <div>
+                                <span class="font-semibold text-amber-950 block">Logistical Bottleneck</span>
+                                <p class="text-slate-700 text-sm mt-1">The block shortage occurred because the block
+                                    supplier's vehicle got heavily stuck in transit. The team is coordinating to resolve
+                                    access issues and resume deliveries.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ada Projects Active Workforce & Site Operations Strategy -->
+            <div class="mb-8 bg-slate-50 p-5 rounded-lg border border-slate-200">
+                <h4 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4 flex items-center gap-1.5">
+                    <i data-lucide="users" class="w-4 h-4 text-slate-600"></i>
+                    Ada District - Active Workforce Distribution
+                </h4>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <!-- Ada SHS (ADASCO) Workforce -->
+                    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
+                        <span class="text-xs font-bold text-blue-700 uppercase tracking-wider block mb-2">Ada SHS
+                            (ADASCO) Site Crew</span>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center text-sm border-b border-slate-100 pb-1.5">
+                                <span class="text-slate-600 flex items-center gap-2"><i data-lucide="pickaxe"
+                                        class="w-4 h-4 text-slate-400"></i> Foundation Diggers (Manual)</span>
+                                <span class="font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded text-xs">7
+                                    Men</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-600 flex items-center gap-2"><i data-lucide="wrench"
+                                        class="w-4 h-4 text-slate-400"></i> Carpenters</span>
+                                <span class="font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded text-xs">3
+                                    Men</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ada SHTS Workforce -->
+                    <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
+                        <span class="text-xs font-bold text-blue-700 uppercase tracking-wider block mb-2">Ada SHTS Site
+                            Crew</span>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center text-sm border-b border-slate-100 pb-1.5">
+                                <span class="text-slate-600 flex items-center gap-2"><i data-lucide="brick"
+                                        class="w-4 h-4 text-slate-400"></i> Masons (Block Laying)</span>
+                                <span class="font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded text-xs">6
+                                    Men</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm border-b border-slate-100 pb-1.5">
+                                <span class="text-slate-600 flex items-center gap-2"><i data-lucide="hammer"
+                                        class="w-4 h-4 text-slate-400"></i> Steelbenders</span>
+                                <span class="font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded text-xs">3
+                                    Men</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-slate-600 flex items-center gap-2"><i data-lucide="user-check"
+                                        class="w-4 h-4 text-slate-400"></i> General Laborers</span>
+                                <span class="font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded text-xs">9
+                                    Men</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Site Engineer's Operational Strategy Callout -->
+                <div
+                    class="bg-blue-50/70 border border-blue-200 p-4 rounded-lg flex items-start gap-3 text-sm text-blue-900">
+                    <i data-lucide="shuffle" class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5"></i>
+                    <div>
+                        <strong class="font-semibold block text-blue-900">Dynamic Labor Allocation (Site Engineer
+                            Strategy)</strong>
+                        <p class="text-blue-800 mt-1">To ensure maximum efficiency and prevent labor downtime during key
+                            transitions, the site engineer is actively alternating the labor forces between both sites
+                            dynamically, deploying craftsmen as and when key tasks require immediate acceleration.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-5 rounded-r-lg mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                    <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-700"></i>
+                    <h4 class="text-amber-900 font-bold uppercase tracking-wider text-sm">1.3 General Observations &
+                        Critical Requests</h4>
+                </div>
+                <div class="space-y-3 text-sm text-amber-950">
+                    <div class="flex items-start gap-2">
+                        <span class="text-amber-600 mt-0.5">•</span>
+                        <p><strong class="text-amber-900">Workforce Expansion Plan (Contingent on Materials):</strong>
+                            There is an active plan to bring on additional workers to speed up operations. However, this
+                            expansion is <strong>strictly contingent on the availability of materials on site</strong>.
+                            Increasing headcount without first securing blocks and iron rods will result in costly, idle
+                            labor force.</p>
+                    </div>
+                    <div class="flex items-start gap-2">
+                        <span class="text-amber-600 mt-0.5">•</span>
+                        <p><strong class="text-amber-900">Concrete Works Paused:</strong> Concrete mixing and casting
+                            operations are currently suspended across both Ada sites for the immediate phase.</p>
+                    </div>
+                    <div class="flex items-start gap-2">
+                        <span class="text-amber-600 mt-0.5">•</span>
+                        <p><strong class="text-amber-900">Critical Material Shortage (Iron Rods):</strong> Steel
+                            reinforcement stock remains completely depleted. Steel benders are on-site but idle.
+                            Immediate procurement of iron rods is required to mobilize steelwork.</p>
+                    </div>
+                    <div class="flex items-start gap-2">
+                        <span class="text-amber-600 mt-0.5">•</span>
+                        <p><strong class="text-amber-900">Logistics & Mattresses:</strong> Temporary accommodations are
+                            successfully secured. Rapid budget approval is required to purchase mattresses for the
+                            long-distance workers to officially move in and deploy.</p>
+                    </div>
+                    <div class="flex items-start gap-2">
+                        <span class="text-amber-600 mt-0.5">•</span>
+                        <p><strong class="text-amber-900">Electricity Faults:</strong> The ongoing power supply issue on
+                            site remains unresolved. Direct intervention is requested.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-break">
+            <div class="flex items-center gap-2 bg-blue-900 text-white py-2 px-4 rounded-lg mb-6">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                <h3 class="font-bold uppercase tracking-wider text-sm">Section 2: Eastern Region Conference Center
+                    (Agyanoa)</h3>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-semibold text-slate-500 uppercase">Weather Conditions</span>
+                        <span class="block text-slate-800 font-bold mt-1 text-sm">No Rainfall / Clear Sky</span>
+                    </div>
+                    <div class="p-2 bg-amber-100 rounded-full text-amber-600">
+                        <i data-lucide="sun" class="w-5 h-5"></i>
+                    </div>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-semibold text-slate-500 uppercase">Substructure Timeline</span>
+                        <span class="block text-slate-800 font-bold mt-1 text-sm">Completion Estimated: Thursday</span>
+                    </div>
+                    <div class="p-2 bg-blue-100 rounded-full text-blue-600">
+                        <i data-lucide="calendar" class="w-5 h-5"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Tracker -->
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 mb-6">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="font-semibold text-slate-900">Substructure Block Work</span>
+                    <span class="font-bold text-blue-600 text-sm">77% Complete</span>
+                </div>
+                <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                    <div class="progress-bar-fill bg-blue-600 h-2.5 rounded-full" style="width: 77%;"></div>
+                </div>
+            </div>
+
+            <!-- Daily Statistics & Inspection -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 text-center">
+                    <span class="text-2xl sm:text-3xl font-extrabold text-blue-900">278</span>
+                    <span class="block text-xs font-semibold text-slate-500 uppercase mt-1">Blocks Laid Today</span>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 text-center">
+                    <span class="text-2xl sm:text-3xl font-extrabold text-blue-900">1,200</span>
+                    <span class="block text-xs font-semibold text-slate-500 uppercase mt-1">Blocks Delivered
+                        Today</span>
+                </div>
+                <div
+                    class="bg-slate-50 p-4 rounded-lg border border-slate-100 text-center flex flex-col justify-center items-center">
+                    <span class="text-emerald-700 font-bold text-sm flex items-center gap-1">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i> Completed
+                    </span>
+                    <span class="block text-xs font-semibold text-slate-500 uppercase mt-1">Consultant Site
+                        Inspection</span>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h4 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3">Site Workforce (Active
+                    Personnel)</h4>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold">
+                            6</div>
+                        <div>
+                            <span class="font-semibold text-slate-900 block text-sm">Masons</span>
+                            <span class="text-xs text-slate-500">Continuous Blockwork</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold">
+                            5</div>
+                        <div>
+                            <span class="font-semibold text-slate-900 block text-sm">General Labourers</span>
+                            <span class="text-xs text-slate-500">Site Support & Carrying</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 space-y-2">
+                    <div class="text-xs text-slate-500 italic bg-slate-50/50 p-2.5 rounded border border-slate-100">
+                        * Note: Continual supervision is active to resolve minor masonry skills/standardization gaps and
+                        maintain strict quality standards.
+                    </div>
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-lg text-xs text-amber-950">
+                        <div class="flex items-center gap-1.5 font-bold text-amber-900 mb-1">
+                            <i data-lucide="zap" class="w-4 h-4 text-amber-600"></i>
+                            Productivity Recovery Action Plan
+                        </div>
+                        <p>To counteract recent low output from the current on-site team, a strategic operational change
+                            is being implemented. <strong>A new reinforcement crew of skilled workers is scheduled to
+                                mobilize on-site tomorrow</strong> to accelerate block-laying velocity and secure our
+                            timeline.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tomorrow's Plan -->
+            <div class="bg-blue-50/40 border border-blue-100 p-4 rounded-lg">
+                <h4 class="font-semibold text-blue-900 text-sm mb-1 flex items-center gap-2">
+                    <i data-lucide="arrow-right-circle" class="w-4 h-4"></i>
+                    Outlook / Plan for Tomorrow
+                </h4>
+                <p class="text-slate-700 text-sm">Continuation of substructure block work. Primary focus will be on
+                    immediately integrating the incoming workforce team, optimizing task delegation, and maximizing
+                    daily output to stay on schedule for our Thursday milestone.</p>
+            </div>
+        </div>
+
+        <div
+            class="mt-12 pt-6 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+            <p>Confidential • Internal Project Management Report</p>
+            <p>© 2026 Project Management Services</p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
