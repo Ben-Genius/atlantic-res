@@ -3,13 +3,13 @@
 import React, { useState, useRef } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  Leaf, 
-  Users, 
-  Scale, 
-  Zap, 
-  Package, 
-  Recycle, 
+import {
+  Leaf,
+  Users,
+  Scale,
+  Zap,
+  Package,
+  Recycle,
   Wheat,
   Briefcase,
   Target,
@@ -36,6 +36,7 @@ import {
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import { IconProgress } from '@tabler/icons-react'
 
 // Register ScrollTrigger inside useGSAP hook or conditionally to support SSR
 if (typeof window !== 'undefined') {
@@ -102,11 +103,11 @@ export default function SustainabilityPage() {
   // GSAP Animations
   useGSAP(() => {
     // 1. Hero Reveal Animations
-    gsap.fromTo('.gsap-hero-title span', 
-      { y: 60, opacity: 0 }, 
+    gsap.fromTo('.gsap-hero-title span',
+      { y: 60, opacity: 0 },
       { y: 0, opacity: 1, duration: 1.2, ease: 'power4.out', stagger: 0.15 }
     )
-    
+
     gsap.fromTo('.gsap-hero-sub',
       { y: 30, opacity: 0 },
       { y: 0, opacity: 1, duration: 1, delay: 0.5, ease: 'power3.out' }
@@ -255,9 +256,9 @@ export default function SustainabilityPage() {
   return (
     <div ref={mainRef}>
       <main className="w-full min-h-screen text-slate-800 bg-white relative overflow-hidden">
-        
+
         {/* ── Parallax Hero Section (GSAP Handled) ── */}
-        <section 
+        <section
           className="gsap-hero-trigger relative w-full px-6 md:px-12 pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden text-white transition-colors duration-300 min-h-[90vh] flex items-center justify-center"
         >
           {/* Background image */}
@@ -267,7 +268,7 @@ export default function SustainabilityPage() {
           />
           <div className="absolute inset-0 bg-[#134E4A] mix-blend-multiply opacity-90 pointer-events-none z-0" />
           <div className="absolute inset-0 bg-black/20 pointer-events-none z-0" />
-          
+
           {/* Floating dishes inside Hero with GSAP Parallax */}
           <div className="gsap-hero-dish-left absolute left-10 md:left-20 top-20 z-10 w-[180px] h-[180px] md:w-[260px] md:h-[260px] opacity-25 lg:opacity-40 pointer-events-none select-none hidden lg:block cursor-grab active:cursor-grabbing">
             <Image
@@ -340,7 +341,7 @@ export default function SustainabilityPage() {
         <section className="gsap-esg-section gsap-reveal-section relative w-full bg-[#FAF9F6] px-6 md:px-12 py-20 md:py-32 overflow-hidden">
           {/* Subtle Grid blueprint overlay */}
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #000000 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
-          
+
           {/* Subtle background watermarks (Jollof Rice with GSAP Parallax) */}
           <div className="gsap-watermark-jollof absolute -left-24 top-[35%] z-0 w-[320px] h-[320px] md:w-[450px] md:h-[450px] opacity-[0.25] md:opacity-[0.4] pointer-events-none select-none hidden lg:block">
             <Image
@@ -351,8 +352,8 @@ export default function SustainabilityPage() {
             />
           </div>
 
-          <div className="max-w-6xl mx-auto relative z-10">
-            
+          <div className="max-w-7xl mx-auto relative z-10">
+
             {/* ESG Commitment Intro */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24">
               <div className="lg:col-span-6 space-y-6 gsap-reveal-header">
@@ -369,9 +370,9 @@ export default function SustainabilityPage() {
               </div>
               <div className="lg:col-span-6 gsap-reveal-item">
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-200/50 aspect-square max-w-md mx-auto bg-slate-100 group">
-                  <img 
-                    src="https://agiscapital.com/wp-content/uploads/2020/06/esg-figure-still-1024x1024.jpg" 
-                    alt="ESG Framework Diagram" 
+                  <img
+                    src="https://agiscapital.com/wp-content/uploads/2020/06/esg-figure-still-1024x1024.jpg"
+                    alt="ESG Framework Diagram"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
@@ -458,7 +459,7 @@ export default function SustainabilityPage() {
         <section className="gsap-environmental-section gsap-reveal-section relative w-full bg-white px-6 md:px-12 py-20 md:py-32 overflow-hidden">
           {/* Subtle radial green glow in background */}
           <div className="absolute right-0 bottom-0 w-[400px] h-[400px] rounded-full bg-green/5 blur-3xl pointer-events-none z-0" />
-          
+
           {/* Subtle background watermarks (Seafood Platter) */}
           <div className="gsap-watermark-seafood absolute -right-24 bottom-[10%] z-0 w-[320px] h-[320px] md:w-[450px] md:h-[450px] opacity-[0.25] md:opacity-[0.4] pointer-events-none select-none hidden lg:block">
             <Image
@@ -470,7 +471,7 @@ export default function SustainabilityPage() {
           </div>
 
           <div className="max-w-6xl mx-auto relative z-10">
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
               <div className="lg:col-span-7 space-y-6 gsap-reveal-header">
                 <span className="text-xs font-bold text-green uppercase tracking-[0.2em]">Environmental Stewardship</span>
@@ -484,7 +485,7 @@ export default function SustainabilityPage() {
                   We actively pursue initiatives to reduce environmental impacts throughout the entire life cycle of our operations, adopting forward-thinking solutions that preserve natural resources for generations to come.
                 </p>
               </div>
-              
+
               {/* Responsible Sourcing Guide Download Card */}
               <div className="lg:col-span-5 gsap-reveal-item">
                 <div className="bg-gradient-to-br from-green to-[#134E4A] text-white rounded-3xl p-8 shadow-xl relative overflow-hidden group">
@@ -498,8 +499,8 @@ export default function SustainabilityPage() {
                   <p className="text-xs text-white/80 leading-relaxed mb-6">
                     We adhere to a comprehensive guide prioritizing fresh, local, and seasonal produce, maintaining ethical business relationships, and reducing environmental footprints.
                   </p>
-                  <a 
-                    href="https://atlanticcatering-gh.com/wp-content/uploads/2024/06/NEW-RESPONSIBLE-SOURCING-ACLL.pdf" 
+                  <a
+                    href="https://atlanticcatering-gh.com/wp-content/uploads/2024/06/NEW-RESPONSIBLE-SOURCING-ACLL.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-white text-green hover:bg-slate-100 font-bold text-xs px-6 py-3 rounded-full transition-colors shadow-md"
@@ -566,13 +567,13 @@ export default function SustainabilityPage() {
         </section>
 
         {/* ── Mid-Page Parallax Banner Section (GSAP Handled) ── */}
-        <section 
+        <section
           className="gsap-banner-trigger relative w-full py-32 md:py-48 overflow-hidden text-center text-white"
         >
           {/* GSAP Parallax background image */}
-          <div 
+          <div
             className="gsap-banner-bg absolute inset-0 z-0 bg-cover bg-center -top-[20%] h-[140%]"
-            style={{ 
+            style={{
               backgroundImage: "url('/images/premium-green-texture.png')"
             }}
           />
@@ -580,7 +581,7 @@ export default function SustainabilityPage() {
           <div className="absolute inset-0 bg-black/10 pointer-events-none z-0" />
 
           <div className="max-w-4xl mx-auto px-6 relative z-10 space-y-6">
-            <Sparkles className="w-8 h-8 text-[#EF9419] mx-auto animate-pulse" />
+            <IconProgress className="w-8 h-8 text-[#EF9419] mx-auto animate-pulse" />
             <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight leading-tight">
               Driving Ghana's Sustainable Future
             </h2>
@@ -595,7 +596,7 @@ export default function SustainabilityPage() {
         <section className="gsap-social-section gsap-reveal-section relative w-full bg-[#F5F5F4] px-6 md:px-12 py-20 md:py-32 overflow-hidden">
           {/* Subtle Grid blueprint overlay */}
           <div className="absolute inset-0 opacity-[0.025] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #000000 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
-          
+
           {/* Floating Culinary Dish with GSAP Parallax */}
           <div className="gsap-watermark-social absolute left-8 bottom-[20%] z-0 w-[240px] h-[240px] opacity-[0.25] md:opacity-[0.35] pointer-events-none select-none hidden lg:block">
             <Image
@@ -607,7 +608,7 @@ export default function SustainabilityPage() {
           </div>
 
           <div className="max-w-6xl mx-auto relative z-10">
-            
+
             <div className="text-center max-w-2xl mx-auto mb-16 gsap-reveal-header">
               <span className="text-xs font-bold text-green uppercase tracking-[0.2em]">Social Responsibility</span>
               <h2 className="text-3xl md:text-5xl font-extrabold text-slate-800 mt-4 mb-6 tracking-tight">
@@ -620,9 +621,9 @@ export default function SustainabilityPage() {
 
             {/* Social Hero Image */}
             <div className="gsap-reveal-item relative rounded-3xl overflow-hidden shadow-2xl mb-16 aspect-[16/9] w-full max-h-[480px] group">
-              <img 
-                src="https://www.thegivingmachine.co.uk/media/zhcdx4g0/corporate-social-responsibility.png?anchor=center&mode=crop&width=800&height=600&rnd=132787859429100000&format=webp" 
-                alt="Social Responsibility Theme" 
+              <img
+                src="https://www.thegivingmachine.co.uk/media/zhcdx4g0/corporate-social-responsibility.png?anchor=center&mode=crop&width=800&height=600&rnd=132787859429100000&format=webp"
+                alt="Social Responsibility Theme"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-8">
@@ -634,9 +635,9 @@ export default function SustainabilityPage() {
 
             {/* Structured Two Column Layout: Detailed Pillars */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-              
+
               <div className="lg:col-span-7 space-y-6">
-                
+
                 <div className="gsap-reveal-item bg-white rounded-2xl p-8 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                   <div className="flex items-center gap-3 mb-4">
                     <Briefcase className="text-green" size={24} />
@@ -692,9 +693,9 @@ export default function SustainabilityPage() {
               {/* Sticky Right Side Context Card */}
               <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-6 gsap-reveal-item">
                 <div className="relative rounded-3xl overflow-hidden shadow-xl aspect-[4/3] bg-slate-100 border border-slate-200/50 group">
-                  <img 
-                    src="https://goodnews.co.ug/wp-content/uploads/2025/01/istockphoto-1221265610-612x612-1.jpg" 
-                    alt="Community Support & Local Impact" 
+                  <img
+                    src="https://goodnews.co.ug/wp-content/uploads/2025/01/istockphoto-1221265610-612x612-1.jpg"
+                    alt="Community Support & Local Impact"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
@@ -714,7 +715,7 @@ export default function SustainabilityPage() {
         {/* ── Sustainability Projects (Interactive Carousel & Pure White Background) ── */}
         <section className="gsap-reveal-section relative w-full bg-white px-6 md:px-12 py-20 md:py-32">
           <div className="max-w-6xl mx-auto">
-            
+
             <div className="text-center max-w-2xl mx-auto mb-16 gsap-reveal-header">
               <span className="text-xs font-bold text-green uppercase tracking-[0.2em]">Impact in Action</span>
               <h2 className="text-3xl md:text-5xl font-extrabold text-slate-800 mt-4 mb-6 tracking-tight">
@@ -727,7 +728,7 @@ export default function SustainabilityPage() {
 
             {/* Interactive Carousel Layout */}
             <div className="gsap-reveal-item relative bg-slate-50 border border-slate-100 rounded-3xl p-8 md:p-12 shadow-sm min-h-[500px] flex flex-col justify-between overflow-hidden">
-              
+
               {/* Background watermarked floating dish relative to the active slide */}
               <AnimatePresence mode="wait">
                 <motion.div
@@ -748,7 +749,7 @@ export default function SustainabilityPage() {
               </AnimatePresence>
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-                
+
                 {/* Carousel Content details */}
                 <div className="lg:col-span-6 space-y-6">
                   <AnimatePresence mode="wait">
@@ -764,21 +765,21 @@ export default function SustainabilityPage() {
                         <span className={`w-1.5 h-1.5 rounded-full ${projects[currentProjectIndex].dotColor} animate-pulse`}></span>
                         {projects[currentProjectIndex].tag}
                       </div>
-                      
+
                       <h3 className="text-3xl font-extrabold text-slate-800">{projects[currentProjectIndex].title}</h3>
                       <p className="text-sm font-semibold text-slate-600 leading-relaxed">{projects[currentProjectIndex].desc}</p>
                       <p className="text-xs text-slate-500 leading-relaxed">{projects[currentProjectIndex].longDesc}</p>
 
                       {projects[currentProjectIndex].hasVideo && (
                         <div className="flex flex-wrap gap-4 pt-2">
-                          <button 
+                          <button
                             onClick={() => setIsVideoModalOpen(true)}
                             className="inline-flex items-center gap-2 bg-green hover:bg-[#134E4A] text-white font-bold text-xs px-6 py-3 rounded-full transition-colors shadow-md"
                           >
                             <Play size={14} fill="currentColor" />
                             Watch Video Highlights
                           </button>
-                          <a 
+                          <a
                             href={projects[currentProjectIndex].youtube}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -805,8 +806,8 @@ export default function SustainabilityPage() {
                     >
                       {projects[currentProjectIndex].hasVideo ? (
                         <div className="relative rounded-2xl overflow-hidden shadow-lg aspect-video bg-black border border-slate-200">
-                          <video 
-                            src={projects[currentProjectIndex].video} 
+                          <video
+                            src={projects[currentProjectIndex].video}
                             controls
                             className="w-full h-full object-cover"
                             poster="/images/premium-green-texture.png"
@@ -830,16 +831,15 @@ export default function SustainabilityPage() {
 
               {/* Carousel Controls */}
               <div className="flex items-center justify-between border-t border-slate-200/50 pt-8 mt-12 relative z-10">
-                
+
                 {/* Slide Counter dots */}
                 <div className="flex gap-2">
                   {projects.map((p, idx) => (
                     <button
                       key={p.id}
                       onClick={() => setCurrentProjectIndex(idx)}
-                      className={`h-2.5 rounded-full transition-all duration-300 ${
-                        currentProjectIndex === idx ? 'w-8 bg-[#EF9419]' : 'w-2.5 bg-slate-300'
-                      }`}
+                      className={`h-2.5 rounded-full transition-all duration-300 ${currentProjectIndex === idx ? 'w-8 bg-[#EF9419]' : 'w-2.5 bg-slate-300'
+                        }`}
                       aria-label={`Slide to project ${idx + 1}`}
                     />
                   ))}
@@ -874,7 +874,7 @@ export default function SustainabilityPage() {
         <section className="gsap-governance-section gsap-reveal-section relative w-full bg-[#F0F4F2] px-6 md:px-12 py-20 md:py-32 overflow-hidden">
           {/* Subtle Grid blueprint overlay */}
           <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #000000 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-          
+
           {/* Floating dish backdrop with GSAP Parallax */}
           <div className="gsap-watermark-governance absolute right-12 top-[20%] z-0 w-[240px] h-[240px] opacity-[0.25] md:opacity-[0.35] pointer-events-none select-none hidden lg:block">
             <Image
@@ -886,7 +886,7 @@ export default function SustainabilityPage() {
           </div>
 
           <div className="max-w-6xl mx-auto relative z-10">
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
               <div className="lg:col-span-7 space-y-6 gsap-reveal-header">
                 <span className="text-xs font-bold text-green uppercase tracking-[0.2em]">Governance</span>
@@ -894,16 +894,16 @@ export default function SustainabilityPage() {
                   Ethics, Transparency &amp; Corporate Accountability
                 </h2>
                 <p className="text-sm md:text-base text-slate-600 leading-relaxed font-medium">
-                  We consider effective governance as fundamental to generating and safeguarding value for our shareholders and stakeholders. 
+                  We consider effective governance as fundamental to generating and safeguarding value for our shareholders and stakeholders.
                 </p>
                 <p className="text-sm text-slate-500 leading-relaxed">
                   This encompasses a robust strategy towards corporate governance, ensuring compliance with all applicable laws, rules, regulations and policies while upholding our foundational values.
                 </p>
               </div>
-              
+
               {/* Organized Grid details */}
               <div className="lg:col-span-5 space-y-6">
-                
+
                 <div className="gsap-reveal-item bg-white rounded-2xl p-6 shadow-sm border border-slate-200/50 hover:shadow-md transition-shadow">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-lg bg-green/10 text-green flex items-center justify-center shrink-0">
@@ -937,9 +937,9 @@ export default function SustainabilityPage() {
         {/* ── Local Content Policy & Human Rights Section (Pure White Background) ── */}
         <section className="gsap-reveal-section relative w-full bg-white px-6 md:px-12 py-20 md:py-32">
           <div className="max-w-6xl mx-auto">
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-              
+
               {/* Left: Local Content Policy Grid */}
               <div className="lg:col-span-7 space-y-6 gsap-reveal-header">
                 <span className="text-xs font-bold text-green uppercase tracking-[0.2em]">Local Content</span>
@@ -949,7 +949,7 @@ export default function SustainabilityPage() {
                 <p className="text-sm text-slate-600 leading-relaxed">
                   At the heart of our Local Content Policy lies a profound reliance on strong relationships and enduring partnerships geared towards capacity building interventions. These connections enable us to empower women and children, communities and foster sustainable growth.
                 </p>
-                
+
                 {/* Organized Grid Design */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
                   {[
@@ -981,7 +981,7 @@ export default function SustainabilityPage() {
                     Preserving Fundamental Rights &amp; Dignity
                   </h3>
                   <p className="text-xs text-white/80 leading-relaxed">
-                    Our commitment to preserving fundamental rights and human dignity is embedded in Atlantic's Human Rights Policy. At Atlantic, we consider human rights an essential aspect of our business philosophy. 
+                    Our commitment to preserving fundamental rights and human dignity is embedded in Atlantic's Human Rights Policy. At Atlantic, we consider human rights an essential aspect of our business philosophy.
                   </p>
                   <p className="text-xs text-white/70 leading-relaxed">
                     Aligned with globally acknowledged principles, our policy advocates for the promotion and protection of human rights. This commitment applies to our operations and affiliates across all assets owned and operated by Atlantic.
@@ -1062,7 +1062,7 @@ export default function SustainabilityPage() {
               >
                 <div className="p-4 bg-slate-50 border-b border-slate-100 flex justify-between items-center">
                   <h4 className="font-bold text-slate-800 text-sm">Maud Speech Highlights — Akyem (Clean Street Bites)</h4>
-                  <button 
+                  <button
                     onClick={() => setIsVideoModalOpen(false)}
                     className="w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-700 flex items-center justify-center text-xs font-bold transition-colors cursor-pointer"
                   >
@@ -1070,8 +1070,8 @@ export default function SustainabilityPage() {
                   </button>
                 </div>
                 <div className="aspect-video bg-black">
-                  <video 
-                    src="https://atlanticcatering-gh.com/wp-content/uploads/2025/10/MAUD-SPEECH-HIGHLIGHTS-AKYEM.mp4" 
+                  <video
+                    src="https://atlanticcatering-gh.com/wp-content/uploads/2025/10/MAUD-SPEECH-HIGHLIGHTS-AKYEM.mp4"
                     controls
                     autoPlay
                     className="w-full h-full object-contain"
