@@ -51,7 +51,7 @@ export const companyInfo = {
 }
 
 export const navigation = [
-  { label: 'Our Solutions', href: '/services' },
+  // { label: 'Our Solutions', href: '/services' },
   { label: 'Sustainability', href: '/sustainability' },
   { label: 'News', href: '/news-updates' },
   { label: 'About Us', href: '/about' },
