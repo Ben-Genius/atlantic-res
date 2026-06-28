@@ -147,17 +147,6 @@ export default function AboutPage() {
         <Sustainability />
         {/* <AboutMarquee /> */}
         {/* <AboutContact /> */}
-
-        {/* ── FOOTER ── */}
-        <footer className="w-full px-6 md:px-16 py-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="font-inter text-white/40 text-xs">
-            © {new Date().getFullYear()} Atlantic Catering & Logistics Limited. All rights reserved.
-          </p>
-          <div className="flex gap-6">
-            <a href="#" className="font-inter text-white/40 hover:text-white text-xs uppercase tracking-widest transition-colors">Food Safety Rating</a>
-            <a href="#" className="font-inter text-white/40 hover:text-white text-xs uppercase tracking-widest transition-colors">ISO Certs</a>
-          </div>
-        </footer>
       </div>
     </div>
   )

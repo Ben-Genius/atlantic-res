@@ -140,7 +140,7 @@ export default function MissionVision() {
           </div>
 
           {/* ══ RIGHT — Quote ══ */}
-          <div className="ceo-quote lg:col-span-5 flex flex-col justify-between p-10 md:p-14 lg:p-16 gap-10 relative overflow-hidden">
+          <div className="ceo-quote lg:col-span-5 flex flex-col justify-between p-6 md:p-14 lg:p-16 gap-10 relative overflow-hidden">
 
             {/* Giant decorative opening quote mark — background layer */}
             <span
@@ -235,7 +235,7 @@ export default function MissionVision() {
               </span>
 
               {/* Attribution */}
-              <div className="quote-line flex items-center gap-4 border-t border-white/10 pt-6">
+              <div className="quote-line flex flex-col sm:flex-row sm:items-center gap-4 border-t border-white/10 pt-6">
 
                 <div>
                   <p className="font-black text-white text-sm uppercase tracking-wide leading-none">
@@ -247,7 +247,7 @@ export default function MissionVision() {
                 </div>
 
                 {/* ISO badges pushed to the right */}
-                <div className="ml-auto flex flex-wrap justify-end gap-2">
+                <div className="sm:ml-auto flex flex-wrap gap-2">
                   {['ISO 9001', 'ISO 14001', 'ISO 22000', 'ISO 45001'].map(cert => (
                     <span
                       key={cert}

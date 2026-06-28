@@ -219,11 +219,12 @@ export default function Header() {
         }}
       >
         {/* Left — nav items */}
-        <div style={{
-          flex: '0 0 50%',
-          display: 'flex', flexDirection: 'column',
-          padding: 'clamp(5rem, 8vw, 8rem) clamp(2rem, 4vw, 4rem) 3rem clamp(2rem, 7vw, 7rem)',
-        }}>
+        <div 
+          className="w-full md:w-1/2 flex flex-col justify-between"
+          style={{
+            padding: 'clamp(5rem, 8vw, 8rem) clamp(2rem, 4vw, 4rem) 3rem clamp(2rem, 7vw, 7rem)',
+          }}
+        >
 
           <nav
             style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '0' }}
@@ -237,15 +238,15 @@ export default function Header() {
                   className="menu-nav-inner block"
                   style={{
                     fontFamily: 'Antonio, sans-serif',
-                    fontSize: '5.7vw',
+                    fontSize: 'clamp(2.2rem, 5vw, 5rem)',
                     fontWeight: 700,
                     textTransform: 'uppercase',
-                    textAlign: 'center',
-                    letterSpacing: '-0.35vw',
+                    textAlign: 'left',
+                    letterSpacing: '-0.03em',
                     lineHeight: '120%',
                     marginTop: 0,
                     marginBottom: 0,
-                    color: hoveredItem === item.href ? '#35b435' : '#35b435',
+                    color: '#35b435',
                     opacity: hoveredItem === null ? 1 : hoveredItem === item.href ? 1 : 0.2,
                     textDecoration: 'none',
                     display: 'block',

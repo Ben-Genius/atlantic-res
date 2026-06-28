@@ -377,7 +377,7 @@ export default function MeetTheCrew() {
             </Reveal>
           </div>
 
-          <Reveal variants={fadeInUp} className="flex-shrink-0">
+          <Reveal variants={fadeInUp} className="flex-shrink-0 mx-auto lg:mx-0">
             <img
               src="/assets/images/About Us/cert.png"
               alt="Certification"

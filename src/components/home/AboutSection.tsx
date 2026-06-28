@@ -195,14 +195,14 @@ export default function AboutSection() {
       {/* ─── Watermark — fully visible and smaller ─── */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-[-24px]  z-20 overflow-hidden w-full flex justify-center"
+        className="pointer-events-none absolute inset-x-0 top-[-24px] z-20 overflow-hidden w-full flex justify-center"
         style={{ lineHeight: 1, }}
       >
         <span
           className="watermark-text block select-none whitespace-nowrap tracking-[10px] text-center font-black uppercase text-[#dedede]"
           style={{
             fontFamily: "'Bebas Neue', sans-serif",
-            fontSize: '10.5rem',
+            fontSize: 'clamp(3.5rem, 9.5vw, 10.5rem)',
           }}
         >
           Reliable. Flexible &amp; Safe
@@ -210,7 +210,7 @@ export default function AboutSection() {
       </div>
 
       {/* ─── Add-on dishes (Top Right & Bottom Left) ─── */}
-      <div className="pointer-events-none absolute right-[-80px] md:right-[-120px] top-[10%] z-10 w-[180px] h-[180px] md:w-[320px] md:h-[320px] aspect-square overflow-hidden will-change-transform float-dish-tr">
+      <div className="pointer-events-none absolute right-[-80px] md:right-[-120px] top-[10%] z-10 w-[180px] h-[180px] md:w-[320px] md:h-[320px] aspect-square overflow-hidden will-change-transform float-dish-tr hidden lg:block">
         <Image
           src="/assets/images/dishes/seafood.png"
           alt="Top right dish 1"
@@ -225,7 +225,7 @@ export default function AboutSection() {
         />
       </div>
 
-      <div className="pointer-events-none absolute left-[-60px] md:left-[-100px] bottom-[18%] z-10 w-[140px] h-[140px] md:w-[260px] md:h-[260px] aspect-square overflow-hidden will-change-transform float-dish-bl">
+      <div className="pointer-events-none absolute left-[-60px] md:left-[-100px] bottom-[18%] z-10 w-[140px] h-[140px] md:w-[260px] md:h-[260px] aspect-square overflow-hidden will-change-transform float-dish-bl hidden lg:block">
         <Image
           src="/assets/images/dishes/jollof.png"
           alt="Bottom left dish 1"
@@ -249,19 +249,14 @@ export default function AboutSection() {
 
           {/* LEFT — main dish (centered and closer to copy) */}
           <div
-            className="relative flex items-center justify-center lg:justify-end mt-30"
-            style={{
-              width: '100%',
-              flex: '0 0 58%',
-              paddingRight: '4vw',
-            }}
+            className="relative flex items-center justify-center lg:justify-end mt-12 lg:mt-30 w-full lg:w-[58%] lg:flex-[0_0_58%] pr-0 lg:pr-[4vw]"
           >
             <div
               ref={imageWrapRef}
-              className="relative will-change-transform  top-[4rem]"
+              className="relative will-change-transform top-[2rem] lg:top-[4rem]"
               style={{
-                width: 'clamp(400px, 54vw, 760px)',
-                height: 'clamp(400px, 54vw, 760px)',
+                width: 'clamp(280px, 54vw, 760px)',
+                height: 'clamp(280px, 54vw, 760px)',
               }}
             >
               <Image
@@ -274,12 +269,11 @@ export default function AboutSection() {
               />
             </div>
 
-
           </div>
 
           {/* RIGHT — copy, vertically centred */}
           <div
-            className="flex flex-1 flex-col justify-center pb-10 pl-0 pr-8 pt-10
+            className="flex flex-1 flex-col justify-center pb-10 px-6 pt-10
                         lg:pb-0 lg:pl-4 lg:pr-[7vw] lg:pt-0"
           >
             {/* Eyebrow */}
