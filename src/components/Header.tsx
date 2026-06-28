@@ -24,18 +24,44 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
 
+  const headerRef = useRef<HTMLElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
   const tlRef = useRef<gsap.core.Timeline | null>(null)
   const imageRefs = useRef<Record<string, HTMLImageElement | null>>({})
   const activeImg = useRef<string>('/')
   const hasOpened = useRef(false)
+  const lastScrollY = useRef(0)
+  const headerVisible = useRef(true)
 
   /* ─── scroll listener ───────────────────────────────────── */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll)
+    const onScroll = () => {
+      const y = window.scrollY
+      setScrolled(y > 40)
+
+      if (isMenuOpen) {
+        lastScrollY.current = y
+        return
+      }
+
+      const delta = y - lastScrollY.current
+      if (Math.abs(delta) < 4) return
+
+      if (delta > 0 && y > 80 && headerVisible.current) {
+        // scrolling down — hide
+        gsap.to(headerRef.current, { yPercent: -120, duration: 0.45, ease: 'power3.inOut' })
+        headerVisible.current = false
+      } else if (delta < 0 && !headerVisible.current) {
+        // scrolling up — show
+        gsap.to(headerRef.current, { yPercent: 0, duration: 0.45, ease: 'power3.out' })
+        headerVisible.current = true
+      }
+
+      lastScrollY.current = y
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [isMenuOpen])
 
   /* ─── build open/close timeline ─────────────────────────── */
   useGSAP(() => {
@@ -84,6 +110,11 @@ export default function Header() {
     if (isMenuOpen) {
       hasOpened.current = true
       tlRef.current.play()
+      // ensure header is visible when menu opens
+      if (!headerVisible.current) {
+        gsap.to(headerRef.current, { yPercent: 0, duration: 0.35, ease: 'power3.out' })
+        headerVisible.current = true
+      }
       window.dispatchEvent(new Event('lenis:stop'))
     } else {
       // skip reverse on initial mount — timeline has never played
@@ -147,7 +178,7 @@ export default function Header() {
   return (
     <>
       {/* ─── Fixed header bar ─────────────────────────── */}
-      <header style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100 }}>
+      <header ref={headerRef} style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100 }}>
         <div className="mx-auto px-8 md:px-16">
           <div className="flex items-center justify-between py-4">
 
