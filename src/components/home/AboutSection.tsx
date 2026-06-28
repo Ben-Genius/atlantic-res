@@ -195,7 +195,7 @@ export default function AboutSection() {
       {/* ─── Watermark — fully visible and smaller ─── */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-[-24px] z-20 overflow-hidden w-full flex justify-center"
+        className="pointer-events-none absolute inset-x-0 z-20 overflow-hidden w-full flex justify-center"
         style={{ lineHeight: 1, }}
       >
         <span
