@@ -316,7 +316,7 @@ export default function SustainabilityPage() {
         {/* ── Stat Strip Section (Overlapping) ── */}
         <section className="relative z-30 -mt-12 px-6 md:px-12">
           <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-1 bg-white rounded-xl shadow-xl overflow-hidden border border-slate-100 p-2 md:p-0">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-0 bg-white rounded-xl shadow-xl overflow-hidden border border-slate-100 p-2 md:p-0">
               <div className="bg-white p-6 text-center">
                 <span className="block text-3xl md:text-5xl font-black text-green mb-1">3</span>
                 <span className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider">ISO Certifications</span>
@@ -325,11 +325,11 @@ export default function SustainabilityPage() {
                 <span className="block text-3xl md:text-5xl font-black text-green mb-1">16</span>
                 <span className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider">Regions Engaged</span>
               </div>
-              <div className="bg-white p-6 text-center border-l border-slate-100">
+              <div className="bg-white p-6 text-center border-t md:border-t-0 md:border-l border-slate-100">
                 <span className="block text-3xl md:text-5xl font-black text-green mb-1">100<span className="text-2xl">%</span></span>
                 <span className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider">Biodegradable Packaging</span>
               </div>
-              <div className="bg-white p-6 text-center border-l border-slate-100">
+              <div className="bg-white p-6 text-center border-t border-l md:border-t-0 border-slate-100">
                 <span className="block text-3xl md:text-5xl font-black text-[#EF9419] mb-1">#1</span>
                 <span className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider">Ghana Club 100 Hospitality</span>
               </div>
@@ -626,8 +626,8 @@ export default function SustainabilityPage() {
                 alt="Social Responsibility Theme"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-8">
-                <p className="text-white text-sm md:text-lg font-semibold max-w-xl">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4 sm:p-8">
+                <p className="text-white text-xs sm:text-sm md:text-lg font-semibold max-w-xl">
                   "We take pride in being an exemplary employer to our workforce and a supportive partner to our communities across all 16 regions."
                 </p>
               </div>
@@ -971,7 +971,7 @@ export default function SustainabilityPage() {
               </div>
 
               {/* Right: Human Rights Commitment */}
-              <div className="lg:col-span-5 gsap-reveal-item bg-gradient-to-br from-[#134E4A] to-slate-900 text-white rounded-3xl p-8 shadow-xl flex flex-col justify-between relative overflow-hidden group">
+              <div className="lg:col-span-5 gsap-reveal-item bg-gradient-to-br from-[#134E4A] to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between relative overflow-hidden group">
                 <div className="absolute right-0 top-0 opacity-[0.03] pointer-events-none transform translate-x-6 -translate-y-6 scale-150 transition-transform duration-700 group-hover:rotate-12">
                   <Globe2 size={240} />
                 </div>

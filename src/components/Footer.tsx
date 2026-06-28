@@ -46,10 +46,12 @@ export default function Footer() {
   const footerRef = useRef<HTMLElement>(null)
   const colRefs = useRef<HTMLDivElement[]>([])
   const [footerHeight, setFooterHeight] = useState(0)
+  const [isLargeScreen, setIsLargeScreen] = useState(false)
 
   useEffect(() => {
     const updateHeight = () => {
       if (wrapperRef.current) setFooterHeight(wrapperRef.current.offsetHeight)
+      setIsLargeScreen(window.innerWidth >= 1024)
     }
     updateHeight()
     window.addEventListener('resize', updateHeight)
@@ -68,20 +70,24 @@ export default function Footer() {
   useGSAP(() => {
     if (!wrapperRef.current || !footerRef.current) return
 
-    gsap.fromTo(
-      footerRef.current,
-      { yPercent: -10 },
-      {
-        yPercent: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: wrapperRef.current,
-          start: 'top bottom',
-          end: 'bottom bottom',
-          scrub: 1,
-        },
-      }
-    )
+    if (isLargeScreen) {
+      gsap.fromTo(
+        footerRef.current,
+        { yPercent: -10 },
+        {
+          yPercent: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: wrapperRef.current,
+            start: 'top bottom',
+            end: 'bottom bottom',
+            scrub: 1,
+          },
+        }
+      )
+    } else {
+      gsap.set(footerRef.current, { yPercent: 0 })
+    }
 
     if (colRefs.current.length > 0) {
       gsap.fromTo(
@@ -101,17 +107,19 @@ export default function Footer() {
         }
       )
     }
-  }, { scope: wrapperRef })
+  }, { scope: wrapperRef, dependencies: [isLargeScreen] })
 
   return (
     <>
       {/* Spacer to create scroll room for the fixed footer reveal */}
-      <div style={{ height: footerHeight, width: '100%', pointerEvents: 'none', background: 'transparent' }} />
+      {isLargeScreen && (
+        <div style={{ height: footerHeight, width: '100%', pointerEvents: 'none', background: 'transparent' }} />
+      )}
 
       {/* Fixed reveal container — sits behind page content */}
       <div
         ref={wrapperRef}
-        style={{
+        style={isLargeScreen ? {
           position: 'fixed',
           bottom: 0,
           left: 0,
@@ -119,6 +127,10 @@ export default function Footer() {
           zIndex: -50,
           width: '100%',
           willChange: 'transform',
+        } : {
+          position: 'relative',
+          width: '100%',
+          zIndex: 1,
         }}
       >
         <footer

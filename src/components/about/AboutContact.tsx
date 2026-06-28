@@ -27,7 +27,7 @@ export default function AboutContact() {
           </a>
         </div>
 
-        <div className="lg:col-span-5 grid grid-cols-1 gap-8 border-l border-white/10 pl-8 md:pl-12">
+        <div className="lg:col-span-5 grid grid-cols-1 gap-8 border-t lg:border-t-0 lg:border-l border-white/10 pl-0 lg:pl-12 pt-8 lg:pt-0">
           {[
             { label: 'Office Address', value: '20 Suya Street, Accra, Ghana\nGA-374-2184' },
             { label: 'Phone', value: '+233 501 502 441' },

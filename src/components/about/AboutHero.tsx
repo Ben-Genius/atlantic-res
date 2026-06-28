@@ -23,7 +23,7 @@ export default function AboutHero() {
       </div>
 
       {/* 1. Top-left Shawarma wrap (au4.png) - Angled & extending from corner */}
-      <div className="hero-plate-tl absolute top-[-1%] left-[-4%] w-[160px] sm:w-[180px] md:w-[280px] lg:w-[350px] z-0 pointer-events-none">
+      <div className="hero-plate-tl absolute top-[-1%] left-[-4%] w-[90px] sm:w-[150px] md:w-[280px] lg:w-[350px] z-0 pointer-events-none">
         <img
           src="/assets/images/About Us/au4.png"
           alt=""
@@ -33,7 +33,7 @@ export default function AboutHero() {
       </div>
 
       {/* 2. Top-right Dip bowl (au2.png) - Positioned in the corner */}
-      <div className="hero-plate-tr absolute top-[-5%] right-[0%] w-[120px] sm:w-[180px] md:w-[240px] lg:w-[300px] z-10 pointer-events-none">
+      <div className="hero-plate-tr absolute top-[-5%] right-[0%] w-[80px] sm:w-[150px] md:w-[240px] lg:w-[300px] z-10 pointer-events-none">
         <img
           src="/assets/images/About Us/au2.png"
           alt=""
@@ -43,7 +43,7 @@ export default function AboutHero() {
       </div>
 
       {/* 3. Bottom-left Falafel bowl (au1.png) - Below main title */}
-      <div className="hero-plate-left absolute top-[22%] sm:top-[48%] md:top-[44%] lg:top-[60%] left-[4%] sm:left-[10%] md:left-[14%] lg:left-[1%] xl:left-[16%] w-[200px] sm:w-[280px] md:w-[380px] lg:w-[450px] xl:w-[400px] z-30 pointer-events-none">
+      <div className="hero-plate-left absolute top-[22%] sm:top-[48%] md:top-[44%] lg:top-[60%] left-[4%] sm:left-[10%] md:left-[14%] lg:left-[1%] xl:left-[16%] w-[140px] sm:w-[220px] md:w-[380px] lg:w-[450px] xl:w-[400px] z-30 pointer-events-none">
         <img
           src="/assets/images/About Us/au1.png"
           alt=""
@@ -53,7 +53,7 @@ export default function AboutHero() {
       </div>
 
       {/* 4. Bottom-right Hummus bowl (au3.png) - Below main title */}
-      <div className="hero-plate-right absolute top-[62%] sm:top-[58%] md:top-[54%] lg:top-[60%] right-[4%] sm:right-[10%] md:right-[14%] lg:right-[18%] xl:right-[20%] w-[150px] sm:w-[200px] md:w-[260px] lg:w-[300px] xl:w-[340px] z-30 flex flex-col items-center sm:items-start gap-4">
+      <div className="hero-plate-right absolute top-[62%] sm:top-[58%] md:top-[54%] lg:top-[60%] right-[4%] sm:right-[10%] md:right-[14%] lg:right-[18%] xl:right-[20%] w-[110px] sm:w-[180px] md:w-[260px] lg:w-[300px] xl:w-[340px] z-30 flex flex-col items-center sm:items-start gap-4">
         <img
           src="/assets/images/About Us/au3.png"
           alt=""
@@ -73,7 +73,7 @@ export default function AboutHero() {
         <h1 className="font-extrabold uppercase leading-[1.1] tracking-tighter m-0 text-center">
           <span className="block overflow-hidden py-1">
             <span
-              className="hero-line block text-[14vw] sm:text-[11vw] md:text-[9vw] lg:text-[8rem] text-white"
+              className="hero-line block text-[8.5vw] sm:text-[8vw] md:text-[7vw] lg:text-[8rem] text-white"
               style={{ WebkitTextStroke: '2px rgba(255,255,255,0.9)' }}
             >
               FOCUS ON <span className="text-transparent">THE WORK</span>
@@ -82,7 +82,7 @@ export default function AboutHero() {
 
           <span className="block overflow-hidden py-1">
             <span
-              className="hero-line block text-[14vw] sm:text-[11vw] md:text-[9vw] lg:text-[8rem] text-transparent"
+              className="hero-line block text-[8.5vw] sm:text-[8vw] md:text-[7vw] lg:text-[8rem] text-transparent"
               style={{ WebkitTextStroke: '2px rgba(255,255,255,0.9)' }}
             >
               WE'LL TAKE CARE
@@ -91,7 +91,7 @@ export default function AboutHero() {
 
           <span className="block overflow-hidden py-1">
             <span
-              className="hero-line block text-[14vw] sm:text-[11vw] md:text-[9vw] lg:text-[8rem] text-[#EF9419]"
+              className="hero-line block text-[8.5vw] sm:text-[8vw] md:text-[7vw] lg:text-[8rem] text-[#EF9419]"
             >
               OF THE REST
             </span>

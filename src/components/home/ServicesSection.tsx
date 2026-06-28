@@ -312,10 +312,10 @@ export default function ServicesSection() {
       <div className="relative w-full h-full flex flex-col justify-center z-20">
 
         {/* Top row: dish + text + card */}
-        <div className="flex items-center ml-4 sm:ml-6 md:ml-[25px] lg:ml-[45px] xl:ml-[65px] gap-[30px] flex-1 relative mt-16 md:mt-24">
+        <div className="flex flex-col lg:flex-row items-center ml-4 sm:ml-6 md:ml-[25px] lg:ml-[45px] xl:ml-[65px] gap-6 lg:gap-[30px] flex-1 relative mt-16 md:mt-24 w-[calc(100%-2rem)]">
 
           {/* A ─ Dish plates stacked absolutely */}
-          <div className="relative z-20 pointer-events-none shrink-0 w-[340px] h-[340px] sm:w-[420px] sm:h-[420px] md:w-[520px] md:h-[520px] lg:w-[620px] lg:h-[620px] xl:w-[680px] xl:h-[680px]">
+          <div className="relative z-20 pointer-events-none shrink-0 w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] md:w-[420px] md:h-[420px] lg:w-[620px] lg:h-[620px] xl:w-[680px] xl:h-[680px] mx-auto lg:mx-0">
             {DISHES.map((dish, idx) => (
               <div
                 key={dish.id}
@@ -332,23 +332,23 @@ export default function ServicesSection() {
           </div>
 
           {/* B ─ Text/Content stacked absolutely */}
-          <div className="relative z-20 flex-1 h-[400px] md:h-[500px]">
+          <div className="relative z-20 flex-1 h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px] w-full mt-4 lg:mt-0">
             {DISHES.map((dish, idx) => (
               <div
                 key={dish.id}
-                className={`dish-content dish-content-${idx} absolute inset-y-0 left-0 flex flex-col justify-start gap-[20%] w-full`}
+                className={`dish-content dish-content-${idx} absolute inset-0 flex flex-col justify-start lg:justify-center items-center lg:items-start text-center lg:text-left gap-3 lg:gap-[15%] w-full`}
               >
                 <div>
-                  <p className="font-outfit text-xs md:text-sm font-semibold tracking-[0.25em] md:tracking-[0.3em] uppercase text-white/70 mb-2">
+                  <p className="font-outfit text-[10px] md:text-sm font-semibold tracking-[0.25em] md:tracking-[0.3em] uppercase text-white/70 mb-1 lg:mb-2">
                     {dish.tag}
                   </p>
 
                   <h2 className="font-outfit leading-[1.0] uppercase">
-                    <span className="block font-extralight tracking-[0.04em] text-[2rem] sm:text-[2.8rem] md:text-[3.8rem] lg:text-[4.5rem] xl:text-[5.2rem] text-white/95">
+                    <span className="block font-extralight tracking-[0.04em] text-[1.5rem] sm:text-[2.2rem] md:text-[3.2rem] lg:text-[4.5rem] xl:text-[5.2rem] text-white/95">
                       {dish.name.split(' ')[0]}
                     </span>
                     <span
-                      className="block font-black tracking-tight text-[2.5rem] sm:text-[3.5rem] md:text-[4.8rem] lg:text-[5.8rem] xl:text-[6.8rem] -mt-1 md:-mt-2"
+                      className="block font-black tracking-tight text-[1.8rem] sm:text-[2.8rem] md:text-[3.8rem] lg:text-[5.8rem] xl:text-[6.8rem] -mt-1 md:-mt-2"
                       style={{ color: dish.accentColor }}
                     >
                       {dish.name.split(' ').slice(1).join(' ')}
@@ -356,14 +356,14 @@ export default function ServicesSection() {
                   </h2>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-8 sm:gap-12 mt-8 md:mt-10 font-inter">
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-12 mt-4 lg:mt-10 font-inter">
                   <a href="#" className="group flex items-center gap-3 md:gap-4 text-white/80 hover:text-white transition-all">
-                    <div className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 group-hover:border-white/60 transition-colors bg-white/5 backdrop-blur-sm">
-                      <svg className="w-3 h-3 md:w-4 md:h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center justify-center w-8 h-8 md:w-12 md:h-12 rounded-full border border-white/20 group-hover:border-white/60 transition-colors bg-white/5 backdrop-blur-sm">
+                      <svg className="w-2.5 h-2.5 md:w-4 md:h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z" />
                       </svg>
                     </div>
-                    <span className="font-medium text-xs md:text-sm tracking-widest uppercase">Contact</span>
+                    <span className="font-medium text-[10px] md:text-sm tracking-widest uppercase">Contact</span>
                   </a>
 
                   <a
@@ -371,17 +371,17 @@ export default function ServicesSection() {
                     className="group flex items-center gap-3 md:gap-4 text-white/80 hover:text-white transition-all"
                   >
                     <div
-                      className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full text-white shadow-lg transition-colors"
+                      className="flex items-center justify-center w-8 h-8 md:w-12 md:h-12 rounded-full text-white shadow-lg transition-colors"
                       style={{
                         backgroundColor: dish.accentColor,
                         boxShadow: `0 10px 15px -3px ${dish.accentColor}33`,
                       }}
                     >
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M7 4H5L4 6v2h2l3.6 7.59L8.25 18A2 2 0 0010 21h9v-2h-8.58a.25.25 0 01-.22-.37L11.1 17h6.45a2 2 0 001.79-1.11L23 9H8.42L7 4z" />
                       </svg>
                     </div>
-                    <span className="font-medium text-xs md:text-sm tracking-widest uppercase">Request Service</span>
+                    <span className="font-medium text-[10px] md:text-sm tracking-widest uppercase">Request Service</span>
                   </a>
                 </div>
               </div>

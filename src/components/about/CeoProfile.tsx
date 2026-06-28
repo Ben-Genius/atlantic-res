@@ -24,7 +24,7 @@ export default function CeoProfile() {
         </div>
 
         {/* Text col */}
-        <div className="lg:col-span-7 flex flex-col justify-between border-l border-white/10 p-8 md:p-12 gap-10">
+        <div className="lg:col-span-7 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-white/10 p-8 md:p-12 gap-10">
           <div>
             <span
               className="block font-black uppercase leading-none text-[12vw] lg:text-[5.5rem] text-transparent"
