@@ -23,7 +23,7 @@ export default function AboutHero() {
       </div>
 
       {/* 1. Top-left Shawarma wrap (au4.png) - Angled & extending from corner */}
-      <div className="hero-plate-tl absolute top-[-1%] left-[-4%] w-[90px] sm:w-[150px] md:w-[280px] lg:w-[350px] z-0 pointer-events-none">
+      <div className="hero-plate-tl absolute top-[-1%] lg:top-[20%] left-[-4%] w-[90px] sm:w-[150px] md:w-[280px] lg:w-[350px] z-0 pointer-events-none">
         <img
           src="/assets/images/About Us/au4.png"
           alt=""
@@ -43,7 +43,7 @@ export default function AboutHero() {
       </div>
 
       {/* 3. Bottom-left Falafel bowl (au1.png) - Below main title */}
-      <div className="hero-plate-left absolute top-[22%] sm:top-[48%] md:top-[44%] lg:top-[60%] left-[4%] sm:left-[10%] md:left-[14%] lg:left-[1%] xl:left-[16%] w-[140px] sm:w-[220px] md:w-[380px] lg:w-[450px] xl:w-[400px] z-30 pointer-events-none">
+      <div className="hero-plate-left absolute top-[35%] sm:top-[48%] md:top-[44%] lg:top-[60%] -left-[5%] sm:left-[10%] md:left-[14%] lg:left-[1%] xl:left-[9%] w-[140px] sm:w-[220px] md:w-[380px] lg:w-[450px] xl:w-[400px] z-30 pointer-events-none">
         <img
           src="/assets/images/About Us/au1.png"
           alt=""
@@ -53,7 +53,7 @@ export default function AboutHero() {
       </div>
 
       {/* 4. Bottom-right Hummus bowl (au3.png) - Below main title */}
-      <div className="hero-plate-right absolute top-[62%] sm:top-[58%] md:top-[54%] lg:top-[60%] right-[4%] sm:right-[10%] md:right-[14%] lg:right-[18%] xl:right-[20%] w-[110px] sm:w-[180px] md:w-[260px] lg:w-[300px] xl:w-[340px] z-30 flex flex-col items-center sm:items-start gap-4">
+      <div className="hero-plate-right absolute top-[62%] sm:top-[58%] md:top-[54%] lg:top-[65%] right-[4%] sm:right-[10%] md:right-[14%] lg:right-[18%] xl:right-[10%] w-[110px] sm:w-[180px] md:w-[260px] lg:w-[300px] xl:w-[340px] z-30 flex flex-col items-center sm:items-start gap-4">
         <img
           src="/assets/images/About Us/au3.png"
           alt=""
@@ -101,7 +101,7 @@ export default function AboutHero() {
         {/* Subline + CTA row */}
         <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-6 mt-10 mx-auto">
           <a
-            href="#contact"
+            href="/contact"
             className="shrink-0 border border-white/90 text-white font-inter font-bold text-xs uppercase tracking-widest px-7 py-3 hover:bg-white hover:text-[#1a4a1a] transition-all duration-200"
           >
             GET IN TOUCH
