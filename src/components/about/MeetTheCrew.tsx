@@ -217,27 +217,29 @@ function MemberContent({
       <div className="relative">
         <AnimatePresence mode="wait">
           {expanded ? (
-            <motion.p
+            <motion.div
               key="full"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.28, ease: EASE.smooth }}
-              className="text-gray-600 leading-relaxed text-sm sm:text-base font-inter whitespace-pre-line"
             >
-              {member.fullBio}
-            </motion.p>
+              <p className="text-gray-600 leading-relaxed text-sm sm:text-base font-inter whitespace-pre-line">
+                {member.fullBio}
+              </p>
+            </motion.div>
           ) : (
-            <motion.p
+            <motion.div
               key="short"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.28, ease: EASE.smooth }}
-              className="text-gray-600 leading-relaxed text-sm sm:text-base font-inter whitespace-pre-line"
             >
-              {member.shortBio}
-            </motion.p>
+              <p className="text-gray-600 leading-relaxed text-sm sm:text-base font-inter whitespace-pre-line">
+                {member.shortBio}
+              </p>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
@@ -351,20 +353,16 @@ export default function MeetTheCrew() {
 
             {/* Title with underline accent */}
             <Reveal variants={fadeInUp} className="mb-3">
-              <div className="mb-3">
-                <h2 className="text-5xl sm:text-6xl lg:text-[5rem] font-black uppercase text-[#111] leading-none tracking-tight inline">
-                  Meet the{" "}
-                </h2>
+              <h2 className="mb-3 text-5xl sm:text-6xl lg:text-[5rem] font-black uppercase text-[#111] leading-none tracking-tight">
+                Meet the{" "}
                 <span className="relative inline-block">
-                  <h2 className="text-5xl sm:text-6xl lg:text-[5rem] font-black uppercase text-[#111] leading-none tracking-tight inline">
-                    Crew
-                  </h2>
+                  Crew
                   <motion.span
                     variants={lineReveal}
                     className="absolute -bottom-1 left-0 w-full h-1.5 bg-[#EF9419] rounded-md origin-left"
                   />
                 </span>
-              </div>
+              </h2>
             </Reveal>
 
             <Reveal variants={fadeInUp} margin="-40px">
