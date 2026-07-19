@@ -89,6 +89,13 @@ const config: Config = {
         'float': 'float 4s ease-in-out infinite',
         'marquee': 'marquee 30s linear infinite',
         'spin-slow': 'spin 20s linear infinite',
+        'bounce-slow': 'bounceSlow 2s ease-in-out infinite',
+      },
+      keyframes: {
+        bounceSlow: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(6px)' },
+        },
       },
       backdropBlur: {
         xs: '2px',
