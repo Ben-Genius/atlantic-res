@@ -410,3 +410,12 @@ body::before {
     @apply font-sans;
   }
 }
+
+/* ─── Reduced motion ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-cell-in,
+  .animate-bounce-slow,
+  .animate-spin-slow {
+    animation: none !important;
+  }
+}

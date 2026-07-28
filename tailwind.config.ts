@@ -90,11 +90,16 @@ const config: Config = {
         'marquee': 'marquee 30s linear infinite',
         'spin-slow': 'spin 20s linear infinite',
         'bounce-slow': 'bounceSlow 2s ease-in-out infinite',
+        'cell-in': 'cellIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) both',
       },
       keyframes: {
         bounceSlow: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(6px)' },
+        },
+        cellIn: {
+          '0%': { opacity: '0', transform: 'scale(1.12)', filter: 'blur(6px)' },
+          '100%': { opacity: '1', transform: 'scale(1)', filter: 'blur(0)' },
         },
       },
       backdropBlur: {
