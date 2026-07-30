@@ -6,6 +6,35 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Phone, Mail, MapPin, Send, CheckCircle2, ChevronDown, Facebook, Instagram, Linkedin, ShieldCheck, Award, CheckSquare, Star } from 'lucide-react'
 import { companyInfo } from '@/lib/constants'
 
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'FoodService'],
+  name: 'Atlantic Catering & Logistics',
+  description: 'ISO-certified catering and logistics for offshore operations, corporate clients, and premium events across Ghana.',
+  url: 'https://atlanticcatering-gh.com',
+  telephone: companyInfo.phone,
+  email: companyInfo.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '20 Suya Street, East Legon',
+    addressLocality: 'Accra',
+    addressRegion: 'Greater Accra',
+    postalCode: 'GA-374-2184',
+    addressCountry: 'GH',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 5.621454,
+    longitude: -0.147729,
+  },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:00', closes: '17:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'], opens: '09:00', closes: '14:00' },
+  ],
+  priceRange: '$$$',
+  areaServed: 'Ghana',
+}
+
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: 'Corporate Catering', message: '' })
   const [newsletterEmail, setNewsletterEmail] = useState('')
@@ -40,7 +69,9 @@ export default function ContactPage() {
   }
 
   return (
-    <main className="w-full min-h-screen text-slate-800 bg-white relative">
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
+      <main className="w-full min-h-screen text-slate-800 bg-white relative">
 
       {/* ── Hero/Header Section (Styled with Brand Green and Texture) ── */}
       <section className="relative w-full px-6 md:px-12 pt-32 pb-24 md:pt-40 md:pb-28 overflow-hidden text-white transition-colors duration-300">
@@ -477,5 +508,6 @@ export default function ContactPage() {
         )}
       </AnimatePresence>
     </main>
+    </>
   )
 }

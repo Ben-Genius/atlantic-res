@@ -46,11 +46,10 @@ export default function Loader() {
             transition={{ duration: 0.8, ease: 'easeOut' }}
             className="mb-12"
           >
-            <object
-              data="/svg/logoA.svg"
-              type="image/svg+xml"
+            <img
+              src="/svg/logoA.svg"
+              alt="Atlantic Catering & Logistics"
               style={{ width: 'clamp(280px, 25vw, 450px)', height: 'auto' }}
-              aria-label="Atlantic Catering & Logistics"
             />
           </motion.div>
 

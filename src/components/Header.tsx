@@ -97,11 +97,11 @@ export default function Header() {
                 className="flex items-center shrink-0"
                 aria-label="Atlantic Catering & Logistics — Home"
               >
-                <object
-                  data="/svg/logoA.svg"
-                  type="image/svg+xml"
-                  aria-label="Atlantic Catering & Logistics"
-                  className="h-10 sm:h-11 md:h-24 w-auto pointer-events-none block"
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/svg/logoA.svg"
+                  alt="Atlantic Catering & Logistics"
+                  className="h-9 sm:h-10 md:h-20 w-auto object-contain"
                 />
               </Link>
             </div>

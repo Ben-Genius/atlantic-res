@@ -46,8 +46,29 @@ const serviceDetails = [
 ]
 
 export default function ServicesPage() {
+  const serviceSchemas = serviceDetails.map((svc, i) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: svc.title,
+    description: svc.desc,
+    provider: {
+      '@type': 'Organization',
+      name: 'Atlantic Catering & Logistics',
+      url: 'https://atlanticcatering-gh.com',
+    },
+    areaServed: 'Ghana',
+    serviceType: svc.id === 'offshore' ? 'Offshore Catering Services'
+      : svc.id === 'corporate' ? 'Corporate Catering Services'
+      : svc.id === 'events' ? 'Event Management Services'
+      : 'Institutional Catering Services',
+  }))
+
   return (
-    <main style={{ background: 'var(--color-ink)' }}>
+    <>
+      {serviceSchemas.map((schema, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      ))}
+      <main style={{ background: 'var(--color-ink)' }}>
       {/* ── HERO ─────────────────────────────────────── */}
       <section style={{ position: 'relative', height: '60vh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0 }}>
@@ -152,5 +173,6 @@ export default function ServicesPage() {
         </div>
       </section>
     </main>
+    </>
   )
 }

@@ -1,0 +1,18 @@
+# *
+User-agent: *
+Allow: /
+
+# *
+User-agent: *
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+Disallow: /test/
+Disallow: /private/
+
+# Host
+Host: https://atlanticcatering-gh.com
+
+# Sitemaps
+Sitemap: https://atlanticcatering-gh.com/sitemap.xml
+Sitemap: https://atlanticcatering-gh.com/sitemap-index.xml
