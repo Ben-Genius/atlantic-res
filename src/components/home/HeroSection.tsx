@@ -83,7 +83,7 @@ export default function HeroSection() {
       </div>
 
       {/* Main Content Area */}
-      <div className="relative z-20 flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-24 xl:py-32">
+      <div className="relative z-20 flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-22 sm:py-24 xl:py-32">
         <div
           ref={contentRef}
           className="relative z-10 w-full text-center flex flex-col items-center justify-center max-w-[900px] mx-auto"

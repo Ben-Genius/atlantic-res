@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { gsap } from 'gsap'
+import LogoA from '@/components/LogoA'
 
 export default function Loader() {
   const [loading, setLoading] = useState(true)
@@ -46,9 +47,8 @@ export default function Loader() {
             transition={{ duration: 0.8, ease: 'easeOut' }}
             className="mb-12"
           >
-            <img
-              src="/svg/logoA.svg"
-              alt="Atlantic Catering & Logistics"
+            <LogoA
+              spin="loop"
               style={{ width: 'clamp(280px, 25vw, 450px)', height: 'auto' }}
             />
           </motion.div>

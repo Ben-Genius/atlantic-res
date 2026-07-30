@@ -6,6 +6,7 @@ import { gsap } from 'gsap'
 import { Menu, X, ArrowRight } from 'lucide-react'
 import { navigation } from '@/lib/constants'
 import { cn } from '@/lib/utils'
+import LogoA from '@/components/LogoA'
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -76,7 +77,7 @@ export default function Header() {
         ref={headerRef}
         className={cn(
           'fixed top-0 left-0 right-0 z-[100]',
-          'transition-all duration-300',
+          'transition-all',
           scrolled
             ? 'bg-white/95 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.08)]'
             : 'bg-transparent'
@@ -85,10 +86,8 @@ export default function Header() {
         <div className="mx-auto px-5 sm:px-8 md:px-12 lg:px-16">
           <div className="flex items-center justify-between h-16 sm:h-18 md:h-20">
 
-            {/* Logo — rounded pill */}
+            {/* Logo — rounded pill with animated SVG */}
             <div className={cn(
-
-
 
             )}>
               <Link
@@ -97,11 +96,10 @@ export default function Header() {
                 className="flex items-center shrink-0"
                 aria-label="Atlantic Catering & Logistics — Home"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/svg/logoA.svg"
-                  alt="Atlantic Catering & Logistics"
-                  className="h-9 sm:h-10 md:h-20 w-auto object-contain"
+                <LogoA
+                  spin="loop"
+                  className="block "
+                  style={{ height: '98px', width: 'auto', aspectRatio: '1600/983' }}
                 />
               </Link>
             </div>
@@ -199,12 +197,7 @@ export default function Header() {
         {/* Sheet header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
           <Link href="/" onClick={close} aria-label="Atlantic Catering & Logistics — Home">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/svg/logoA.svg"
-              alt="Atlantic Catering & Logistics"
-              className="h-10 w-auto object-contain"
-            />
+            <LogoA spin="loop" className="h-10 w-auto" style={{ aspectRatio: '1600/983' }} />
           </Link>
           <button
             onClick={close}
