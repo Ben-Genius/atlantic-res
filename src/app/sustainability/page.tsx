@@ -809,6 +809,7 @@ export default function SustainabilityPage() {
                           <video
                             src={projects[currentProjectIndex].video}
                             controls
+                            playsInline
                             className="w-full h-full object-cover"
                             poster="/images/premium-green-texture.png"
                           />
@@ -1074,6 +1075,7 @@ export default function SustainabilityPage() {
                     src="https://atlanticcatering-gh.com/wp-content/uploads/2025/10/MAUD-SPEECH-HIGHLIGHTS-AKYEM.mp4"
                     controls
                     autoPlay
+                    playsInline
                     className="w-full h-full object-contain"
                   />
                 </div>

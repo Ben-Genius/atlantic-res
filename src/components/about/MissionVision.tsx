@@ -11,15 +11,50 @@ const CARDS = [
 
 export default function MissionVision() {
   const sectionRef = useRef<HTMLDivElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const [muted, setMuted] = useState(true)
+  const [isPlaying, setIsPlaying] = useState(false)
+
+  // Ensure video attempts playback on load
+  React.useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = muted
+      const playPromise = videoRef.current.play()
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setIsPlaying(true))
+          .catch(() => setIsPlaying(false))
+      }
+    }
+  }, [muted])
+
+  const togglePlay = () => {
+    if (!videoRef.current) return
+    if (videoRef.current.paused) {
+      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {})
+    } else {
+      videoRef.current.pause()
+      setIsPlaying(false)
+    }
+  }
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setMuted(prev => {
+      const nextMuted = !prev
+      if (videoRef.current) {
+        videoRef.current.muted = nextMuted
+      }
+      return nextMuted
+    })
+  }
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger)
 
     gsap.from('.ceo-video', {
-      x: -80,
-      opacity: 0,
-      duration: 1.4,
+      x: -40,
+      duration: 1.2,
       ease: 'power3.out',
       scrollTrigger: {
         trigger: sectionRef.current,
@@ -99,27 +134,42 @@ export default function MissionVision() {
         <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch min-h-[70vh]">
 
           {/* ══ LEFT — Video ══ */}
-          <div className="ceo-video lg:col-span-6 relative">
-            <div className="w-full h-[60vw] lg:h-full min-h-[360px] relative overflow-hidden">
+          <div className="ceo-video lg:col-span-6 relative z-10">
+            <div 
+              onClick={togglePlay}
+              className="w-full h-[60vw] lg:h-full min-h-[360px] relative overflow-hidden group cursor-pointer bg-black/40"
+            >
               <video
+                ref={videoRef}
                 src="https://atlanticcatering-gh.com/wp-content/uploads/2026/02/Home-Atlantic-Catering.mp4"
-
+                autoPlay
                 loop
                 muted={muted}
                 playsInline
                 controls
-
                 poster="/assets/images/thumbnail.png"
-
-                className="absolute inset-0 w-full h-full object-contain "
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+                className="absolute inset-0 w-full h-full object-cover"
               />
+
+              {/* Big Play Button overlay if video was paused by browser autoplay restriction */}
+              {!isPlaying && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-20 transition-opacity">
+                  <div className="w-16 h-16 rounded-full bg-[#EF9419] flex items-center justify-center text-white shadow-lg transform group-hover:scale-110 transition-transform">
+                    <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                </div>
+              )}
 
               {/* Right-edge fade blending into text side */}
               <div className="absolute inset-y-0 right-0 w-28 pointer-events-none" />
 
               {/* Mute / Unmute toggle */}
               <button
-                onClick={() => setMuted(m => !m)}
+                onClick={toggleMute}
                 className="absolute bottom-4 left-4 z-20 flex items-center gap-2 bg-black/50 hover:bg-black/70 backdrop-blur-sm border border-white/15 text-white px-3 py-2 rounded-full transition-all"
               >
                 {muted ? (

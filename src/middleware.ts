@@ -31,6 +31,7 @@ export function middleware(request: NextRequest) {
     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://maps.google.com https://maps.googleapis.com https://www.youtube.com https://www.youtube-nocookie.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "img-src 'self' data: https: blob:",
+    "media-src 'self' blob: https://atlanticcatering-gh.com https://*.atlanticcatering-gh.com",
     "font-src 'self' data: https://fonts.gstatic.com",
     "connect-src 'self' https://www.google-analytics.com https://atlanticcatering-gh.com https://*.odoo.com",
     "frame-src 'self' https://www.google.com https://www.youtube.com https://www.youtube-nocookie.com https://maps.google.com",

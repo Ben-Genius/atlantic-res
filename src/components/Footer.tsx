@@ -165,7 +165,7 @@ export default function Footer() {
                     alt="Atlantic Catering & Logistics"
                     width={130}
                     height={52}
-                    style={{ height: 'auto', width: 'auto', maxWidth: 130 }}
+                    style={{ maxWidth: 130 }}
                   />
                 </Link>
                 <p style={{ fontSize: '0.875rem', color: 'rgba(26,26,26,0.55)', lineHeight: 1.85, maxWidth: 260, marginBottom: '1.95rem' }}>
