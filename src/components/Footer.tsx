@@ -141,7 +141,7 @@ export default function Footer() {
             fontFamily: 'DM Sans, Inter, sans-serif',
             position: 'relative',
             overflow: 'hidden',
-            borderTop: '1px solid rgba(103,186,103,0.2)',
+            borderTop: '1px solid rgba(102,204,51,0.2)',
           }}
         >
           {/* Subtle ambient tint */}
@@ -177,7 +177,7 @@ export default function Footer() {
                     <span key={tag} style={{
                       padding: '0.3rem 0.7rem',
                       border: '1px solid rgba(103,186,103,0.4)',
-                      color: '#35b435',
+                      color: '#66cc33',
                       fontSize: '0.6rem', fontWeight: 700,
                       letterSpacing: '0.1em', textTransform: 'uppercase',
                     }}>
@@ -198,8 +198,8 @@ export default function Footer() {
                         transition: 'all 0.3s ease',
                       }}
                       onMouseEnter={e => {
-                        e.currentTarget.style.background = '#35b435'
-                        e.currentTarget.style.borderColor = '#35b435'
+                        e.currentTarget.style.background = '#66cc33'
+                        e.currentTarget.style.borderColor = '#66cc33'
                         e.currentTarget.style.color = '#ffffff'
                       }}
                       onMouseLeave={e => {
@@ -216,7 +216,7 @@ export default function Footer() {
 
               {/* Services column */}
               <div ref={el => { if (el) colRefs.current[2] = el }}>
-                <h4 style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#35b435', marginBottom: '1.5rem' }}>
+                <h4 style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#66cc33', marginBottom: '1.5rem' }}>
                   Services
                 </h4>
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
@@ -238,7 +238,7 @@ export default function Footer() {
 
               {/* Company column */}
               <div ref={el => { if (el) colRefs.current[3] = el }}>
-                <h4 style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#35b435', marginBottom: '1.5rem' }}>
+                <h4 style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#66cc33', marginBottom: '1.5rem' }}>
                   Company
                 </h4>
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
@@ -260,7 +260,7 @@ export default function Footer() {
 
               {/* Contact column */}
               <div ref={el => { if (el) colRefs.current[4] = el }}>
-                <h4 style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#35b435', marginBottom: '1.5rem' }}>
+                <h4 style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#66cc33', marginBottom: '1.5rem' }}>
                   Contact
                 </h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
@@ -275,7 +275,7 @@ export default function Footer() {
                       onMouseEnter={e => { e.currentTarget.style.color = '#1a1a1a' }}
                       onMouseLeave={e => { e.currentTarget.style.color = 'rgba(26,26,26,0.55)' }}
                     >
-                      <Icon size={14} style={{ color: '#35b435', marginTop: 3, flexShrink: 0 }} />
+                      <Icon size={14} style={{ color: '#66cc33', marginTop: 3, flexShrink: 0 }} />
                       {label}
                     </a>
                   ))}
@@ -302,7 +302,7 @@ export default function Footer() {
                   <Link
                     key={label} href="#"
                     style={{ fontSize: '0.72rem', color: 'rgba(26,26,26,0.35)', textDecoration: 'none', transition: 'color 0.25s', letterSpacing: '0.04em' }}
-                    onMouseEnter={e => { e.currentTarget.style.color = '#35b435' }}
+                    onMouseEnter={e => { e.currentTarget.style.color = '#66cc33' }}
                     onMouseLeave={e => { e.currentTarget.style.color = 'rgba(26,26,26,0.35)' }}
                   >
                     {label}

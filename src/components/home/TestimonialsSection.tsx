@@ -107,11 +107,11 @@ export default function TestimonialsSection() {
       className="relative py-20 md:py-10 bg-[#F9F6F0] overflow-hidden select-none"
     >
       {/* Subtle warm tint */}
-      <div className="absolute inset-0 bg-[#35b435]/[0.015] pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[#66cc33]/[0.015] pointer-events-none z-0" />
 
       {/* ─── HEADER (left-aligned) ─── */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 mb-14">
-        <span className="testi-label block text-[#EF9419] font-outfit text-xs font-extrabold uppercase tracking-[0.28em] mb-3">
+        <span className="testi-label block text-[#cc9933] font-outfit text-xs font-extrabold uppercase tracking-[0.28em] mb-3">
           Client Feedback
         </span>
         <h2 className="testi-heading text-3xl md:text-5xl font-black text-[#1a1a1a] font-outfit tracking-tight leading-tight max-w-lg">
@@ -151,7 +151,7 @@ export default function TestimonialsSection() {
               {/* Arrowhead at top-right (pointing toward plate after mirror) */}
               <path
                 d="M62 8 L72 4 L68 14"
-                stroke="#EF9419"
+                stroke="#cc9933"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -160,14 +160,14 @@ export default function TestimonialsSection() {
               {/* Curved path from label (bottom-left) to arrowhead (top-right) */}
               <path
                 d="M10 65 C20 40 50 20 68 8"
-                stroke="#EF9419"
+                stroke="#cc9933"
                 strokeWidth="2"
                 strokeLinecap="round"
                 fill="none"
               />
             </svg>
             <span
-              className="font-serif text-[13px] text-[#EF9419] font-semibold leading-tight text-center"
+              className="font-serif text-[13px] text-[#cc9933] font-semibold leading-tight text-center"
               style={{ fontStyle: 'italic' }}
             >
               delicious<br />breakfast
@@ -179,7 +179,7 @@ export default function TestimonialsSection() {
         <div className="flex-1 flex flex-col items-center text-center px-4 md:px-10 max-w-2xl mx-auto">
 
           {/* Gold quote icon */}
-          <div className="testi-quote-icon inline-flex items-center justify-center w-14 h-14 rounded-full bg-[#EF9419] text-white shadow-xl shadow-[#EF9419]/30 mb-7">
+          <div className="testi-quote-icon inline-flex items-center justify-center w-14 h-14 rounded-full bg-[#cc9933] text-white shadow-xl shadow-[#cc9933]/30 mb-7">
             <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
               <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-4.765 2.827-4.725 6.51h4.725V21h-9.978zm-11.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.154c-2.433.914-4.76 2.824-4.722 6.505h4.722V21H3z" />
             </svg>
@@ -196,10 +196,10 @@ export default function TestimonialsSection() {
 
           {/* Author */}
           <div className="testi-author mt-6">
-            <p className="text-base font-bold text-[#EF9419] font-outfit tracking-widest uppercase">
+            <p className="text-base font-bold text-[#cc9933] font-outfit tracking-widest uppercase">
               {premiumTestimonials[activeIndex].author}
             </p>
-            <p className="text-xs text-[#35b435] font-semibold mt-0.5 tracking-widest uppercase font-outfit">
+            <p className="text-xs text-[#66cc33] font-semibold mt-0.5 tracking-widest uppercase font-outfit">
               {premiumTestimonials[activeIndex].role}
             </p>
           </div>
@@ -221,7 +221,7 @@ export default function TestimonialsSection() {
                 style={{
                   width: i === activeIndex ? 28 : 8,
                   height: 8,
-                  background: i === activeIndex ? '#EF9419' : '#d1c4a8',
+                  background: i === activeIndex ? '#cc9933' : '#d1c4a8',
                   borderRadius: 999,
                 }}
               />
@@ -248,7 +248,7 @@ export default function TestimonialsSection() {
             style={{ top: -30, left: -65 }}
           >
             <span
-              className="font-serif text-[13px] text-[#EF9419] font-semibold leading-tight text-center mb-1"
+              className="font-serif text-[13px] text-[#cc9933] font-semibold leading-tight text-center mb-1"
               style={{ fontStyle: 'italic' }}
             >
               healthy<br />experience
@@ -264,7 +264,7 @@ export default function TestimonialsSection() {
               {/* Curved path from label top-left to arrowhead bottom-right */}
               <path
                 d="M10 8 C25 30 55 50 70 62"
-                stroke="#EF9419"
+                stroke="#cc9933"
                 strokeWidth="2"
                 strokeLinecap="round"
                 fill="none"
@@ -272,7 +272,7 @@ export default function TestimonialsSection() {
               {/* Arrowhead at bottom-right (pointing into the plate) */}
               <path
                 d="M60 62 L72 65 L66 54"
-                stroke="#EF9419"
+                stroke="#cc9933"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -290,7 +290,7 @@ export default function TestimonialsSection() {
           className="bg-transparent px-8 py-3 flex flex-col sm:flex-row items-center gap-3 "
           style={{ borderRadius: '100px' }}
         >
-          <div className="flex gap-1 text-white bg-[#EF9419] px-3 py-2 rounded-md">
+          <div className="flex gap-1 text-white bg-[#cc9933] px-3 py-2 rounded-md">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star key={i} className="w-4 h-4 fill-current" />
             ))}

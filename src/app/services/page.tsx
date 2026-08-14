@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Ship, Building2, PartyPopper, GraduationCap, CheckCircle2, ArrowRight } from 'lucide-react'
+import { Headphones, Factory, Plane, CalendarCheck, Ship, Shirt, Tent, Crown, CheckCircle2, ArrowRight } from 'lucide-react'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -12,36 +12,68 @@ const fadeUp = {
 
 const serviceDetails = [
   {
-    id: 'offshore',
-    title: 'Offshore Operations',
-    icon: Ship,
-    img: '/images/service-offshore.png',
-    desc: 'Specialized catering and logistics for FPSOs, vessels, and remote camps. We deliver morale-boosting nutrition in the most demanding environments.',
-    features: ['ISO 22000 Certified Safety', 'Remote Site Management', 'Specialized Supply Chain', '24/7 Operations Support']
+    id: 'support',
+    title: '24/7 Support Services',
+    icon: Headphones,
+    img: '/images/service-corporate.png',
+    desc: 'Dependable 24/7 support services ensuring seamless operations across all facilities.',
+    features: ['Round-the-clock Support', 'Rapid Response', 'Facility Maintenance', 'Dedicated Teams']
   },
   {
-    id: 'corporate',
-    title: 'Corporate Catering',
-    icon: Building2,
+    id: 'offshore',
+    title: 'Offshore Catering & Supply Services',
+    icon: Factory,
+    img: '/images/service-offshore.png',
+    desc: 'ACLL offers a full suite of timely, dependable offshore catering and supply services for the oil and gas industry.',
+    features: ['ISO 22000 Certified Safety', 'Rig & Platform Catering', 'Specialized Supply Chain', 'Remote Operations']
+  },
+  {
+    id: 'inflight',
+    title: 'Inflight Catering',
+    icon: Plane,
     img: '/images/service-corporate.png',
-    desc: 'Elevate your workspace with premium dining. From executive boardrooms to daily staff meals, we provide tailored culinary solutions.',
-    features: ['Executive Boardroom Service', 'Daily Staff Feeding', 'Nutritional Menu Design', 'Hospitality Management']
+    desc: 'Premium inflight catering delivering exceptional culinary experiences for aviation clients.',
+    features: ['Aviation Dining', 'Custom Menu Design', 'Strict Safety Standards', 'Timely Delivery']
   },
   {
     id: 'events',
-    title: 'Event Management',
-    icon: PartyPopper,
-    img: '/images/catering_service_display.png', // Fallback or new image
-    desc: 'Unforgettable culinary moments for your most important occasions. Bespoke menus and full-scale coordination for corporate and private events.',
+    title: 'Event Planning & Management',
+    icon: CalendarCheck,
+    img: '/images/catering_service_display.png',
+    desc: 'Professional event planning and management for galas, business retreats, and special corporate events.',
     features: ['Custom Menu Curation', 'Full Event Staffing', 'Equipment & Decor', 'Premium Presentation']
   },
   {
-    id: 'institutional',
-    title: 'Institutional Services',
-    icon: GraduationCap,
-    img: '/images/hero-expertise.png', // Fallback
-    desc: 'Comprehensive facilities management including laundry, housekeeping, and janitorial services for large-scale operations.',
-    features: ['Professional Housekeeping', 'Large-scale Laundry', 'Janitorial Services', 'Supply Chain Logistics']
+    id: 'maritime',
+    title: 'Ship Chandelling',
+    icon: Ship,
+    img: '/images/service-offshore.png',
+    desc: 'Your reliable partner for complete ship chandelling, supplying provisions and stores to vessels of every kind.',
+    features: ['Vessel Supplies', 'Fresh Provisions', 'Rapid Turnaround', 'Maritime Logistics']
+  },
+  {
+    id: 'facility',
+    title: 'Housekeeping, Laundry & Cleaning Services',
+    icon: Shirt,
+    img: '/images/hero-expertise.png',
+    desc: 'Maintaining safe and clean living conditions with our comprehensive housekeeping, laundry, and cleaning services.',
+    features: ['Professional Housekeeping', 'Large-scale Laundry', 'Janitorial Services', 'Sanitization']
+  },
+  {
+    id: 'camp',
+    title: 'Camp Management Services.',
+    icon: Tent,
+    img: '/images/service-offshore.png',
+    desc: 'Expert camp management services ensuring seamless daily operations for remote sites and large-scale facilities.',
+    features: ['Remote Site Operations', 'Facility Maintenance', 'Personnel Management', 'Logistics Support']
+  },
+  {
+    id: 'vip',
+    title: 'VIP Catering',
+    icon: Crown,
+    img: '/images/catering_service_display.png',
+    desc: 'Exquisite VIP catering tailored for executives, dignitaries, and high-profile private dining experiences.',
+    features: ['Exclusive Dining', 'Executive Chef Curated', 'Premium Ingredients', 'White-glove Service']
   }
 ]
 
@@ -57,10 +89,7 @@ export default function ServicesPage() {
       url: 'https://atlanticcatering-gh.com',
     },
     areaServed: 'Ghana',
-    serviceType: svc.id === 'offshore' ? 'Offshore Catering Services'
-      : svc.id === 'corporate' ? 'Corporate Catering Services'
-      : svc.id === 'events' ? 'Event Management Services'
-      : 'Institutional Catering Services',
+    serviceType: svc.title + ' Services',
   }))
 
   return (

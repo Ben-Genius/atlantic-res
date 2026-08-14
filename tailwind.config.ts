@@ -51,17 +51,23 @@ const config: Config = {
           2: '#181818',
           3: '#202020',
         },
+        // ── ACLL Brand Guide (Rev 1) — Primary Colours ──
         green: {
-          DEFAULT: '#35b435',
-          light: '#2D6A4F',
-          mid: '#52B788',
-          dim: 'rgba(27, 67, 50, 0.15)',
+          DEFAULT: '#66cc33',   // Moderate Lime Green — brand primary
+          light: '#A4D79C',
+          mid: '#A4D79C',
+          dark: '#3C8B36',
+          dim: 'rgba(102, 204, 51, 0.15)',
         },
         gold: {
-          DEFAULT: '#EF9419',
-          light: '#FBC02D',
+          DEFAULT: '#cc9933',
+          light: '#D4A556',
+          dark: '#B37B29',
         },
-        cream: '#FAFAF8',
+        // Accent colours — charts / colour coding only, never backgrounds
+        accentPurple: '#b048b8',
+        accentBlue: '#296ed6',
+        cream: '#ffffff',
       },
       fontFamily: {
         display: ['Antonio', 'sans-serif'],

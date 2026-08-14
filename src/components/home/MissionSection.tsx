@@ -43,7 +43,7 @@ export default function MissionSection() {
           >
             "Deliver quality, healthy, nutritious, and hygienically prepared meals with excellence to every client and partner."
           </blockquote>
-          <div className="h-px bg-gradient-to-r from-transparent via-[#57C157] to-transparent mb-10" />
+          <div className="h-px bg-gradient-to-r from-transparent via-[#66cc33] to-transparent mb-10" />
           <p className="text-sm text-[rgba(26,26,26,0.4)] tracking-[0.15em] uppercase">
             Maud Lindsay-Gamrat — Chief Executive Officer
           </p>

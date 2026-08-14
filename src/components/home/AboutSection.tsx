@@ -278,10 +278,10 @@ export default function AboutSection() {
           >
             {/* Eyebrow */}
             <div className="about-eyebrow mb-5 flex items-center gap-3">
-              <span className="h-px w-8 bg-[#57C157]" />
+              <span className="h-px w-8 bg-[#66cc33]" />
               <span
                 className="text-xs font-semibold uppercase tracking-[0.22em]"
-                style={{ color: '#57C157' }}
+                style={{ color: '#66cc33' }}
               >
                 Since 2014
               </span>
@@ -322,10 +322,10 @@ export default function AboutSection() {
 
               <a
                 href="tel:+233302000000"
-                className="group flex items-center gap-2.5 text-sm font-semibold text-[#1a1a1a] transition-colors hover:text-[#57C157]"
+                className="group flex items-center gap-2.5 text-sm font-semibold text-[#1a1a1a] transition-colors hover:text-[#66cc33]"
               >
                 <span
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d9d9d9] transition-colors group-hover:border-[#57C157]"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d9d9d9] transition-colors group-hover:border-[#66cc33]"
                 >
                   <svg
                     width="15" height="15" viewBox="0 0 24 24" fill="none"
@@ -369,9 +369,9 @@ function ValuePill({
       {/* Circular icon — matches inspo style exactly */}
       <div
         className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full"
-        style={{ background: 'rgba(87,193,87,0.10)' }}
+        style={{ background: 'rgba(102,204,51,0.10)' }}
       >
-        <Icon className="h-[22px] w-[22px]" style={{ color: '#57C157' }} />
+        <Icon className="h-[22px] w-[22px]" style={{ color: '#66cc33' }} />
       </div>
       <div>
         <p className="text-[0.78rem] font-bold uppercase tracking-[0.14em] text-[#1a1a1a]">

@@ -31,13 +31,13 @@ export default function CtaButton({
     size === 'md' ? 'p-4 pr-5' : 'p-3 pr-4',
     variant === 'primary'
       ? 'bg-green text-white hover:bg-gold'
-      : 'border border-[rgba(26,26,26,0.2)] text-[#1a1a1a] hover:border-[#57C157] hover:text-[#57C157]',
+      : 'border border-[rgba(26,26,26,0.2)] text-[#1a1a1a] hover:border-[#66cc33] hover:text-[#66cc33]',
     className
   )
 
   const iconClass = cn(
     'relative w-7 h-7 flex items-center justify-center rounded-sm overflow-hidden',
-    variant === 'primary' ? 'bg-white/20' : 'bg-black/5 group-hover/btn:bg-[#57C157]/10'
+    variant === 'primary' ? 'bg-white/20' : 'bg-black/5 group-hover/btn:bg-[#66cc33]/10'
   )
 
   const content = (

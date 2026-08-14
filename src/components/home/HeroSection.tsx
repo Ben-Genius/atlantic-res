@@ -88,7 +88,7 @@ export default function HeroSection() {
           ref={contentRef}
           className="relative z-10 w-full text-center flex flex-col items-center justify-center max-w-[900px] mx-auto"
         >
-          <span className="hero-eyebrow text-[10px] sm:text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-[0.28em] text-[#57C157] mb-3 sm:mb-4 md:mb-5 select-none">
+          <span className="hero-eyebrow text-[10px] sm:text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-[0.28em] text-[#66cc33] mb-3 sm:mb-4 md:mb-5 select-none">
             GLOBAL CUISINE, UNFORGETTABLE EXPERIENCES
           </span>
 
@@ -97,7 +97,7 @@ export default function HeroSection() {
             <span
               className="hero-title-line-1 block text-[2.8rem] sm:text-[3.8rem] md:text-[5rem] lg:text-[6.5rem] xl:text-[7.5rem] 2xl:text-[8.5rem]"
               style={{
-                WebkitTextStroke: '2px #EF9419',
+                WebkitTextStroke: '2px #cc9933',
                 color: 'transparent',
               }}
             >
@@ -107,7 +107,7 @@ export default function HeroSection() {
             {/* Line 2 — solid primary green */}
             <span
               className="hero-title-line-2 block text-[2.8rem] sm:text-[3.6rem] md:text-[4.8rem] lg:text-[6rem] xl:text-[7rem] 2xl:text-[8rem] mt-1 sm:mt-2 md:mt-3"
-              style={{ color: '#57C157' }}
+              style={{ color: '#66cc33' }}
             >
               MADE FOR
             </span>
@@ -115,7 +115,7 @@ export default function HeroSection() {
             {/* Line 3 — cycling word, solid gold */}
             <span
               className="hero-title-line-3 block text-[2.8rem] sm:text-[3.6rem] md:text-[4.8rem] lg:text-[6rem] xl:text-[7rem] 2xl:text-[8rem] min-h-[1.1em] relative w-full mt-1 sm:mt-2 md:mt-3"
-              style={{ color: '#EF9419' }}
+              style={{ color: '#cc9933' }}
             >
               <span ref={textRef} className="absolute left-0 right-0 text-center block">
                 EVERY MOMENT
@@ -135,7 +135,7 @@ export default function HeroSection() {
               label="EXPLORE OUR MENU"
               size="md"
               variant="primary"
-              className="!bg-[#57C157] text-white hover:!bg-[#EF9419] hover:text-white shadow-[0_8px_30px_rgba(87,193,87,0.3)] hover:shadow-[0_12px_40px_rgba(239,148,25,0.4)] transition-all duration-500"
+              className="!bg-[#66cc33] text-white hover:!bg-[#cc9933] hover:text-white shadow-[0_8px_30px_rgba(102,204,51,0.3)] hover:shadow-[0_12px_40px_rgba(204,153,51,0.4)] transition-all duration-500"
             />
           </div>
         </div>
@@ -147,7 +147,7 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-12 text-center sm:text-left text-[#1a1a1a]">
             {/* Item 1 */}
             <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
-              <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-[#57C157]/10 border border-[#57C157]/20 text-[#57C157] shadow-sm flex-shrink-0">
+              <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-[#66cc33]/10 border border-[#66cc33]/20 text-[#66cc33] shadow-sm flex-shrink-0">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 sm:w-4 sm:h-4">
                   <circle cx="12" cy="12" r="10" />
                   <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20" />
@@ -163,7 +163,7 @@ export default function HeroSection() {
 
             {/* Item 2 */}
             <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
-              <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-[#57C157]/10 border border-[#57C157]/20 text-[#57C157] shadow-sm flex-shrink-0">
+              <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-[#66cc33]/10 border border-[#66cc33]/20 text-[#66cc33] shadow-sm flex-shrink-0">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 sm:w-4 sm:h-4">
                   <path d="M12 4V2M5 18h14a1 1 0 0 0 1-1v-2a7 7 0 0 0-14 0v2a1 1 0 0 0 1 1Z" />
                   <path d="M12 4a5 5 0 0 1 5 5v2H7V9a5 5 0 0 1 5-5Z" />
@@ -179,7 +179,7 @@ export default function HeroSection() {
 
             {/* Item 3 */}
             <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
-              <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-[#57C157]/10 border border-[#57C157]/20 text-[#57C157] shadow-sm flex-shrink-0">
+              <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-[#66cc33]/10 border border-[#66cc33]/20 text-[#66cc33] shadow-sm flex-shrink-0">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 sm:w-4 sm:h-4">
                   <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 8a7 7 0 0 1-9 10Z" />
                   <path d="M9 22v-4" />

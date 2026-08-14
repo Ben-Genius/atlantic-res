@@ -29,7 +29,7 @@ export default function CtaSection() {
   return (
     <>
       <section ref={sectionRef} className="py-section bg-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[rgba(103,186,103,0.05)] to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[rgba(102,204,51,0.05)] to-transparent pointer-events-none" />
         <div className="container-xl relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="reveal">
             <div className="section-label">

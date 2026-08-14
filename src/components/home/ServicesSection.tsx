@@ -5,98 +5,126 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+/**
+ * Per-service accents are drawn only from the ACLL brand guide (Rev 1):
+ * the gold range (#cc9933 / #D4A556 / #B37B29), the light green #A4D79C,
+ * brand white, and the two sanctioned accent colours — purple #b048b8 and
+ * blue #296ed6. The guide permits those two for colour coding only, which is
+ * exactly this use; the section background stays brand green.
+ */
 const DISHES = [
   {
     id: 1,
-    name: 'Onshore Catering',
-    subtitle: 'Remote Site Dining',
-    img: '/images/services/atlantic/offshore-catering-new.jpg',
-    accentColor: '#EF9419',
-    arcColor: 'rgba(239, 148, 25, 0.25)',
-    rating: '4.8',
-    ratingColor: 'bg-[#EF9419]',
-    description: 'ACLL offers a full suite of timely, dependable onshore catering services for clients across the country.',
+    name: '24/7 Support Services',
+    subtitle: 'Round-the-clock Support',
+    img: '/assets/images/Services/support.webp',
+    accentColor: '#cc9933', // Brand gold
+    arcColor: 'rgba(204, 153, 51, 0.25)',
+    rating: '4.9',
+    ratingColor: 'bg-[#cc9933]',
+    ratingTextClass: 'text-white',
+    description: 'Dependable 24/7 support services ensuring seamless operations across all facilities.',
     tag: '#1 Core Service',
-    division: 'Onshore Division'
+    division: 'Support Division'
   },
   {
     id: 2,
-    name: 'Offshore Catering',
-    subtitle: 'Rig & Platform Catering',
-    img: '/images/services/atlantic/offshore-catering-new.jpg',
-    accentColor: '#10B981', // emerald green
-    arcColor: 'rgba(16, 185, 129, 0.25)',
+    name: 'Offshore Catering & Supply',
+    subtitle: 'Rig & Platform Operations',
+    img: '/assets/images/Services/onsh.webp',
+    accentColor: '#296ed6', // Accent blue
+    arcColor: 'rgba(41, 110, 214, 0.25)',
     rating: '4.9',
-    ratingColor: 'bg-[#10B981]',
-    description: 'ACLL offers a full suite of timely, dependable offshore catering services for the oil and gas industry.',
+    ratingColor: 'bg-[#296ed6]',
+    ratingTextClass: 'text-white',
+    description: 'ACLL offers a full suite of timely, dependable offshore catering and supply services for the oil and gas industry.',
     tag: '#2 Core Service',
     division: 'Offshore Division'
   },
   {
     id: 3,
-    name: 'Contract Catering',
-    subtitle: 'On-site Cafés & Dining',
-    img: '/images/services/atlantic/offshore-catering-new.jpg',
-    accentColor: '#3B82F6', // blue
-    arcColor: 'rgba(59, 130, 246, 0.25)',
-    rating: '4.6',
-    ratingColor: 'bg-[#3B82F6]',
-    description: 'ACLL is specialized in formal catering services for on-site restaurant and café operations.',
+    name: 'Inflight Catering',
+    subtitle: 'Aviation Dining',
+    img: '/assets/images/Services/iNFLIGHTcatering.webp',
+    accentColor: '#b048b8', // Accent purple
+    arcColor: 'rgba(176, 72, 184, 0.25)',
+    rating: '4.8',
+    ratingColor: 'bg-[#b048b8]',
+    ratingTextClass: 'text-white',
+    description: 'Premium inflight catering delivering exceptional culinary experiences for aviation clients.',
     tag: '#3 Core Service',
-    division: 'Contract Division'
+    division: 'Aviation Division'
   },
   {
     id: 4,
-    name: 'Camp Design',
-    subtitle: 'Top-Tier Construction',
-    img: '/images/services/atlantic/offshore-catering-new.jpg',
-    accentColor: '#EC4899', // pink
-    arcColor: 'rgba(236, 72, 153, 0.25)',
-    rating: '4.7',
-    ratingColor: 'bg-[#EC4899]',
-    description: 'We custom design, build top-tier camps and also manage the daily operations while supplying and distributing the essential goods and services.',
+    name: 'Event Planning & Mgt',
+    subtitle: 'Galas & Corporate Events',
+    img: '/assets/images/Services/eventt.webp',
+    accentColor: '#D4A556', // Gold light
+    arcColor: 'rgba(212, 165, 86, 0.25)',
+    rating: '4.9',
+    ratingColor: 'bg-[#D4A556]',
+    ratingTextClass: 'text-[#1a1a1a]',
+    description: 'Professional event planning and management for galas, business retreats, and special corporate events.',
     tag: '#4 Core Service',
-    division: 'Camp Management & Operations'
+    division: 'Event Management'
   },
   {
     id: 5,
-    name: 'Event Planning',
-    subtitle: 'Galas & Business Events',
-    img: '/images/services/atlantic/offshore-catering-new.jpg',
-    accentColor: '#8B5CF6', // violet
-    arcColor: 'rgba(139, 92, 246, 0.25)',
-    rating: '4.5',
-    ratingColor: 'bg-[#8B5CF6]',
-    description: 'Let us create the fresh, seasonal menus for your upcoming gala, birthday party or office retreat and business events.',
+    name: 'Ship Chandelling',
+    subtitle: 'Vessel Supplies',
+    img: '/assets/images/Services/ShipSupplies%20.webp',
+    accentColor: '#A4D79C', // Green light
+    arcColor: 'rgba(164, 215, 156, 0.25)',
+    rating: '4.7',
+    ratingColor: 'bg-[#A4D79C]',
+    ratingTextClass: 'text-[#1a1a1a]',
+    description: 'Your reliable partner for complete ship chandelling, supplying provisions and stores to vessels of every kind.',
     tag: '#5 Core Service',
-    division: 'Event Management & Planning'
+    division: 'Maritime Supplies'
   },
   {
     id: 6,
-    name: 'Ship Supplies',
-    subtitle: 'Provisions & Store Supply',
-    img: '/images/services/atlantic/offshore-catering-new.jpg',
-    accentColor: '#F59E0B', // amber
-    arcColor: 'rgba(245, 158, 11, 0.25)',
-    rating: '4.9',
-    ratingColor: 'bg-[#F59E0B]',
-    description: 'ACLL is your reliable partner in the supply of provisions and stores to the offshore industry and ships of every kind.',
+    name: 'Housekeeping, Laundry & Cleaning',
+    subtitle: 'Facility Care',
+    img: '/assets/images/Services/cleaning.webp',
+    accentColor: '#B37B29', // Gold dark
+    arcColor: 'rgba(179, 123, 41, 0.25)',
+    rating: '4.8',
+    ratingColor: 'bg-[#B37B29]',
+    ratingTextClass: 'text-white',
+    description: 'Maintaining safe and clean living conditions with our comprehensive housekeeping, laundry, and cleaning services.',
     tag: '#6 Core Service',
-    division: 'Ship & Store Supplies'
+    division: 'Facility Management'
   },
   {
     id: 7,
-    name: 'Housekeeping Services',
-    subtitle: 'Facility & Laundry Care',
-    img: '/images/services/atlantic/offshore-catering-new.jpg',
-    accentColor: '#06B6D4', // cyan
-    arcColor: 'rgba(6, 182, 212, 0.25)',
-    rating: '4.7',
-    ratingColor: 'bg-[#06B6D4]',
-    description: 'At ACLL, our goal is to provide a safe well-maintained camp or facility to ensure healthy living conditions, including full laundry and housekeeping services.',
+    name: 'Camp Mgt Services.',
+    subtitle: 'Remote Site Operations',
+    img: '/assets/images/Services/camp.webp',
+    accentColor: '#ffffff', // Brand white
+    arcColor: 'rgba(255, 255, 255, 0.25)',
+    rating: '4.9',
+    ratingColor: 'bg-white',
+    ratingTextClass: 'text-[#1a1a1a]',
+    description: 'Expert camp management services ensuring seamless daily operations for remote sites and large-scale facilities.',
     tag: '#7 Core Service',
-    division: 'Housekeeping & Laundry Services'
+    division: 'Camp Operations'
   },
+  {
+    id: 8,
+    name: 'VIP Catering',
+    subtitle: 'Exclusive Dining',
+    img: '/assets/images/Services/EventPlanning%202%20.webp',
+    accentColor: '#cc9933', // Reuse Brand Gold
+    arcColor: 'rgba(204, 153, 51, 0.25)',
+    rating: '5.0',
+    ratingColor: 'bg-[#cc9933]',
+    ratingTextClass: 'text-white',
+    description: 'Exquisite VIP catering tailored for executives, dignitaries, and high-profile private dining experiences.',
+    tag: '#8 Core Service',
+    division: 'Executive Division'
+  }
 ]
 
 export default function ServicesSection() {
@@ -125,7 +153,7 @@ export default function ServicesSection() {
         id: 'services-pin',
         trigger: sectionRef.current,
         start: 'top top',
-        end: `+=${window.innerHeight * 6}`, // 600vh total scroll distance for 7 items
+        end: `+=${window.innerHeight * (DISHES.length - 1)}`, // Dynamic total scroll distance
         scrub: 1,
         pin: true,
         anticipatePin: 1,
@@ -283,7 +311,7 @@ export default function ServicesSection() {
       }}
     >
       {/* ── overlays ── */}
-      <div className="absolute inset-0 bg-[#35b435] mix-blend-multiply opacity-90 pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[#66cc33] mix-blend-multiply opacity-90 pointer-events-none z-0" />
       <div className="absolute inset-0 bg-black/15 pointer-events-none z-0" />
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
@@ -302,7 +330,7 @@ export default function ServicesSection() {
           top: 'calc(50% - 1681px)',
           width: '1800px',
           height: '1800px',
-          border: '220px solid rgba(239, 148, 25, 0.25)',
+          border: '220px solid rgba(204, 153, 51, 0.25)',
           borderRadius: '50%',
           transformOrigin: 'center center',
         }}
@@ -319,7 +347,7 @@ export default function ServicesSection() {
             {DISHES.map((dish, idx) => (
               <div
                 key={dish.id}
-                className={`dish-plate dish-plate-${idx} absolute inset-0 rounded-full border-[6px] md:border-[10px] border-white/95 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] overflow-hidden`}
+                className={`dish-plate dish-plate-${idx} absolute inset-0  overflow-hidden`}
               >
                 <img
                   src={dish.img}
@@ -410,7 +438,7 @@ export default function ServicesSection() {
                     {/* Rating */}
                     <div className="flex items-center gap-4">
                       <div className={`flex items-center justify-center w-14 h-14 xl:w-16 xl:h-16 rounded-2xl shrink-0 ${dish.ratingColor}`}>
-                        <span className="font-outfit font-black text-white text-xl xl:text-2xl leading-none">{dish.rating}</span>
+                        <span className={`font-outfit font-black text-xl xl:text-2xl leading-none ${dish.ratingTextClass}`}>{dish.rating}</span>
                       </div>
                       <div className="flex flex-col gap-1">
                         <div className="flex gap-0.5">
@@ -522,7 +550,7 @@ export default function ServicesSection() {
                     </span>
                     <span
                       className={`thumb-subtitle font-inter text-[9px] tracking-wider uppercase transition-colors
-                        ${idx === 0 ? 'text-[#EF9419]' : 'text-white/25 group-hover:text-white/40'}`}
+                        ${idx === 0 ? 'text-[#cc9933]' : 'text-white/25 group-hover:text-white/40'}`}
                       style={{ color: idx === 0 ? dish.accentColor : undefined }}
                     >
                       {dish.subtitle}

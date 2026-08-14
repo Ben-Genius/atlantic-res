@@ -110,11 +110,11 @@ export default function StatsBand() {
     >
       {/* Custom Cinematic Cursor */}
       <div 
-        className="stats-cursor fixed top-0 left-0 w-5 h-5 bg-[#EF9419] rounded-full pointer-events-none z-[9999] mix-blend-difference -translate-x-1/2 -translate-y-1/2 opacity-0 transition-[width,height] duration-300 ease-out will-change-transform"
+        className="stats-cursor fixed top-0 left-0 w-5 h-5 bg-[#cc9933] rounded-full pointer-events-none z-[9999] mix-blend-difference -translate-x-1/2 -translate-y-1/2 opacity-0 transition-[width,height] duration-300 ease-out will-change-transform"
       />
 
       {/* Color Overlay: Multiplies the primary brand green into the texture to make it much greener and perfectly on-brand */}
-      <div className="absolute inset-0 bg-[#35b435] mix-blend-multiply opacity-90 pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[#66cc33] mix-blend-multiply opacity-90 pointer-events-none z-0" />
       {/* Subtle dark overlay for text contrast */}
       <div className="absolute inset-0 bg-black/10 pointer-events-none z-0" />
 
@@ -136,7 +136,7 @@ export default function StatsBand() {
 
           {/* The Pop-in Badge (Moved to middle with higher z-index and size) */}
           <span className="stats-badge-wrapper relative inline-flex items-center justify-center px-[0.2em] mx-[0.1em] z-50">
-            <span className="stats-badge bg-[#EF9419] text-[#1a1a1a] px-[0.4em] py-[0.05em] rounded-md inline-block shadow-[0_20px_40px_rgba(0,0,0,0.4)] origin-center tracking-[-0.02em] font-sans font-bold text-[clamp(1.5rem,4vw,3.5rem)] -rotate-3">
+            <span className="stats-badge bg-[#cc9933] text-[#1a1a1a] px-[0.4em] py-[0.05em] rounded-md inline-block shadow-[0_20px_40px_rgba(0,0,0,0.4)] origin-center tracking-[-0.02em] font-sans font-bold text-[clamp(1.5rem,4vw,3.5rem)] -rotate-3">
               #1 ISO CERTIFIED
             </span>
           </span>

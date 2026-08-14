@@ -120,7 +120,7 @@ export default function Header() {
                   href={item.href}
                   className={cn(
                     'relative px-4 py-1.5 text-[12px] font-semibold uppercase tracking-[0.14em] rounded-full',
-                    'text-[#1a1a1a]/75 hover:text-[#35b435] hover:bg-[#35b435]/8 hover:font-bold',
+                    'text-[#1a1a1a]/75 hover:text-[#66cc33] hover:bg-[#66cc33]/8 hover:font-bold',
                     'transition-all duration-200'
                   )}
                 >
@@ -137,9 +137,9 @@ export default function Header() {
                 rel="noopener noreferrer"
                 className={cn(
                   'group relative flex items-center gap-2.5 px-4 py-2.5 rounded-md overflow-hidden',
-                  'bg-[#35b435] text-white font-bold uppercase tracking-[0.18em] text-[11px]',
+                  'bg-[#66cc33] text-white font-bold uppercase tracking-[0.18em] text-[11px]',
                   'transition-all duration-400 ease-[cubic-bezier(0.23,1,0.32,1)]',
-                  'hover:bg-[#EF9419] shadow-md hover:shadow-lg'
+                  'hover:bg-[#cc9933] shadow-md hover:shadow-lg'
                 )}
               >
                 <span>eCommerce</span>
@@ -165,7 +165,7 @@ export default function Header() {
               aria-expanded={mobileOpen}
               className={cn(
                 'lg:hidden flex items-center justify-center w-9 h-9 rounded-full',
-                'bg-[#35b435] text-white transition-colors duration-200 hover:bg-[#EF9419]'
+                'bg-[#66cc33] text-white transition-colors duration-200 hover:bg-[#cc9933]'
               )}
             >
               <Menu className={cn('w-4 h-4 transition-all duration-200', mobileOpen && 'opacity-0 scale-75')} />
@@ -217,14 +217,14 @@ export default function Header() {
               onClick={close}
               className={cn(
                 'flex items-center px-4 py-3 rounded-lg text-[14px] font-semibold uppercase tracking-[0.12em]',
-                'text-[#1a1a1a]/80 hover:text-[#35b435] hover:bg-[#35b435]/8',
+                'text-[#1a1a1a]/80 hover:text-[#66cc33] hover:bg-[#66cc33]/8',
                 'transition-all duration-200 group'
               )}
             >
               <span className="flex-1">{item.label}</span>
               <ArrowRight
                 size={14}
-                className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-[#35b435]"
+                className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-[#66cc33]"
               />
             </Link>
           ))}
@@ -239,8 +239,8 @@ export default function Header() {
             onClick={close}
             className={cn(
               'flex items-center justify-center gap-2 w-full py-3 px-4 rounded-md',
-              'bg-[#35b435] text-white font-bold uppercase tracking-[0.18em] text-[11px]',
-              'hover:bg-[#EF9419] transition-colors duration-300 shadow-md'
+              'bg-[#66cc33] text-white font-bold uppercase tracking-[0.18em] text-[11px]',
+              'hover:bg-[#cc9933] transition-colors duration-300 shadow-md'
             )}
           >
             <span>eCommerce</span>
