@@ -17,7 +17,7 @@ const DISHES = [
     id: 1,
     name: '24/7 Support Services',
     subtitle: 'Round-the-clock Support',
-    img: '/assets/images/Services/support.webp',
+    img: '/assets/images/Services/fit/support.webp',
     accentColor: '#cc9933', // Brand gold
     arcColor: 'rgba(204, 153, 51, 0.25)',
     rating: '4.9',
@@ -31,7 +31,7 @@ const DISHES = [
     id: 2,
     name: 'Offshore Catering & Supply',
     subtitle: 'Rig & Platform Operations',
-    img: '/assets/images/Services/onsh.webp',
+    img: '/assets/images/Services/fit/offshore.webp',
     accentColor: '#296ed6', // Accent blue
     arcColor: 'rgba(41, 110, 214, 0.25)',
     rating: '4.9',
@@ -45,7 +45,7 @@ const DISHES = [
     id: 3,
     name: 'Inflight Catering',
     subtitle: 'Aviation Dining',
-    img: '/assets/images/Services/iNFLIGHTcatering.webp',
+    img: '/assets/images/Services/fit/inflight.webp',
     accentColor: '#b048b8', // Accent purple
     arcColor: 'rgba(176, 72, 184, 0.25)',
     rating: '4.8',
@@ -59,7 +59,7 @@ const DISHES = [
     id: 4,
     name: 'Event Planning & Mgt',
     subtitle: 'Galas & Corporate Events',
-    img: '/assets/images/Services/eventt.webp',
+    img: '/assets/images/Services/fit/event-planning.webp',
     accentColor: '#D4A556', // Gold light
     arcColor: 'rgba(212, 165, 86, 0.25)',
     rating: '4.9',
@@ -73,7 +73,7 @@ const DISHES = [
     id: 5,
     name: 'Ship Chandelling',
     subtitle: 'Vessel Supplies',
-    img: '/assets/images/Services/ShipSupplies%20.webp',
+    img: '/assets/images/Services/fit/ship-chandelling.webp',
     accentColor: '#A4D79C', // Green light
     arcColor: 'rgba(164, 215, 156, 0.25)',
     rating: '4.7',
@@ -87,7 +87,7 @@ const DISHES = [
     id: 6,
     name: 'Housekeeping, Laundry & Cleaning',
     subtitle: 'Facility Care',
-    img: '/assets/images/Services/cleaning.webp',
+    img: '/assets/images/Services/fit/housekeeping.webp',
     accentColor: '#B37B29', // Gold dark
     arcColor: 'rgba(179, 123, 41, 0.25)',
     rating: '4.8',
@@ -101,7 +101,7 @@ const DISHES = [
     id: 7,
     name: 'Camp Mgt Services.',
     subtitle: 'Remote Site Operations',
-    img: '/assets/images/Services/camp.webp',
+    img: '/assets/images/Services/fit/camp.webp',
     accentColor: '#ffffff', // Brand white
     arcColor: 'rgba(255, 255, 255, 0.25)',
     rating: '4.9',
@@ -115,7 +115,7 @@ const DISHES = [
     id: 8,
     name: 'VIP Catering',
     subtitle: 'Exclusive Dining',
-    img: '/assets/images/Services/EventPlanning%202%20.webp',
+    img: '/assets/images/Services/fit/vip-catering.webp',
     accentColor: '#cc9933', // Reuse Brand Gold
     arcColor: 'rgba(204, 153, 51, 0.25)',
     rating: '5.0',
@@ -343,16 +343,18 @@ export default function ServicesSection() {
         <div className="flex flex-col lg:flex-row items-center ml-4 sm:ml-6 md:ml-[25px] lg:ml-[45px] xl:ml-[65px] gap-6 lg:gap-[30px] flex-1 relative mt-16 md:mt-24 w-[calc(100%-2rem)]">
 
           {/* A ─ Dish plates stacked absolutely */}
-          <div className="relative z-20 pointer-events-none shrink-0 w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] md:w-[420px] md:h-[420px] lg:w-[620px] lg:h-[620px] xl:w-[680px] xl:h-[680px] mx-auto lg:mx-0">
+          {/* Box matches the 4:3 canvas every cutout is normalised onto, so
+              object-contain frames each subject identically — no cropping. */}
+          <div className="relative z-20 pointer-events-none shrink-0 w-[280px] h-[210px] sm:w-[380px] sm:h-[285px] md:w-[480px] md:h-[360px] lg:w-[620px] lg:h-[465px] xl:w-[700px] xl:h-[525px] mx-auto lg:mx-0">
             {DISHES.map((dish, idx) => (
               <div
                 key={dish.id}
-                className={`dish-plate dish-plate-${idx} absolute inset-0  overflow-hidden`}
+                className={`dish-plate dish-plate-${idx} absolute inset-0`}
               >
                 <img
                   src={dish.img}
                   alt={dish.name}
-                  className="w-full h-full object-cover scale-[1.02] mt-5"
+                  className="w-full h-full object-contain [filter:drop-shadow(0_18px_28px_rgba(0,0,0,0.32))]"
                   draggable={false}
                 />
               </div>
@@ -526,7 +528,7 @@ export default function ServicesSection() {
                 >
                   {/* Thumbnail circle */}
                   <div
-                    className={`thumb-circle-container rounded-full overflow-hidden transition-all duration-300 ring-offset-2 ring-offset-transparent border-[1.5px]
+                    className={`thumb-circle-container rounded-full overflow-hidden bg-white/5 transition-all duration-300 ring-offset-2 ring-offset-transparent border-[1.5px]
                       ${idx === 0
                         ? 'w-[72px] h-[72px] xl:w-[84px] xl:h-[84px] border-white'
                         : 'w-[56px] h-[56px] xl:w-[64px] xl:h-[64px] border-white/20'
@@ -535,7 +537,7 @@ export default function ServicesSection() {
                     <img
                       src={dish.img}
                       alt={dish.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain scale-[1.18]"
                       draggable={false}
                     />
                   </div>
