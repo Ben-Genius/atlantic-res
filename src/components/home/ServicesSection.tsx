@@ -345,7 +345,7 @@ export default function ServicesSection() {
           {/* A ─ Dish plates stacked absolutely */}
           {/* Box matches the 4:3 canvas every cutout is normalised onto, so
               object-contain frames each subject identically — no cropping. */}
-          <div className="relative z-20 pointer-events-none shrink-0 aspect-[4/3] w-[320px] sm:w-[430px] md:w-[540px] lg:w-[clamp(300px,30vw,950px)] xl:w-[clamp(480px,40vw,950px)] 2xl:w-[clamp(560px,46vw,980px)] mx-auto lg:mx-0">
+          <div className="relative z-20 pointer-events-none shrink-0 aspect-[4/3] w-[320px] sm:w-[430px] md:w-[540px] lg:w-[min(clamp(300px,calc(75vw_-_430px),1200px),calc((100vh_-_14rem)*4/3))] mx-auto lg:mx-0">
             {DISHES.map((dish, idx) => (
               <div
                 key={dish.id}
@@ -364,7 +364,7 @@ export default function ServicesSection() {
           {/* B ─ Text/Content stacked absolutely */}
           {/* min-w-0 lets this column actually shrink inside the flex row, so
               max-w-full on the heading resolves to the space left by the card */}
-          <div className="relative z-20 flex-1 min-w-0 h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px] w-full mt-4 lg:mt-0">
+          <div className="relative z-20 flex-1 min-w-0 h-[250px] sm:h-[300px] md:h-[350px] lg:h-[min(500px,calc(100vh_-_15rem))] w-full mt-4 lg:mt-0">
             {DISHES.map((dish, idx) => (
               <div
                 key={dish.id}
@@ -376,11 +376,11 @@ export default function ServicesSection() {
                   </p>
 
                   <h2 className="font-outfit leading-[1.0] uppercase w-full max-w-full break-words">
-                    <span className="block font-extralight tracking-[0.04em] text-[1.5rem] sm:text-[2.2rem] md:text-[3.2rem] lg:text-[clamp(2rem,3.4vw,4.4rem)] text-white/95">
+                    <span className="block font-extralight tracking-[0.04em] text-[1.5rem] sm:text-[2.2rem] md:text-[3.2rem] lg:text-[clamp(2rem,3.2vw,4.4rem)] text-white/95">
                       {dish.name.split(' ')[0]}
                     </span>
                     <span
-                      className="block font-black tracking-tight text-[1.8rem] sm:text-[2.8rem] md:text-[3.8rem] lg:text-[clamp(2.4rem,4.2vw,5.4rem)] -mt-1 md:-mt-2"
+                      className="block font-black tracking-tight text-[1.8rem] sm:text-[2.8rem] md:text-[3.8rem] lg:text-[clamp(2.4rem,4vw,5.4rem)] -mt-1 md:-mt-2"
                       style={{ color: dish.accentColor }}
                     >
                       {dish.name.split(' ').slice(1).join(' ')}
