@@ -27,13 +27,19 @@ export default function CtaSection() {
   }, { scope: sectionRef })
 
   return (
-    <>
-      <section ref={sectionRef} className="py-section bg-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[rgba(102,204,51,0.05)] to-transparent pointer-events-none" />
+    <div
+      style={{
+        backgroundImage: "url('/assets/images/footer.webp')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+      className="relative w-full"
+    >
+      <section ref={sectionRef} className="py-section relative overflow-hidden">
         <div className="container-xl relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="reveal">
-            <div className="section-label">
-              <span className="brand-line" />
+            <div className="section-label text-[#1a1a1a]/80">
+              <span className="brand-line bg-[#1a1a1a]/40" />
               Get Started
             </div>
             <h2
@@ -42,14 +48,14 @@ export default function CtaSection() {
             >
               Ready to Elevate<br />Your Operations?
             </h2>
-            <p className="text-[rgba(26,26,26,0.6)] leading-[1.85] max-w-[420px]">
+            <p className="text-[rgba(26,26,26,0.7)] leading-[1.85] max-w-[420px]">
               Let's create something exceptional together. Contact our team to discuss your specific needs and how Atlantic can serve you.
             </p>
           </div>
 
-          <div className="reveal bg-[#f5f5f3] border border-black/[.08] p-12">
+          <div className="reveal bg-white/70 backdrop-blur-xl border border-black/[.08] p-12 rounded-2xl shadow-xl">
             <div className="font-serif text-2xl text-[#1a1a1a] mb-3">Start a conversation</div>
-            <p className="text-sm text-[rgba(26,26,26,0.55)] leading-[1.7] mb-8">
+            <p className="text-sm text-[rgba(26,26,26,0.65)] leading-[1.7] mb-8">
               Reach out via phone, email, or our contact form. We respond within 24 hours.
             </p>
             <div className="flex flex-col gap-3">
@@ -59,7 +65,7 @@ export default function CtaSection() {
                 label="Call +233 501 502 441"
                 variant="outline"
                 size="md"
-                className="w-full"
+                className="w-full bg-white/50 text-[#1a1a1a] border-black/10 hover:bg-white"
               />
             </div>
           </div>
@@ -67,14 +73,14 @@ export default function CtaSection() {
       </section>
 
       <WaveDivider />
-    </>
+    </div>
   )
 }
 
 function WaveDivider() {
   return (
     <div
-      className="relative w-screen -ml-[calc(50vw-50%)] leading-[0] -mt-px"
+      className="relative w-screen -ml-[calc(50vw-50%)] leading-[0] -mt-px "
       style={{ filter: 'drop-shadow(0 18px 8px rgba(3,2,0,0.05))' }}
     >
       <svg

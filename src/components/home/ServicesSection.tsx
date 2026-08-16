@@ -340,12 +340,12 @@ export default function ServicesSection() {
       <div className="relative w-full h-full flex flex-col justify-center z-20">
 
         {/* Top row: dish + text + card */}
-        <div className="flex flex-col lg:flex-row items-center ml-4 sm:ml-6 md:ml-[25px] lg:ml-[45px] xl:ml-[65px] gap-6 lg:gap-[30px] flex-1 relative mt-16 md:mt-24 w-[calc(100%-2rem)]">
+        <div className="flex flex-col lg:flex-row items-center ml-4 sm:ml-6 md:ml-[25px] lg:ml-[45px] xl:ml-[10px] gap-6 lg:gap-[30px] flex-1 relative mt-16 md:mt-24 w-[calc(100%-2rem)]">
 
           {/* A ─ Dish plates stacked absolutely */}
           {/* Box matches the 4:3 canvas every cutout is normalised onto, so
               object-contain frames each subject identically — no cropping. */}
-          <div className="relative z-20 pointer-events-none shrink-0 w-[280px] h-[210px] sm:w-[380px] sm:h-[285px] md:w-[480px] md:h-[360px] lg:w-[620px] lg:h-[465px] xl:w-[700px] xl:h-[525px] mx-auto lg:mx-0">
+          <div className="relative z-20 pointer-events-none shrink-0 aspect-[4/3] w-[320px] sm:w-[430px] md:w-[540px] lg:w-[clamp(300px,30vw,950px)] xl:w-[clamp(480px,40vw,950px)] 2xl:w-[clamp(560px,46vw,980px)] mx-auto lg:mx-0">
             {DISHES.map((dish, idx) => (
               <div
                 key={dish.id}
@@ -362,23 +362,25 @@ export default function ServicesSection() {
           </div>
 
           {/* B ─ Text/Content stacked absolutely */}
-          <div className="relative z-20 flex-1 h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px] w-full mt-4 lg:mt-0">
+          {/* min-w-0 lets this column actually shrink inside the flex row, so
+              max-w-full on the heading resolves to the space left by the card */}
+          <div className="relative z-20 flex-1 min-w-0 h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px] w-full mt-4 lg:mt-0">
             {DISHES.map((dish, idx) => (
               <div
                 key={dish.id}
                 className={`dish-content dish-content-${idx} absolute inset-0 flex flex-col justify-start lg:justify-center items-center lg:items-start text-center lg:text-left gap-3 lg:gap-[15%] w-full`}
               >
-                <div>
+                <div className="w-full min-w-0 max-w-full">
                   <p className="font-outfit text-[10px] md:text-sm font-semibold tracking-[0.25em] md:tracking-[0.3em] uppercase text-white/70 mb-1 lg:mb-2">
                     {dish.tag}
                   </p>
 
-                  <h2 className="font-outfit leading-[1.0] uppercase">
-                    <span className="block font-extralight tracking-[0.04em] text-[1.5rem] sm:text-[2.2rem] md:text-[3.2rem] lg:text-[4.5rem] xl:text-[5.2rem] text-white/95">
+                  <h2 className="font-outfit leading-[1.0] uppercase w-full max-w-full break-words">
+                    <span className="block font-extralight tracking-[0.04em] text-[1.5rem] sm:text-[2.2rem] md:text-[3.2rem] lg:text-[clamp(2rem,3.4vw,4.4rem)] text-white/95">
                       {dish.name.split(' ')[0]}
                     </span>
                     <span
-                      className="block font-black tracking-tight text-[1.8rem] sm:text-[2.8rem] md:text-[3.8rem] lg:text-[5.8rem] xl:text-[6.8rem] -mt-1 md:-mt-2"
+                      className="block font-black tracking-tight text-[1.8rem] sm:text-[2.8rem] md:text-[3.8rem] lg:text-[clamp(2.4rem,4.2vw,5.4rem)] -mt-1 md:-mt-2"
                       style={{ color: dish.accentColor }}
                     >
                       {dish.name.split(' ').slice(1).join(' ')}
@@ -419,7 +421,7 @@ export default function ServicesSection() {
           </div>
 
           {/* E ─ Overview card stacked absolutely */}
-          <div className="relative hidden lg:block w-[300px] xl:w-[320px] h-[400px] shrink-0 ml-auto mr-8 xl:mr-16 self-center mt-[1rem]">
+          <div className="relative hidden lg:block w-[300px] xl:w-[320px] h-[400px] shrink-0 ml-auto mr-6 self-center mt-[1rem]">
             {DISHES.map((dish, idx) => {
               return (
                 <div
