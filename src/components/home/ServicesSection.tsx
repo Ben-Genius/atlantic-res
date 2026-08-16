@@ -4,6 +4,7 @@ import React, { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { smoothScrollTo } from '@/lib/lenis'
 
 /**
  * Per-service accents are drawn only from the ACLL brand guide (Rev 1):
@@ -127,6 +128,95 @@ const DISHES = [
   }
 ]
 
+/**
+ * Every plate gets its own move instead of one repeated spin: `enter` is the
+ * state the image animates FROM when its slide arrives, `exit` the state it
+ * animates TO when it leaves. Scrubbing backwards simply reverses them.
+ * Core GSAP transforms only — no paid plugins.
+ */
+type PlateMove = {
+  enter: gsap.TweenVars
+  exit: gsap.TweenVars
+  ease: string
+  exitEase: string
+}
+
+/** Every property any recipe touches, at rest — the shared "landed" state. */
+const PLATE_RESET: gsap.TweenVars = {
+  x: 0,
+  y: 0,
+  z: 0,
+  xPercent: 0,
+  yPercent: 0,
+  rotation: 0,
+  rotationX: 0,
+  rotationY: 0,
+  skewX: 0,
+  scale: 1,
+  opacity: 1,
+  filter: 'blur(0px)',
+  transformOrigin: '50% 50%',
+}
+
+const PLATE_MOVES: PlateMove[] = [
+  {
+    // 24/7 Support — the signature drop-and-spin
+    enter: { y: -680, rotation: 180, opacity: 0 },
+    exit: { y: 560, rotation: -120, opacity: 0 },
+    ease: 'power4.out',
+    exitEase: 'power2.in',
+  },
+  {
+    // Offshore — 3D door swing off its left edge
+    enter: { rotationY: -105, xPercent: 60, opacity: 0, transformOrigin: 'left center' },
+    exit: { rotationY: 95, xPercent: -55, opacity: 0, transformOrigin: 'right center' },
+    ease: 'power3.out',
+    exitEase: 'power2.in',
+  },
+  {
+    // Inflight — arrives out of depth, blur pulling into focus
+    enter: { scale: 0.3, z: -650, opacity: 0, filter: 'blur(18px)' },
+    exit: { scale: 1.7, opacity: 0, filter: 'blur(20px)' },
+    ease: 'expo.out',
+    exitEase: 'power2.in',
+  },
+  {
+    // Event Planning — pendulum swing hinged at the top corner
+    enter: { rotation: -50, y: -240, opacity: 0, transformOrigin: 'top left' },
+    exit: { rotation: 44, y: 210, opacity: 0, transformOrigin: 'top right' },
+    ease: 'back.out(1.5)',
+    exitEase: 'power2.in',
+  },
+  {
+    // Ship Chandelling — card flip over the X axis
+    enter: { rotationX: 88, yPercent: -50, opacity: 0, transformOrigin: 'center bottom' },
+    exit: { rotationX: -74, yPercent: 42, opacity: 0, transformOrigin: 'center top' },
+    ease: 'circ.out',
+    exitEase: 'power2.in',
+  },
+  {
+    // Housekeeping — skewed slide, like a card dealt across the frame
+    enter: { xPercent: 108, skewX: -16, opacity: 0 },
+    exit: { xPercent: -100, skewX: 14, opacity: 0 },
+    ease: 'power4.out',
+    exitEase: 'power3.in',
+  },
+  {
+    // Camp — spiral in from a point
+    enter: { rotation: 200, scale: 0.25, opacity: 0 },
+    exit: { rotation: -165, scale: 0.3, opacity: 0 },
+    ease: 'power3.out',
+    exitEase: 'power2.in',
+  },
+  {
+    // VIP — rises with a tilt and settles elastically
+    enter: { yPercent: 80, rotationY: 40, scale: 0.85, opacity: 0 },
+    exit: { yPercent: -68, rotationY: -36, scale: 0.9, opacity: 0 },
+    ease: 'elastic.out(1,0.75)',
+    exitEase: 'power2.in',
+  },
+]
+
 export default function ServicesSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const arcRef = useRef<HTMLDivElement>(null)
@@ -134,135 +224,180 @@ export default function ServicesSection() {
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger)
 
-    // Initial setup for Slide 0
-    gsap.set('.dish-plate-0', { x: 0, y: 0, rotate: 0, opacity: 1 })
-    gsap.set('.dish-content-0', { x: 0, opacity: 1 })
-    gsap.set('.dish-card-0', { x: 0, opacity: 1 })
+    const mm = gsap.matchMedia()
 
-    // Hide others
-    DISHES.forEach((_, idx) => {
-      if (idx > 0) {
-        gsap.set(`.dish-plate-${idx}`, { y: -800, rotate: 180, opacity: 0 })
-        gsap.set(`.dish-content-${idx}`, { x: -600, opacity: 0 })
-        gsap.set(`.dish-card-${idx}`, { x: 200, opacity: 0 })
+    mm.add(
+      {
+        // Blur costs real GPU time on phones, and 3D reads badly in a tall
+        // stacked layout — both are desktop-only embellishments.
+        rich: '(min-width: 1024px) and (prefers-reduced-motion: no-preference)',
+        reduced: '(prefers-reduced-motion: reduce)',
+        // matchMedia only runs the callback when a condition matches, so this
+        // one keeps phones (narrow + no motion preference) animated too.
+        base: 'all',
+      },
+      (ctx) => {
+        const { rich, reduced } = ctx.conditions as { rich: boolean; reduced: boolean }
+
+        // Reduced motion gets a plain crossfade; everything else keeps the move
+        // but drops the blur filter unless we're on a desktop viewport.
+        const move = (vars: gsap.TweenVars): gsap.TweenVars => {
+          if (reduced) return { opacity: 0 }
+          if (rich) return { ...vars }
+          const { filter, ...rest } = vars
+          return rest
+        }
+        const easeFor = (ease: string) => (reduced ? 'none' : ease)
+
+        // Perspective has to live on the plates for rotationX/Y to read as 3D
+        gsap.set('.dish-plate', { transformPerspective: 1200 })
+
+        // Initial setup for Slide 0
+        gsap.set('.dish-plate-0', { ...PLATE_RESET })
+        gsap.set('.dish-content-0', { x: 0, opacity: 1 })
+        gsap.set('.dish-card-0', { x: 0, opacity: 1 })
+
+        // Park every other plate in its own entry pose
+        DISHES.forEach((_, idx) => {
+          if (idx > 0) {
+            gsap.set(`.dish-plate-${idx}`, { ...PLATE_RESET, ...move(PLATE_MOVES[idx].enter) })
+            gsap.set(`.dish-content-${idx}`, { x: -600, opacity: 0 })
+            gsap.set(`.dish-card-${idx}`, { x: 200, opacity: 0 })
+          }
+        })
+
+        // Slow idle drift on the artwork itself, so the plate never sits dead
+        // still between slides. Runs on the <img>, leaving the wrapper's
+        // transforms free for the scroll-driven moves above.
+        if (!reduced) {
+          DISHES.forEach((_, idx) => {
+            gsap.to(`.dish-plate-${idx} img`, {
+              y: -12,
+              duration: 3 + idx * 0.12,
+              ease: 'sine.inOut',
+              yoyo: true,
+              repeat: -1,
+            })
+          })
+        }
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            id: 'services-pin',
+            trigger: sectionRef.current,
+            start: 'top top',
+            end: `+=${window.innerHeight * (DISHES.length - 1)}`, // Dynamic total scroll distance
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          }
+        })
+
+        DISHES.forEach((dish, idx) => {
+          if (idx === 0) return
+
+          const prevIdx = idx - 1
+          const label = `slide-${idx}`
+
+          tl.addLabel(label)
+
+          // 1. Previous dish leaves on its own exit move
+          tl.to(`.dish-plate-${prevIdx}`, {
+            ...move(PLATE_MOVES[prevIdx].exit),
+            duration: 1,
+            ease: easeFor(PLATE_MOVES[prevIdx].exitEase),
+          }, label)
+
+          // 2. Previous content/title exits right
+          tl.to(`.dish-content-${prevIdx}`, {
+            x: 600,
+            opacity: 0,
+            duration: 1,
+            ease: 'power2.inOut',
+          }, label)
+
+          // 3. Previous card exits right
+          tl.to(`.dish-card-${prevIdx}`, {
+            x: 200,
+            opacity: 0,
+            duration: 1,
+            ease: 'power2.inOut',
+          }, label)
+
+          // 4. Arc border color changes
+          tl.to(arcRef.current, {
+            borderColor: dish.arcColor,
+            duration: 1,
+            ease: 'power2.inOut',
+          }, label)
+
+          // 5. New dish arrives on its own entry move
+          tl.fromTo(`.dish-plate-${idx}`,
+            { ...PLATE_RESET, ...move(PLATE_MOVES[idx].enter) },
+            { ...PLATE_RESET, duration: 1, ease: easeFor(PLATE_MOVES[idx].ease) },
+            `${label}+=0.1`
+          )
+
+          // 6. New content/title slides in from left
+          tl.fromTo(`.dish-content-${idx}`,
+            { x: -600, opacity: 0 },
+            { x: 0, opacity: 1, duration: 1, ease: 'power2.inOut' },
+            `${label}+=0.1`
+          )
+
+          // 7. New card slides in from right
+          tl.fromTo(`.dish-card-${idx}`,
+            { x: 200, opacity: 0 },
+            { x: 0, opacity: 1, duration: 1, ease: 'power2.inOut' },
+            `${label}+=0.1`
+          )
+
+          // 8. Carousel thumbnail active style transition
+          tl.to(`.carousel-thumb-${prevIdx}`, {
+            opacity: 0.6,
+            duration: 0.5,
+            ease: 'power1.inOut'
+          }, label)
+          tl.to(`.carousel-thumb-${prevIdx} .thumb-circle-container`, {
+            borderColor: 'rgba(255, 255, 255, 0.2)',
+            scale: 0.85,
+            duration: 0.5,
+            ease: 'power1.inOut'
+          }, label)
+          tl.to(`.carousel-thumb-${prevIdx} .thumb-name`, {
+            color: 'rgba(255, 255, 255, 0.45)',
+            duration: 0.5,
+          }, label)
+          tl.to(`.carousel-thumb-${prevIdx} .thumb-subtitle`, {
+            color: 'rgba(255, 255, 255, 0.25)',
+            duration: 0.5,
+          }, label)
+
+          tl.to(`.carousel-thumb-${idx}`, {
+            opacity: 1,
+            duration: 0.5,
+            ease: 'power1.inOut'
+          }, `${label}+=0.1`)
+          tl.to(`.carousel-thumb-${idx} .thumb-circle-container`, {
+            borderColor: '#ffffff',
+            scale: 1,
+            duration: 0.5,
+            ease: 'power1.inOut'
+          }, `${label}+=0.1`)
+          tl.to(`.carousel-thumb-${idx} .thumb-name`, {
+            color: '#ffffff',
+            duration: 0.5,
+          }, `${label}+=0.1`)
+          tl.to(`.carousel-thumb-${idx} .thumb-subtitle`, {
+            color: dish.accentColor,
+            duration: 0.5,
+          }, `${label}+=0.1`)
+        })
       }
-    })
+    )
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        id: 'services-pin',
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: `+=${window.innerHeight * (DISHES.length - 1)}`, // Dynamic total scroll distance
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      }
-    })
-
-    DISHES.forEach((dish, idx) => {
-      if (idx === 0) return
-
-      const prevIdx = idx - 1
-      const label = `slide-${idx}`
-
-      tl.addLabel(label)
-
-      // 1. Previous dish exits left with rotation
-      tl.to(`.dish-plate-${prevIdx}`, {
-        x: -600,
-        rotate: -120,
-        opacity: 0,
-        duration: 1,
-        ease: 'power2.inOut',
-      }, label)
-
-      // 2. Previous content/title exits right
-      tl.to(`.dish-content-${prevIdx}`, {
-        x: 600,
-        opacity: 0,
-        duration: 1,
-        ease: 'power2.inOut',
-      }, label)
-
-      // 3. Previous card exits right
-      tl.to(`.dish-card-${prevIdx}`, {
-        x: 200,
-        opacity: 0,
-        duration: 1,
-        ease: 'power2.inOut',
-      }, label)
-
-      // 4. Arc border color changes
-      tl.to(arcRef.current, {
-        borderColor: dish.arcColor,
-        duration: 1,
-        ease: 'power2.inOut',
-      }, label)
-
-      // 5. New dish drops in from top with spin
-      tl.fromTo(`.dish-plate-${idx}`,
-        { y: -800, x: 0, rotate: 180, opacity: 0 },
-        { y: 0, rotate: 0, opacity: 1, duration: 1, ease: 'power2.inOut' },
-        `${label}+=0.1`
-      )
-
-      // 6. New content/title slides in from left
-      tl.fromTo(`.dish-content-${idx}`,
-        { x: -600, opacity: 0 },
-        { x: 0, opacity: 1, duration: 1, ease: 'power2.inOut' },
-        `${label}+=0.1`
-      )
-
-      // 7. New card slides in from right
-      tl.fromTo(`.dish-card-${idx}`,
-        { x: 200, opacity: 0 },
-        { x: 0, opacity: 1, duration: 1, ease: 'power2.inOut' },
-        `${label}+=0.1`
-      )
-
-      // 8. Carousel thumbnail active style transition
-      tl.to(`.carousel-thumb-${prevIdx}`, {
-        opacity: 0.6,
-        duration: 0.5,
-        ease: 'power1.inOut'
-      }, label)
-      tl.to(`.carousel-thumb-${prevIdx} .thumb-circle-container`, {
-        borderColor: 'rgba(255, 255, 255, 0.2)',
-        scale: 0.85,
-        duration: 0.5,
-        ease: 'power1.inOut'
-      }, label)
-      tl.to(`.carousel-thumb-${prevIdx} .thumb-name`, {
-        color: 'rgba(255, 255, 255, 0.45)',
-        duration: 0.5,
-      }, label)
-      tl.to(`.carousel-thumb-${prevIdx} .thumb-subtitle`, {
-        color: 'rgba(255, 255, 255, 0.25)',
-        duration: 0.5,
-      }, label)
-
-      tl.to(`.carousel-thumb-${idx}`, {
-        opacity: 1,
-        duration: 0.5,
-        ease: 'power1.inOut'
-      }, `${label}+=0.1`)
-      tl.to(`.carousel-thumb-${idx} .thumb-circle-container`, {
-        borderColor: '#ffffff',
-        scale: 1,
-        duration: 0.5,
-        ease: 'power1.inOut'
-      }, `${label}+=0.1`)
-      tl.to(`.carousel-thumb-${idx} .thumb-name`, {
-        color: '#ffffff',
-        duration: 0.5,
-      }, `${label}+=0.1`)
-      tl.to(`.carousel-thumb-${idx} .thumb-subtitle`, {
-        color: dish.accentColor,
-        duration: 0.5,
-      }, `${label}+=0.1`)
-    })
+    return () => mm.revert()
   }, { scope: sectionRef })
 
   const handleCarouselClick = (index: number) => {
@@ -272,10 +407,9 @@ export default function ServicesSection() {
       const start = trigger.start
       const end = trigger.end
       const targetScroll = start + (index / (DISHES.length - 1)) * (end - start)
-      window.scrollTo({
-        top: targetScroll,
-        behavior: 'smooth',
-      })
+      // Drive the jump through Lenis so it eases with the same curve as the
+      // wheel; falls back to native smooth scroll if Lenis isn't running.
+      smoothScrollTo(targetScroll, 1.4)
     }
   }
 

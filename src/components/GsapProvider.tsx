@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Observer } from 'gsap/Observer'
 import { SplitText } from 'gsap/SplitText'
 import Lenis from 'lenis'
+import { setLenis } from '@/lib/lenis'
 
 export default function GsapProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -16,6 +17,7 @@ export default function GsapProvider({ children }: { children: React.ReactNode }
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     })
+    setLenis(lenis)
 
     lenis.on('scroll', ScrollTrigger.update)
 
@@ -33,6 +35,7 @@ export default function GsapProvider({ children }: { children: React.ReactNode }
       window.removeEventListener('lenis:stop',  stopLenis)
       window.removeEventListener('lenis:start', startLenis)
       gsap.ticker.remove(lenisRaf)   // same reference — actually removed
+      setLenis(null)
       lenis.destroy()
     }
   }, [])
