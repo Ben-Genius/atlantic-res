@@ -4,7 +4,7 @@ import React, { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { smoothScrollTo } from '@/lib/lenis'
+import { getLenis, smoothScrollTo } from '@/lib/lenis'
 
 /**
  * Per-service accents are drawn only from the ACLL brand guide (Rev 1):
@@ -32,7 +32,7 @@ const DISHES = [
     id: 2,
     name: 'Offshore Catering & Supply',
     subtitle: 'Rig & Platform Operations',
-    img: '/assets/images/Services/fit/offshore.webp',
+    img: '/assets/images/Services/oNSHORE2.webp',
     accentColor: '#296ed6', // Accent blue
     arcColor: 'rgba(41, 110, 214, 0.25)',
     rating: '4.9',
@@ -291,6 +291,8 @@ export default function ServicesSection() {
             pin: true,
             anticipatePin: 1,
             invalidateOnRefresh: true,
+            preventOverlaps: true,
+            fastScrollEnd: true,
           }
         })
 
@@ -397,7 +399,33 @@ export default function ServicesSection() {
       }
     )
 
-    return () => mm.revert()
+    /* Label snapping — one timeline label per slide, so releasing the wheel
+       mid-transition settles on the nearest service instead of a half state.
+       Driven through Lenis rather than ScrollTrigger's own snap, which would
+       fight Lenis for ownership of the scroll position. */
+    let snapTimer: ReturnType<typeof setTimeout> | null = null
+    const settleOnNearestSlide = () => {
+      if (snapTimer) clearTimeout(snapTimer)
+      const st = ScrollTrigger.getById('services-pin')
+      if (!st || !st.isActive) return
+      snapTimer = setTimeout(() => {
+        const trigger = ScrollTrigger.getById('services-pin')
+        if (!trigger || !trigger.isActive) return
+        const step = (trigger.end - trigger.start) / (DISHES.length - 1)
+        const index = Math.round((trigger.scroll() - trigger.start) / step)
+        const target = trigger.start + index * step
+        if (Math.abs(target - trigger.scroll()) > 4) smoothScrollTo(target, 0.7)
+      }, 170)
+    }
+
+    const lenis = getLenis()
+    lenis?.on('scroll', settleOnNearestSlide)
+
+    return () => {
+      if (snapTimer) clearTimeout(snapTimer)
+      lenis?.off('scroll', settleOnNearestSlide)
+      mm.revert()
+    }
   }, { scope: sectionRef })
 
   const handleCarouselClick = (index: number) => {
