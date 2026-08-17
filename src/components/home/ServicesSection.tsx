@@ -158,6 +158,27 @@ const PLATE_RESET: gsap.TweenVars = {
   transformOrigin: '50% 50%',
 }
 
+/* ── Hand-off timing ──────────────────────────────────────────────────────
+   The old slide used to leave over the same beat the new one arrived on, so
+   mid-transition both sat near 50% opacity on top of each other and the whole
+   thing read as mush. Now the exit runs first and the entry starts just before
+   it finishes: a short overlap that hides the swap without ever showing two
+   services at once. Opacity gets its own, shorter tween at each end — the old
+   slide is invisible well before it stops moving, and the new one finishes
+   fading in early so it lands solid rather than arriving translucent. */
+const EXIT = 0.62
+const ENTER_AT = 0.34
+const ENTER = 0.82
+/** Fade completes in this fraction of the move it rides on. */
+const FADE_OUT_RATIO = 0.72
+const FADE_IN_RATIO = 0.55
+
+/** Transform-only copy of a vars object, so opacity can be tweened separately. */
+const withoutOpacity = (vars: gsap.TweenVars): gsap.TweenVars => {
+  const { opacity, ...rest } = vars
+  return rest
+}
+
 const PLATE_MOVES: PlateMove[] = [
   {
     // 24/7 Support — the signature drop-and-spin
@@ -301,100 +322,137 @@ export default function ServicesSection() {
 
           const prevIdx = idx - 1
           const label = `slide-${idx}`
+          const enterAt = `${label}+=${ENTER_AT}`
 
           tl.addLabel(label)
 
-          // 1. Previous dish leaves on its own exit move
+          // The incoming slide paints above the outgoing one, so scrubbing
+          // backwards can't leave the old plate sitting on top of the new one.
+          tl.set(`.dish-plate-${prevIdx}`, { zIndex: 1 }, label)
+          tl.set(`.dish-plate-${idx}`, { zIndex: 2 }, enterAt)
+
+          // 1. Previous dish leaves on its own exit move. Opacity is a separate,
+          //    shorter tween so the old plate is *gone* before the new one lands
+          //    instead of both hanging at half strength through the middle.
           tl.to(`.dish-plate-${prevIdx}`, {
-            ...move(PLATE_MOVES[prevIdx].exit),
-            duration: 1,
+            ...withoutOpacity(move(PLATE_MOVES[prevIdx].exit)),
+            duration: EXIT,
             ease: easeFor(PLATE_MOVES[prevIdx].exitEase),
+          }, label)
+          tl.to(`.dish-plate-${prevIdx}`, {
+            opacity: 0,
+            duration: EXIT * FADE_OUT_RATIO,
+            ease: easeFor('power2.in'),
           }, label)
 
           // 2. Previous content/title exits right
           tl.to(`.dish-content-${prevIdx}`, {
             x: 600,
+            duration: EXIT,
+            ease: 'power2.in',
+          }, label)
+          tl.to(`.dish-content-${prevIdx}`, {
             opacity: 0,
-            duration: 1,
-            ease: 'power2.inOut',
+            duration: EXIT * FADE_OUT_RATIO,
+            ease: 'power2.in',
           }, label)
 
           // 3. Previous card exits right
           tl.to(`.dish-card-${prevIdx}`, {
             x: 200,
+            duration: EXIT,
+            ease: 'power2.in',
+          }, label)
+          tl.to(`.dish-card-${prevIdx}`, {
             opacity: 0,
-            duration: 1,
-            ease: 'power2.inOut',
+            duration: EXIT * FADE_OUT_RATIO,
+            ease: 'power2.in',
           }, label)
 
-          // 4. Arc border color changes
+          // 4. Arc border colour crosses the whole hand-off
           tl.to(arcRef.current, {
             borderColor: dish.arcColor,
-            duration: 1,
-            ease: 'power2.inOut',
+            duration: ENTER_AT + ENTER,
+            ease: 'power1.inOut',
           }, label)
 
-          // 5. New dish arrives on its own entry move
+          // 5. New dish arrives on its own entry move, fading in over the first
+          //    part of it so it reads as arriving rather than materialising.
           tl.fromTo(`.dish-plate-${idx}`,
-            { ...PLATE_RESET, ...move(PLATE_MOVES[idx].enter) },
-            { ...PLATE_RESET, duration: 1, ease: easeFor(PLATE_MOVES[idx].ease) },
-            `${label}+=0.1`
+            withoutOpacity({ ...PLATE_RESET, ...move(PLATE_MOVES[idx].enter) }),
+            { ...withoutOpacity(PLATE_RESET), duration: ENTER, ease: easeFor(PLATE_MOVES[idx].ease) },
+            enterAt
+          )
+          tl.fromTo(`.dish-plate-${idx}`,
+            { opacity: 0 },
+            { opacity: 1, duration: ENTER * FADE_IN_RATIO, ease: easeFor('power2.out') },
+            enterAt
           )
 
           // 6. New content/title slides in from left
           tl.fromTo(`.dish-content-${idx}`,
-            { x: -600, opacity: 0 },
-            { x: 0, opacity: 1, duration: 1, ease: 'power2.inOut' },
-            `${label}+=0.1`
+            { x: -600 },
+            { x: 0, duration: ENTER, ease: 'power3.out' },
+            enterAt
+          )
+          tl.fromTo(`.dish-content-${idx}`,
+            { opacity: 0 },
+            { opacity: 1, duration: ENTER * FADE_IN_RATIO, ease: 'power2.out' },
+            enterAt
           )
 
           // 7. New card slides in from right
           tl.fromTo(`.dish-card-${idx}`,
-            { x: 200, opacity: 0 },
-            { x: 0, opacity: 1, duration: 1, ease: 'power2.inOut' },
-            `${label}+=0.1`
+            { x: 200 },
+            { x: 0, duration: ENTER, ease: 'power3.out' },
+            enterAt
+          )
+          tl.fromTo(`.dish-card-${idx}`,
+            { opacity: 0 },
+            { opacity: 1, duration: ENTER * FADE_IN_RATIO, ease: 'power2.out' },
+            enterAt
           )
 
           // 8. Carousel thumbnail active style transition
           tl.to(`.carousel-thumb-${prevIdx}`, {
             opacity: 0.6,
-            duration: 0.5,
+            duration: EXIT,
             ease: 'power1.inOut'
           }, label)
           tl.to(`.carousel-thumb-${prevIdx} .thumb-circle-container`, {
             borderColor: 'rgba(255, 255, 255, 0.2)',
             scale: 0.85,
-            duration: 0.5,
+            duration: EXIT,
             ease: 'power1.inOut'
           }, label)
           tl.to(`.carousel-thumb-${prevIdx} .thumb-name`, {
             color: 'rgba(255, 255, 255, 0.45)',
-            duration: 0.5,
+            duration: EXIT,
           }, label)
           tl.to(`.carousel-thumb-${prevIdx} .thumb-subtitle`, {
             color: 'rgba(255, 255, 255, 0.25)',
-            duration: 0.5,
+            duration: EXIT,
           }, label)
 
           tl.to(`.carousel-thumb-${idx}`, {
             opacity: 1,
-            duration: 0.5,
+            duration: ENTER,
             ease: 'power1.inOut'
-          }, `${label}+=0.1`)
+          }, enterAt)
           tl.to(`.carousel-thumb-${idx} .thumb-circle-container`, {
             borderColor: '#ffffff',
             scale: 1,
-            duration: 0.5,
+            duration: ENTER,
             ease: 'power1.inOut'
-          }, `${label}+=0.1`)
+          }, enterAt)
           tl.to(`.carousel-thumb-${idx} .thumb-name`, {
             color: '#ffffff',
-            duration: 0.5,
-          }, `${label}+=0.1`)
+            duration: ENTER,
+          }, enterAt)
           tl.to(`.carousel-thumb-${idx} .thumb-subtitle`, {
             color: dish.accentColor,
-            duration: 0.5,
-          }, `${label}+=0.1`)
+            duration: ENTER,
+          }, enterAt)
         })
       }
     )
