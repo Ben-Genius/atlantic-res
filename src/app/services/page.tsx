@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Headphones, Factory, Plane, CalendarCheck, Ship, Shirt, Tent, Crown, CheckCircle2, ArrowRight } from 'lucide-react'
+import CtaSection from '@/components/home/CtaSection'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -192,15 +193,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* ── FINAL CTA ────────────────────────────────── */}
-      <section style={{ padding: '8rem 0', textAlign: 'center' }}>
-        <div className="container-xl">
-          <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: 'white', marginBottom: '2rem' }}>
-            Elevate Your Operations
-          </h2>
-          <Link href="/contact" className="btn-brand">Get A Tailored Proposal</Link>
-        </div>
-      </section>
+      <CtaSection />
     </main>
     </>
   )

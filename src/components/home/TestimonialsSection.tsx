@@ -54,67 +54,67 @@ const premiumTestimonials: {
   note: string
   theme: Theme
 }[] = [
-  {
-    quote:
-      'Good communication and the food was great. The facilities were managed perfectly. Love the desserts and their way of presenting. We came here for a corporate event and this place won our hearts.',
-    author: 'Leonel Mooney',
-    role: 'Offshore Platform Director, Chevron',
-    dish: CUTOUTS.prawns,
-    dishAlt: 'Grilled tiger prawns with herbs and lemon',
-    note: 'chef’s\nselection',
-    theme: { solid: '#cc9933', tint: '#FBF3E3', accent: '#B37B29', onDark: true },
-  },
-  {
-    quote:
-      'Exceptional logistical coordination under extreme maritime conditions. Every single meal feels like fine dining, boosting crew morale immensely. Atlantic truly sets the gold standard.',
-    author: 'Capt. Matthew Taylor',
-    role: 'Vessel Superintendent, Atlantic Marine',
-    dish: CUTOUTS.lobster,
-    dishAlt: 'Butter-poached lobster tail with micro herbs',
-    note: 'offshore\nfine dining',
-    theme: { solid: '#296ed6', tint: '#EBF1FC', accent: '#296ed6', onDark: true },
-  },
-  {
-    quote:
-      'A flawless hospitality and catering partnership. From camp management to daily laundry, their team operates with ultimate professionalism and care for every detail.',
-    author: 'Herman Miller',
-    role: 'Onshore Camps Coordinator, Tullow Oil',
-    dish: CUTOUTS.jollof,
-    dishAlt: 'Jollof rice with grilled chicken and plantain',
-    note: 'camp\nfavourite',
-    theme: { solid: '#b048b8', tint: '#F8ECFA', accent: '#b048b8', onDark: true },
-  },
-  {
-    quote:
-      'Rotations change, weather changes, headcounts change — the standard never does. Menus land on schedule at every site, and the HSE paperwork is always ahead of us.',
-    author: 'Kwabena Osei',
-    role: 'Site Services Manager, Newmont Ghana',
-    dish: CUTOUTS.steak,
-    dishAlt: 'Seared beef fillet with watercress and jus',
-    note: 'plated\non site',
-    theme: { solid: '#1A2330', tint: '#EDEFF3', accent: '#1A2330', onDark: true },
-  },
-  {
-    quote:
-      'Our inflight service was audited twice this year and Atlantic cleared both without a single finding. Cold chain, allergen control, turnaround times — all handled quietly and correctly.',
-    author: 'Naa Adjeley Nortey',
-    role: 'Flight Operations Manager, Macdan Aviation',
-    dish: CUTOUTS.prawns,
-    dishAlt: 'Grilled tiger prawns with herbs and lemon',
-    note: 'aviation\nready',
-    theme: { solid: '#A4D79C', tint: '#F1F8EF', accent: '#3C8B36', onDark: false },
-  },
-  {
-    quote:
-      'They catered our annual general meeting for six hundred guests and made it look effortless. Presentation, timing and service were exactly what we needed our clients to see.',
-    author: 'Selorm Agbeko',
-    role: 'Head of Corporate Services, CalBank',
-    dish: CUTOUTS.lobster,
-    dishAlt: 'Butter-poached lobster tail with micro herbs',
-    note: 'events\nat scale',
-    theme: { solid: '#D4A556', tint: '#FCF5E9', accent: '#B37B29', onDark: false },
-  },
-]
+    {
+      quote:
+        'Good communication and the food was great. The facilities were managed perfectly. Love the desserts and their way of presenting. We came here for a corporate event and this place won our hearts.',
+      author: 'Leonel Mooney',
+      role: 'Offshore Platform Director, Chevron',
+      dish: CUTOUTS.prawns,
+      dishAlt: 'Grilled tiger prawns with herbs and lemon',
+      note: 'chef’s\nselection',
+      theme: { solid: '#cc9933', tint: '#FBF3E3', accent: '#B37B29', onDark: true },
+    },
+    {
+      quote:
+        'Exceptional logistical coordination under extreme maritime conditions. Every single meal feels like fine dining, boosting crew morale immensely. Atlantic truly sets the gold standard.',
+      author: 'Capt. Matthew Taylor',
+      role: 'Vessel Superintendent, Atlantic Marine',
+      dish: CUTOUTS.lobster,
+      dishAlt: 'Butter-poached lobster tail with micro herbs',
+      note: 'offshore\nfine dining',
+      theme: { solid: '#296ed6', tint: '#EBF1FC', accent: '#296ed6', onDark: true },
+    },
+    {
+      quote:
+        'A flawless hospitality and catering partnership. From camp management to daily laundry, their team operates with ultimate professionalism and care for every detail.',
+      author: 'Herman Miller',
+      role: 'Onshore Camps Coordinator, Tullow Oil',
+      dish: CUTOUTS.jollof,
+      dishAlt: 'Jollof rice with grilled chicken and plantain',
+      note: 'camp\nfavourite',
+      theme: { solid: '#b048b8', tint: '#F8ECFA', accent: '#b048b8', onDark: true },
+    },
+    {
+      quote:
+        'Rotations change, weather changes, headcounts change — the standard never does. Menus land on schedule at every site, and the HSE paperwork is always ahead of us.',
+      author: 'Kwabena Osei',
+      role: 'Site Services Manager, Newmont Ghana',
+      dish: CUTOUTS.steak,
+      dishAlt: 'Seared beef fillet with watercress and jus',
+      note: 'plated\non site',
+      theme: { solid: '#1A2330', tint: '#EDEFF3', accent: '#1A2330', onDark: true },
+    },
+    {
+      quote:
+        'Our inflight service was audited twice this year and Atlantic cleared both without a single finding. Cold chain, allergen control, turnaround times — all handled quietly and correctly.',
+      author: 'Naa Adjeley Nortey',
+      role: 'Flight Operations Manager, Macdan Aviation',
+      dish: CUTOUTS.prawns,
+      dishAlt: 'Grilled tiger prawns with herbs and lemon',
+      note: 'aviation\nready',
+      theme: { solid: '#A4D79C', tint: '#F1F8EF', accent: '#3C8B36', onDark: false },
+    },
+    {
+      quote:
+        'They catered our annual general meeting for six hundred guests and made it look effortless. Presentation, timing and service were exactly what we needed our clients to see.',
+      author: 'Selorm Agbeko',
+      role: 'Head of Corporate Services, CalBank',
+      dish: CUTOUTS.lobster,
+      dishAlt: 'Butter-poached lobster tail with micro herbs',
+      note: 'events\nat scale',
+      theme: { solid: '#D4A556', tint: '#FCF5E9', accent: '#B37B29', onDark: false },
+    },
+  ]
 
 const promiseStats = [
   { value: '55,000+', label: 'Meals served' },
@@ -477,11 +477,10 @@ export default function TestimonialsSection() {
               className="absolute inset-0 pointer-events-none"
               style={{
                 opacity: item.theme.onDark ? 0.13 : 0.18,
-                backgroundImage: `radial-gradient(circle at center, ${
-                  item.theme.onDark
-                    ? 'rgba(255,255,255,0.85)'
-                    : 'rgba(26,26,26,0.6)'
-                } 1px, transparent 1px)`,
+                backgroundImage: `radial-gradient(circle at center, ${item.theme.onDark
+                  ? 'rgba(255,255,255,0.85)'
+                  : 'rgba(26,26,26,0.6)'
+                  } 1px, transparent 1px)`,
                 backgroundSize: '28px 28px',
               }}
             />
@@ -504,9 +503,8 @@ export default function TestimonialsSection() {
             </div>
 
             <div
-              className={`absolute z-20 flex flex-col top-[13%] ${
-                i % 2 === 0 ? 'left-[7%] items-start' : 'right-[7%] items-end'
-              }`}
+              className={`absolute z-20 flex flex-col top-[13%] ${i % 2 === 0 ? 'left-[7%] items-start' : 'right-[7%] items-end'
+                }`}
             >
               <span
                 className="font-serif text-[15px] xl:text-base font-semibold leading-tight whitespace-pre-line"
@@ -532,9 +530,8 @@ export default function TestimonialsSection() {
   return (
     <section
       ref={sectionRef}
-      className={`relative w-full bg-white select-none ${
-        useSplit ? 'lg:h-screen lg:overflow-hidden' : ''
-      }`}
+      className={`relative w-full bg-white select-none ${useSplit ? 'lg:h-screen lg:overflow-hidden' : ''
+        }`}
     >
       {/* ================================================================
           DESKTOP — DUAL-DIRECTION SPLIT SCREEN
@@ -574,9 +571,8 @@ export default function TestimonialsSection() {
                   )}
 
                   <QuoteMark
-                    className={`w-12 h-12 mt-8 mb-6 ${
-                      i === 0 ? 'testi-reveal' : ''
-                    }`}
+                    className={`w-12 h-12 mt-8 mb-6 ${i === 0 ? 'testi-reveal' : ''
+                      }`}
                     color={item.theme.accent}
                   />
 
@@ -679,11 +675,10 @@ export default function TestimonialsSection() {
                 className="absolute inset-0 pointer-events-none"
                 style={{
                   opacity: item.theme.onDark ? 0.13 : 0.18,
-                  backgroundImage: `radial-gradient(circle, ${
-                    item.theme.onDark
-                      ? 'rgba(255,255,255,0.9)'
-                      : 'rgba(26,26,26,0.6)'
-                  } 1px, transparent 1px)`,
+                  backgroundImage: `radial-gradient(circle, ${item.theme.onDark
+                    ? 'rgba(255,255,255,0.9)'
+                    : 'rgba(26,26,26,0.6)'
+                    } 1px, transparent 1px)`,
                   backgroundSize: '26px 26px',
                 }}
               />

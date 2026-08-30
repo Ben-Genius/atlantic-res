@@ -1,9 +1,9 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight, ExternalLink } from 'lucide-react'
+import CtaSection from '@/components/home/CtaSection'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -109,15 +109,7 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      {/* ── CTA ──────────────────────────────────────── */}
-      <section style={{ padding: '8rem 0', textAlign: 'center' }}>
-        <div className="container-xl">
-          <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'white', marginBottom: '2.5rem' }}>
-            Ready to add your success story?
-          </h2>
-          <Link href="/contact" className="btn-brand">Get In Touch</Link>
-        </div>
-      </section>
+      <CtaSection />
     </main>
   )
 }

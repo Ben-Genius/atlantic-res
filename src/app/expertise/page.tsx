@@ -1,9 +1,9 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Award, Users, TrendingUp, Shield, CheckCircle2, ChevronRight } from 'lucide-react'
+import CtaSection from '@/components/home/CtaSection'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -234,18 +234,7 @@ export default function ExpertisePage() {
         </div>
       </section>
 
-      {/* ── CTA ──────────────────────────────────────── */}
-      <section style={{ padding: '8rem 0', textAlign: 'center' }}>
-        <div className="container-xl">
-          <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'white', marginBottom: '2.5rem' }}>
-            Ready to Partner with Experts?
-          </h2>
-          <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center' }}>
-            <Link href="/contact" className="btn-brand">Get In Touch</Link>
-            <Link href="/services" className="btn-ghost">Our Services</Link>
-          </div>
-        </div>
-      </section>
+      <CtaSection />
     </main>
   )
 }

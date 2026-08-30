@@ -15,23 +15,18 @@ export default function MissionVision() {
   const [muted, setMuted] = useState(true)
   const [isPlaying, setIsPlaying] = useState(false)
 
-  // Ensure video attempts playback on load
+  // Keep the element's mute state in sync — playback itself only ever
+  // starts from togglePlay, on a click, never automatically.
   React.useEffect(() => {
     if (videoRef.current) {
       videoRef.current.muted = muted
-      const playPromise = videoRef.current.play()
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => setIsPlaying(true))
-          .catch(() => setIsPlaying(false))
-      }
     }
   }, [muted])
 
   const togglePlay = () => {
     if (!videoRef.current) return
     if (videoRef.current.paused) {
-      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {})
+      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => { })
     } else {
       videoRef.current.pause()
       setIsPlaying(false)
@@ -108,41 +103,30 @@ export default function MissionVision() {
   return (
     <section className="scroll-reveal w-full px-6 md:px-16 py-16">
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10">
-        {CARDS.map((card, i) => (
-          <div
-            key={i}
-            className="p-8 md:p-10 border-b md:border-b-0 md:border-r border-white/10 last:border-r-0 last:border-b-0 group hover:bg-white/[0.03] transition-colors"
-          >
-            <span className="block font-inter text-xs font-bold uppercase tracking-widest mb-4" style={{ color: card.color }}>
-              {card.label}
-            </span>
-            <h3 className="font-black text-3xl md:text-4xl uppercase tracking-tight text-white leading-none mb-5">
-              {card.title}
-            </h3>
-            <p className="font-inter text-white/60 text-sm leading-relaxed">
-              {card.body}
-            </p>
-          </div>
-        ))}
+      <div className="quote-line flex items-center gap-3">
+        <div className="w-8 h-px bg-[#EF9419]" />
+        <span className="font-inter text-[#EF9419] text-xs font-bold uppercase tracking-[0.35em]">
+          Message from the CEO
+        </span>
       </div>
 
       <section
         ref={sectionRef}
-        className="scroll-reveal relative w-full overflow-hidden"
+        className="scroll-reveal relative w-full overflow-hidden py-8"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch min-h-[70vh]">
 
-          {/* ══ LEFT — Video ══ */}
-          <div className="ceo-video lg:col-span-6 relative z-10">
-            <div 
+        <div className="flex flex-col">
+
+          {/* ══ Video — full width, rectangular ══ */}
+          <div className="ceo-video relative z-10 w-full">
+            <div
               onClick={togglePlay}
-              className="w-full h-[60vw] lg:h-full min-h-[360px] relative overflow-hidden group cursor-pointer bg-black/40"
+              className="w-full aspect-video md:aspect-[21/9] relative overflow-hidden group cursor-pointer bg-black/40 rounded-lg"
             >
               <video
                 ref={videoRef}
                 src="https://atlanticcatering-gh.com/wp-content/uploads/2026/02/Home-Atlantic-Catering.mp4"
-                autoPlay
+
                 loop
                 muted={muted}
                 playsInline
@@ -163,9 +147,6 @@ export default function MissionVision() {
                   </div>
                 </div>
               )}
-
-              {/* Right-edge fade blending into text side */}
-              <div className="absolute inset-y-0 right-0 w-28 pointer-events-none" />
 
               {/* Mute / Unmute toggle */}
               <button
@@ -189,135 +170,27 @@ export default function MissionVision() {
             </div>
           </div>
 
-          {/* ══ RIGHT — Quote ══ */}
-          <div className="ceo-quote lg:col-span-5 flex flex-col justify-between p-6 md:p-14 lg:p-16 gap-10 relative overflow-hidden">
-
-            {/* Giant decorative opening quote mark — background layer */}
-            <span
-              className="absolute -top-10 -left-4 font-black text-white/[0.04] select-none pointer-events-none leading-none"
-              style={{
-                fontSize: 'clamp(14rem, 30vw, 28rem)',
-                fontFamily: 'Georgia, "Times New Roman", serif',
-                lineHeight: 0.75,
-              }}
-              aria-hidden
-            >
-              "
-            </span>
-
-            <div className="relative z-10 flex flex-col gap-8 flex-1 justify-center">
-
-              {/* Eyebrow label */}
-              <div className="quote-line flex items-center gap-3">
-                <div className="w-8 h-px bg-[#EF9419]" />
-                <span className="font-inter text-[#EF9419] text-xs font-bold uppercase tracking-[0.35em]">
-                  Message from the CEO
-                </span>
-              </div>
-
-              {/* Opening quote glyph — small, decorative */}
-              <span
-                className="quote-line block text-[#EF9419] font-black leading-none select-none"
-                style={{
-                  fontSize: '4rem',
-                  fontFamily: 'Georgia, "Times New Roman", serif',
-                  lineHeight: 0.6,
-                }}
-                aria-hidden
-              >
-                "
-              </span>
-
-              {/* The quote — Sqew-style: mix of outlined ghost + solid words inline */}
-              <blockquote className="quote-line relative">
-                <p
-                  className="font-black uppercase leading-[0.88] tracking-tighter"
-                  style={{ fontSize: 'clamp(2.4rem, 5.5vw, 5rem)' }}
-                >
-                  {/* Line 1 — outlined ghost */}
-                  <span
-                    className="block text-transparent"
-                    style={{ WebkitTextStroke: '1.5px rgba(255,255,255,0.80)' }}
-                  >
-                    WE DON'T JUST
-                  </span>
-
-                  {/* Line 2 — solid orange accent */}
-                  <span className="block text-[#EF9419]">
-                    FEED PEOPLE.
-                  </span>
-
-                  {/* Line 3 — solid white */}
-                  <span className="block text-white">
-                    WE NOURISH
-                  </span>
-
-                  {/* Line 4 — outlined ghost again */}
-                  <span
-                    className="block text-transparent"
-                    style={{ WebkitTextStroke: '1.5px rgba(255,255,255,0.45)' }}
-                  >
-                    LIVES.
-                  </span>
-                </p>
-              </blockquote>
-
-              {/* Full prose quote — smaller, under the display headline */}
-              <p className="quote-line font-inter text-white/65 text-sm md:text-base leading-relaxed max-w-lg">
-                At Atlantic, every meal we serve is a promise kept — a commitment to quality,
-                dignity, and care. We believe the standard of catering in Africa can be
-                world-class, and we prove it every single day. Backed by comprehensive ISO certifications
-                in environmental, health, and food safety management, we guarantee the highest standards
-                in cleanliness and service quality.
-              </p>
-
-              {/* Closing quote glyph */}
-              <span
-                className="quote-line block text-[#EF9419]/40 font-black leading-none select-none self-end"
-                style={{
-                  fontSize: '3rem',
-                  fontFamily: 'Georgia, "Times New Roman", serif',
-                  lineHeight: 0.6,
-                }}
-                aria-hidden
-              >
-                "
-              </span>
-
-              {/* Attribution */}
-              <div className="quote-line flex flex-col sm:flex-row sm:items-center gap-4 border-t border-white/10 pt-6">
-
-                <div>
-                  <p className="font-black text-white text-sm uppercase tracking-wide leading-none">
-                    Maud Lindsay-Gamrat
-                  </p>
-                  <p className="font-inter text-white/50 text-xs mt-1 uppercase tracking-widest">
-                    Chief Executive Officer · ACLL
-                  </p>
-                </div>
-
-                {/* ISO badges pushed to the right */}
-                <div className="sm:ml-auto flex flex-wrap gap-2">
-                  {['ISO 9001', 'ISO 14001', 'ISO 22000', 'ISO 45001'].map(cert => (
-                    <span
-                      key={cert}
-                      className="cert-badge border border-white/20 text-white/60
-                               font-inter font-bold text-[9px] uppercase tracking-widest
-                               px-2.5 py-1 hover:border-white/50 hover:text-white
-                               transition-colors duration-200"
-                    >
-                      {cert}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-            </div>
-          </div>
 
         </div>
       </section>
-
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10">
+        {CARDS.map((card, i) => (
+          <div
+            key={i}
+            className="p-8 md:p-10 border-b md:border-b-0 md:border-r border-white/10 last:border-r-0 last:border-b-0 group hover:bg-white/[0.03] transition-colors"
+          >
+            <span className="block font-inter text-xs font-bold uppercase tracking-widest mb-4" style={{ color: card.color }}>
+              {card.label}
+            </span>
+            <h3 className="font-black text-3xl md:text-4xl uppercase tracking-tight text-white leading-none mb-5">
+              {card.title}
+            </h3>
+            <p className="font-inter text-white/60 text-sm leading-relaxed">
+              {card.body}
+            </p>
+          </div>
+        ))}
+      </div>
     </section>
   )
 }

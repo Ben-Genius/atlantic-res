@@ -86,7 +86,7 @@ const DISHES = [
   },
   {
     id: 6,
-    name: 'Housekeeping, Laundry & Cleaning',
+    name: 'Housekeeping Laundry & Cleaning',
     subtitle: 'Facility Care',
     img: '/assets/images/Services/fit/housekeeping.webp',
     accentColor: '#B37B29', // Gold dark
@@ -209,11 +209,13 @@ const PLATE_MOVES: PlateMove[] = [
     exitEase: 'power2.in',
   },
   {
-    // Ship Chandelling — card flip over the X axis
-    enter: { rotationX: 88, yPercent: -50, opacity: 0, transformOrigin: 'center bottom' },
-    exit: { rotationX: -74, yPercent: 42, opacity: 0, transformOrigin: 'center top' },
-    ease: 'circ.out',
-    exitEase: 'power2.in',
+    // Ship Chandelling — vessel crests into frame off a swell and lists as it
+    // rises, levelling out flat on arrival; leaves by dipping away over the
+    // horizon with the opposite roll, like it's sailing off past the bow wave.
+    enter: { y: 340, rotation: -13, xPercent: -8, scale: 0.9, opacity: 0, transformOrigin: 'center bottom' },
+    exit: { y: -280, rotation: 11, xPercent: 14, scale: 1.08, opacity: 0, transformOrigin: 'center bottom' },
+    ease: 'power2.out',
+    exitEase: 'power1.in',
   },
   {
     // Housekeeping — skewed slide, like a card dealt across the frame
@@ -241,6 +243,7 @@ const PLATE_MOVES: PlateMove[] = [
 export default function ServicesSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const arcRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger)
@@ -272,6 +275,30 @@ export default function ServicesSection() {
 
         // Perspective has to live on the plates for rotationX/Y to read as 3D
         gsap.set('.dish-plate', { transformPerspective: 1200 })
+
+        // Section-level hand-off with whatever sits above (Hero/About) —
+        // without this the pinned content simply snaps fully in the instant
+        // the pin engages, and scrolling back out cuts just as hard. Scrubbing
+        // it in over the approach corridor means scrolling back up reads as a
+        // settle/close instead of a jump cut once the pin releases.
+        gsap.fromTo(contentRef.current,
+          reduced
+            ? { opacity: 0 }
+            : { opacity: 0, y: 70, scale: 0.96, filter: rich ? 'blur(6px)' : 'blur(0px)' },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            filter: 'blur(0px)',
+            ease: easeFor('power2.out'),
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top bottom',
+              end: 'top top',
+              scrub: 1,
+            },
+          }
+        )
 
         // Initial setup for Slide 0
         gsap.set('.dish-plate-0', { ...PLATE_RESET })
@@ -557,7 +584,7 @@ export default function ServicesSection() {
       />
 
       {/* ── MAIN CONTENT CONTAINER ── */}
-      <div className="relative w-full h-full flex flex-col justify-center z-20">
+      <div ref={contentRef} className="relative w-full h-full flex flex-col justify-center z-20">
 
         {/* Top row: dish + text + card */}
         <div className="flex flex-col lg:flex-row items-center ml-4 sm:ml-6 md:ml-[25px] lg:ml-[45px] xl:ml-[10px] gap-6 lg:gap-[30px] flex-1 relative mt-16 md:mt-24 w-[calc(100%-2rem)]">
@@ -596,7 +623,7 @@ export default function ServicesSection() {
                   </p>
 
                   <h2 className="font-outfit leading-[1.0] uppercase w-full max-w-full break-words">
-                    <span className="block font-extralight tracking-[0.04em] text-[1.5rem] sm:text-[2.2rem] md:text-[3.2rem] lg:text-[clamp(2rem,3.2vw,4.4rem)] text-white/95">
+                    <span className="block font-extralight tracking-[0.03em] text-[1.5rem] sm:text-[2.2rem] md:text-[3.2rem] lg:text-[clamp(2rem,3.2vw,4.4rem)] text-white/95 py-2">
                       {dish.name.split(' ')[0]}
                     </span>
                     <span
@@ -641,7 +668,7 @@ export default function ServicesSection() {
           </div>
 
           {/* E ─ Overview card stacked absolutely */}
-          <div className="relative hidden lg:block w-[300px] xl:w-[320px] h-[400px] shrink-0 ml-auto mr-6 self-center mt-[1rem]">
+          <div className="relative hidden lg:block w-[300px] xl:w-[320px] h-[400px] shrink-0 ml-auto mr-0 self-center mt-[1rem]">
             {DISHES.map((dish, idx) => {
               return (
                 <div

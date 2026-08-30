@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Calendar, ArrowRight, Tag } from 'lucide-react'
+import CtaSection from '@/components/home/CtaSection'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -124,6 +125,8 @@ export default function NewsPage() {
           </div>
         </div>
       </section>
+
+      <CtaSection />
     </main>
     </>
   )

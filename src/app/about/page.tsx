@@ -13,6 +13,7 @@ import MeetTheCrew from '@/components/about/MeetTheCrew'
 import Sustainability from '@/components/about/Sustainability'
 import AboutMarquee from '@/components/about/AboutMarquee'
 import AboutContact from '@/components/about/AboutContact'
+import CtaSection from '@/components/home/CtaSection'
 
 export default function AboutPage() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -141,12 +142,14 @@ export default function AboutPage() {
 
       <div className="relative z-10 w-full">
         <AboutHero />
-        <AboutEditorial />
         <MissionVision />
+        <AboutEditorial />
+
         <MeetTheCrew />
         <Sustainability />
-        {/* <AboutMarquee /> */}
-        {/* <AboutContact /> */}
+
+        <AboutContact />
+        <CtaSection />
       </div>
     </div>
   )

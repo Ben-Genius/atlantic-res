@@ -1,17 +1,16 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Variants, motion, AnimatePresence, useInView } from "framer-motion";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
+import { getLenis, smoothScrollTo } from "@/lib/lenis";
 
 // ─── Animations ──────────────────────────────────────────────────────────
 
 const EASE = { smooth: [0.4, 0, 0.2, 1], outExpo: [0.16, 1, 0.3, 1], spring: [0.175, 0.885, 0.32, 1] };
-
-const clipFromLeft: Variants = {
-  hidden: { clipPath: "inset(0% 100% 0% 0%)" },
-  show: { clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 1.1, ease: EASE.outExpo } },
-};
 
 const clipFromRight: Variants = {
   hidden: { clipPath: "inset(0% 0% 0% 100%)" },
@@ -113,15 +112,8 @@ const BOARD_MEMBERS = [
     shortBio: "Hubert Tossou serves as the Operations Director at Atlantic Catering. He has vast knowledge and twenty years of experience in the hospitality industry having worked in some of the most reputable companies in the food industry both in Ghana, Nigeria, and Benin.",
     fullBio: "Hubert Tossou serves as the Operations Director at Atlantic Catering. He has vast knowledge and twenty years of experience in the hospitality industry having worked in some of the most reputable companies in the food industry both in Ghana, Nigeria, and Benin.\n\nSome of his key responsibilities include Product development, Project start-up, planning and coordination. He is a trained executive Chef with over twelve years experience in in-flight and remote site operations. He holds a Bachelor’s in Hotel and Project Management and is a certified ISO Food Safety Auditor. He is fluent in English and French."
   },
-  {
-    number: "03",
-    initials: "JA",
-    name: "John Ansah",
-    role: "BD/ QUALITY & REMOTE SITE DIRECTOR",
-    image: "https://atlanticcatering-gh.com/wp-content/uploads/2025/10/John.jpg",
-    shortBio: "John oversees all remote sites of the company. He is an experienced Ghanaian quality and food safety consultant. He started his career as a laboratory technologist and by dint of hard work has risen through the ranks to become a QHSE Director with a career spanning over 2 decades.",
-    fullBio: "John oversees all remote sites of the company. He is an experienced Ghanaian quality and food safety consultant. He started his career as a laboratory technologist and by dint of hard work has risen through the ranks to become a QHSE Director with a career spanning over 2 decades.\n\nJohn has worked with: Apam Hospital, Ghana Armed Forces Recruit Centre, Pioneer Food Cannery, Guinness Ghana Breweries, Everpure Ghana Ltd and First Catering Ltd., a Swiss commercial airline catering company, now Newrest Ghana; where he played a major role and under his impeccable leadership won several contracts.\n\nJohn holds an MSc Degree in Occupational Health Safety Risk Management from Open University of Malaysia."
-  },
+
+
   {
     number: "04",
     initials: "JT",
@@ -208,7 +200,7 @@ function MemberContent({
       {/* Name */}
       <motion.h3
         variants={direction === "left" ? fadeInLeft : fadeInRight}
-        className="text-3xl sm:text-4xl md:text-5xl font-black text-[#111] uppercase leading-tight mb-6 tracking-tight"
+        className="text-3xl sm:text-4xl md:text-5xl font-black text-white uppercase leading-tight mb-6 tracking-tight"
       >
         {member.name}
       </motion.h3>
@@ -224,7 +216,7 @@ function MemberContent({
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.28, ease: EASE.smooth }}
             >
-              <p className="text-gray-600 leading-relaxed text-sm sm:text-base font-inter whitespace-pre-line">
+              <p className="text-white leading-relaxed text-sm sm:text-base font-inter whitespace-pre-line">
                 {member.fullBio}
               </p>
             </motion.div>
@@ -236,7 +228,7 @@ function MemberContent({
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.28, ease: EASE.smooth }}
             >
-              <p className="text-gray-600 leading-relaxed text-sm sm:text-base font-inter whitespace-pre-line">
+              <p className="text-white leading-relaxed text-sm sm:text-base font-inter whitespace-pre-line">
                 {member.shortBio}
               </p>
             </motion.div>
@@ -275,54 +267,141 @@ function MemberContent({
 
 function MemberRow({
   member,
-  index,
 }: {
   member: (typeof BOARD_MEMBERS)[number];
-  index: number;
 }) {
   const [expanded, setExpanded] = useState(false);
-  const isEven = index % 2 === 1;
-  const portraitVariant = isEven ? clipFromLeft : clipFromRight;
-  const portraitDirection = isEven ? "left" : "right";
 
   return (
-    <div className={cn(
-      "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center py-16 sm:py-20 border-b border-gray-200 last:border-0",
-    )}>
-      {isEven ? (
-        <>
-          {/* Portrait left */}
-          <Reveal variants={portraitVariant} className="lg:col-span-5 relative w-full aspect-[4/5]">
-            <MemberPortrait image={member.image} name={member.name} className="absolute inset-0 w-full h-full shadow-2xl" />
-          </Reveal>
-          {/* Content right */}
-          <div className="lg:col-span-7">
-            <MemberContent
-              member={member}
-              expanded={expanded}
-              onToggle={() => setExpanded((p) => !p)}
-              direction={portraitDirection}
-            />
-          </div>
-        </>
-      ) : (
-        <>
-          {/* Content left */}
-          <div className="lg:col-span-7 order-2 lg:order-1">
-            <MemberContent
-              member={member}
-              expanded={expanded}
-              onToggle={() => setExpanded((p) => !p)}
-              direction={portraitDirection}
-            />
-          </div>
-          {/* Portrait right */}
-          <Reveal variants={portraitVariant} className="lg:col-span-5 order-1 lg:order-2 mb-8 lg:mb-0 relative w-full aspect-[4/5]">
-            <MemberPortrait image={member.image} name={member.name} className="absolute inset-0 w-full h-full shadow-2xl" />
-          </Reveal>
-        </>
-      )}
+    <div className="crew-slide w-full lg:h-full lg:shrink-0 flex items-center px-6 md:px-16 py-16 lg:py-0 border-b border-gray-200 lg:border-0 last:border-0">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center w-full max-w-7xl mx-auto">
+        {/* Portrait */}
+        <Reveal variants={clipFromRight} className="lg:col-span-5 relative w-full aspect-[4/5] lg:max-h-[65vh]">
+          <MemberPortrait image={member.image} name={member.name} className="absolute inset-0 w-full h-full shadow-2xl" />
+        </Reveal>
+        {/* Content — capped and internally scrollable so one long bio never
+            forces the pinned slide taller than the viewport */}
+        <div className="lg:col-span-7 lg:max-h-[70vh] lg:overflow-y-auto lg:pr-2">
+          <MemberContent
+            member={member}
+            expanded={expanded}
+            onToggle={() => setExpanded((p) => !p)}
+            direction="right"
+          />
+        </div>
+      </div>
     </div>
+  );
+}
+
+// ─── Board carousel — horizontal scroll, pinned on desktop ────────
+//
+// Scrolling the page moves the crew sideways instead of stacking seven
+// full bio blocks down the page. Pinned + scrubbed through GSAP exactly
+// like the services carousel, with Lenis driving the snap-to-member and
+// the dot/arrow jumps so it eases with the same curve as the wheel.
+// Below `lg` it just falls back to a plain stacked column — scroll-jacking
+// a long bio on a touch screen is a bad time.
+
+function BoardCarousel() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const total = BOARD_MEMBERS.length;
+
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
+      if (!trackRef.current) return;
+
+      // A single timeline owning its own scrollTrigger config (rather than a
+      // bare ScrollTrigger.create() with a tween pointed at that instance)
+      // — the latter can fall out of sync once the pin goes inactive and a
+      // programmatic jump (dot click, snap) scrolls back into range.
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          id: "crew-pin",
+          trigger: sectionRef.current,
+          start: "top top",
+          end: () => `+=${window.innerHeight * (total - 1)}`,
+          pin: true,
+          scrub: 1,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => setActiveIndex(Math.round(self.progress * (total - 1))),
+        },
+      });
+
+      tl.to(trackRef.current, {
+        xPercent: -100 * (total - 1),
+        ease: "none",
+      });
+
+      return () => tl.scrollTrigger?.kill();
+    });
+
+    return () => mm.revert();
+  }, { scope: sectionRef });
+
+  // Snap to the nearest member once the wheel settles — mirrors the
+  // services carousel's Lenis-driven snap so it doesn't fight Lenis for
+  // ownership of the scroll position.
+  useEffect(() => {
+    let snapTimer: ReturnType<typeof setTimeout> | null = null;
+    const settleOnNearestMember = () => {
+      if (snapTimer) clearTimeout(snapTimer);
+      const st = ScrollTrigger.getById("crew-pin");
+      if (!st || !st.isActive) return;
+      snapTimer = setTimeout(() => {
+        const trigger = ScrollTrigger.getById("crew-pin");
+        if (!trigger || !trigger.isActive) return;
+        const step = (trigger.end - trigger.start) / (total - 1);
+        const index = Math.round((trigger.scroll() - trigger.start) / step);
+        const target = trigger.start + index * step;
+        if (Math.abs(target - trigger.scroll()) > 4) smoothScrollTo(target, 0.7);
+      }, 170);
+    };
+
+    const lenis = getLenis();
+    lenis?.on("scroll", settleOnNearestMember);
+    return () => {
+      if (snapTimer) clearTimeout(snapTimer);
+      lenis?.off("scroll", settleOnNearestMember);
+    };
+  }, [total]);
+
+  const goTo = (index: number) => {
+    const trigger = ScrollTrigger.getById("crew-pin");
+    if (!trigger) return;
+    const target = trigger.start + (index / (total - 1)) * (trigger.end - trigger.start);
+    smoothScrollTo(target, 1.2);
+  };
+
+  return (
+    <section ref={sectionRef} className="relative w-full overflow-hidden lg:h-screen bg-black">
+      <div ref={trackRef} className="flex flex-col lg:flex-row lg:h-full lg:will-change-transform ">
+        {BOARD_MEMBERS.map((member) => (
+          <MemberRow key={member.name} member={member} />
+        ))}
+      </div>
+
+      {/* Dots — desktop only, mirrors the pinned scroll */}
+      <div className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 items-center gap-2 z-30">
+        {BOARD_MEMBERS.map((member, index) => (
+          <button
+            key={member.name}
+            onClick={() => goTo(index)}
+            aria-label={`Go to ${member.name}`}
+            className={cn(
+              "h-2 rounded-full transition-all duration-300",
+              activeIndex === index ? "w-8 bg-[#EF9419]" : "w-2 bg-gray-300 hover:bg-gray-400",
+            )}
+          />
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -385,14 +464,8 @@ export default function MeetTheCrew() {
         </div>
       </section>
 
-      {/* ── Board members — alternating layout ────────────────────── */}
-      <section className="bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          {BOARD_MEMBERS.map((member, index) => (
-            <MemberRow key={member.name} member={member} index={index} />
-          ))}
-        </div>
-      </section>
+      {/* ── Board members — horizontal scroll, pinned on desktop ──── */}
+      <BoardCarousel />
     </div>
   );
 }
