@@ -409,8 +409,7 @@ function BoardCarousel() {
 
 export default function MeetTheCrew() {
   return (
-    <div className="bg-white
-     pb-32">
+    <div className="pb-32">
       {/* ── Introduction ──────────────────────────────────────────── */}
       <section className="py-4 overflow-hidden relative">
         {/* Ambient orb */}

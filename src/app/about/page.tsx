@@ -145,12 +145,9 @@ export default function AboutPage() {
           <AboutHero />
           <MissionVision />
           <AboutEditorial />
-
           <MeetTheCrew />
           <Sustainability />
-
           {/* <AboutContact /> */}
-
         </div>
       </div>
       <CtaSection />

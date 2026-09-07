@@ -12,7 +12,7 @@ const SDGS = [
 
 export default function Sustainability() {
   return (
-    <section className="scroll-reveal w-full px-6 md:px-16 py-20 border-t border-white/10">
+    <section className="scroll-reveal w-full px-6 md:px-16 py-8 ">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         <div className="lg:col-span-5">
           <span className="block font-inter text-[#10B981] text-xs font-bold uppercase tracking-[0.3em] mb-4">

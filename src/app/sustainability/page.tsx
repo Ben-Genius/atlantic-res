@@ -140,7 +140,7 @@ const projects = [
     desc: 'Training and certifications for street food vendors in hygiene, food safety, and business operations across Ghana.',
     longDesc: 'By investing in street vendors, we prevent food-borne illnesses, uplift local entrepreneurs, and encourage safe cooking practices across regional communities.',
     video: 'https://atlanticcatering-gh.com/wp-content/uploads/2025/10/MAUD-SPEECH-HIGHLIGHTS-AKYEM.mp4',
-    youtube: 'https://www.youtube.com/watch?v=4BfKFCOCJe8',
+    youtube: '',
     hasVideo: true,
     dish: '/assets/images/dishes/dish1.png',
   },
