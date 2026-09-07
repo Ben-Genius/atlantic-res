@@ -35,7 +35,7 @@ export function middleware(request: NextRequest) {
     "font-src 'self' data: https://fonts.gstatic.com",
     "connect-src 'self' https://www.google-analytics.com https://atlanticcatering-gh.com https://*.odoo.com",
     "frame-src 'self' https://www.google.com https://www.youtube.com https://www.youtube-nocookie.com https://maps.google.com",
-    "object-src 'none'",
+    "object-src 'self' data:",
     "base-uri 'self'",
     "form-action 'self'",
     "frame-ancestors 'self'",
