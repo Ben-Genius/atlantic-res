@@ -11,12 +11,28 @@ gsap.registerPlugin(ScrollTrigger, TextPlugin)
 
 const CYCLING_WORDS = ['EVERY MOMENT', 'CATERING', 'LOGISTICS', 'HOSPITALITY']
 
+/* Serrated stamp edge — n shallow outward bumps around a circle, as on a postage seal */
+function scallopedPath(cx: number, cy: number, r: number, n: number) {
+  const step = (Math.PI * 2) / n
+  const bump = r * Math.sin(step / 2) * 1.18
+  let d = ''
+  for (let i = 0; i <= n; i++) {
+    const a = i * step - Math.PI / 2
+    const x = (cx + Math.cos(a) * r).toFixed(2)
+    const y = (cy + Math.sin(a) * r).toFixed(2)
+    d += i === 0 ? `M ${x},${y}` : ` A ${bump.toFixed(2)},${bump.toFixed(2)} 0 0 1 ${x},${y}`
+  }
+  return `${d} Z`
+}
+
+const SEAL_EDGE = scallopedPath(100, 100, 96, 46)
+
 export default function HeroSection() {
   const textRef = useRef<HTMLSpanElement>(null)
   const heroRef = useRef<HTMLElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
-  const statsRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const sealRef = useRef<SVGGElement>(null)
 
   useGSAP(() => {
     const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -52,13 +68,16 @@ export default function HeroSection() {
         ease: 'power3.out',
       })
 
-      gsap.from(statsRef.current, {
-        opacity: 0,
-        y: 15,
-        duration: 1.0,
-        ease: 'power3.out',
-        delay: 0.3,
-      })
+      if (sealRef.current) {
+        gsap.to(sealRef.current, {
+          rotation: 360,
+          duration: 26,
+          ease: 'none',
+          repeat: -1,
+          transformOrigin: '50% 50%',
+          svgOrigin: '100 100',
+        })
+      }
     }, heroRef)
 
     return () => ctx.revert()
@@ -87,126 +106,106 @@ export default function HeroSection() {
           <source src="/assets/video/heroVid.MP4" type="video/mp4" />
         </video>
 
-        {/*
-          Directional scrim only. No full-plate wash - the footage stays vivid on
-          the right and centre where the subject sits; density builds toward the
-          lower-left corner where the copy lands.
-        */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0B1014]/85 via-[#0B1014]/30 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1014]/90 via-[#0B1014]/10 to-transparent" />
-        {/* Faint top falloff so the fixed nav keeps contrast on the white end-card frame */}
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#0B1014]/45 to-transparent" />
+        {/* Even scrim so centred copy stays legible over the footage */}
+        <div className="absolute inset-0 bg-[#0B1014]/10" />
       </div>
 
       {/* Main Content Area */}
-      <div className="relative z-20 flex-1 flex items-center px-5 sm:px-8 lg:px-12 xl:px-16 pt-8 pb-8 sm:pb-10 lg:pb-14">
+      <div className="relative z-20 flex-1 flex items-center justify-center px-5 sm:px-8 py-12">
         <div
           ref={contentRef}
-          className="relative z-10 w-full text-left flex flex-col items-start max-w-[680px] lg:max-w-[760px]"
+          className="relative z-10 w-full max-w-[760px] text-center flex flex-col items-center"
         >
-          <span className="hero-eyebrow text-[10px] sm:text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-[0.28em] text-[#8FE05C] mb-3 sm:mb-4 md:mb-5 select-none">
-            GLOBAL CUISINE, UNFORGETTABLE EXPERIENCES
+          <span className="hero-eyebrow text-[10px] sm:text-[12px] font-bold uppercase tracking-[0.28em] text-[#8FE05C] mb-4 sm:mb-5 select-none">
+            Global Cuisine, Unforgettable Experiences
           </span>
 
-          <h1 className="hero-title font-black uppercase leading-[1.0] tracking-tight select-none w-full" style={{ fontFamily: "'Antonio', sans-serif" }}>
-            {/* Line 1 — gold outlined */}
-            <span
-              className="hero-title-line-1 block text-[2.5rem] sm:text-[3.4rem] md:text-[4.2rem] lg:text-[5rem] xl:text-[5.8rem]"
-              style={{
-                WebkitTextStroke: '2px #E8B020',
-                color: 'transparent',
-              }}
-            >
-              GREAT FOOD
+          <h1
+            className="hero-title font-black uppercase leading-[1.0] tracking-tight text-white select-none"
+            style={{ fontFamily: "'Antonio', sans-serif" }}
+          >
+            <span className="block text-[2.75rem] sm:text-[4.2rem] lg:text-[5.5rem]">
+              GREAT FOOD MADE FOR
             </span>
-
-            {/* Line 2 — solid primary green */}
-            <span
-              className="hero-title-line-2 block text-[2.5rem] sm:text-[3.4rem] md:text-[4.2rem] lg:text-[5rem] xl:text-[5.8rem] mt-1 sm:mt-1.5 md:mt-2"
-              style={{ color: '#8FE05C' }}
-            >
-              MADE FOR
-            </span>
-
-            {/* Line 3 — cycling word, solid gold */}
-            <span
-              className="hero-title-line-3 block text-[2.5rem] sm:text-[3.4rem] md:text-[4.2rem] lg:text-[5rem] xl:text-[5.8rem] min-h-[1.1em] relative w-full mt-1 sm:mt-1.5 md:mt-2"
-              style={{ color: '#E8B020' }}
-            >
-              <span ref={textRef} className="absolute left-0 right-0 text-left block">
+            <span className="block text-[2.75rem] sm:text-[4.2rem] lg:text-[5.5rem] min-h-[1.1em] mt-1 sm:mt-2 text-[#8FE05C]">
+              <span ref={textRef} className="inline-block">
                 EVERY MOMENT
               </span>
             </span>
           </h1>
 
-          {/* Description Paragraph */}
-          <p className="hero-desc text-[13px] sm:text-[15px] md:text-[16px] lg:text-[18px] leading-relaxed text-white/80 max-w-[440px] lg:max-w-[520px] mt-4 sm:mt-5 md:mt-6 font-medium select-none">
-            From exquisite meals to seamless service, we bring people together through exceptional food and care.
-          </p>
 
-          {/* Green CTA Button */}
-          <div className="hero-cta mt-6 sm:mt-8 lg:mt-9">
-            <CtaButton
-              href="/menu"
-              label="EXPLORE OUR MENU"
-              size="md"
-              variant="primary"
-              className="!bg-[#66cc33] text-white hover:!bg-[#cc9933] hover:text-white shadow-[0_8px_30px_rgba(102,204,51,0.3)] hover:shadow-[0_12px_40px_rgba(204,153,51,0.4)] transition-all duration-500"
-            />
-          </div>
+
         </div>
       </div>
 
-      {/* Bottom Section - Feature Stats Bar */}
-      <div ref={statsRef} className="relative z-20 w-full px-5 sm:px-8 lg:px-12 xl:px-16 py-5 sm:py-6 md:py-7 border-t border-white/15">
-        <div className="w-full max-w-[1400px]">
-          <div className="flex flex-col sm:flex-row items-center justify-start gap-4 sm:gap-6 md:gap-8 lg:gap-10 text-center sm:text-left text-white">
-            {/* Item 1 */}
-            <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
-              <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-[#8FE05C]/15 border border-[#8FE05C]/30 text-[#8FE05C] flex-shrink-0">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 sm:w-4 sm:h-4">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20" />
-                </svg>
-              </div>
-              <span className="text-[9px] sm:text-[10px] md:text-[11px] lg:text-xs font-bold uppercase tracking-[0.2em] text-white/80 whitespace-nowrap">
-                International Flavors
-              </span>
-            </div>
+      {/* Certification seal — bottom right */}
+      <div className="hidden sm:block absolute z-20 bottom-8 right-8 lg:bottom-12 lg:right-12 w-[132px] lg:w-[164px] select-none pointer-events-none">
+        <svg viewBox="0 0 200 200" className="w-full h-full" role="img" aria-label="ISO 22000 certified — Atlantic Catering & Logistics, established 2014">
+          <defs>
+            <path id="seal-arc-top" d="M 28,100 A 72,72 0 0 1 172,100" fill="none" />
+            <path id="seal-arc-bottom" d="M 21,100 A 79,79 0 0 0 179,100" fill="none" />
+          </defs>
 
-            {/* Divider */}
-            <div className="hidden sm:block w-[1px] h-5 sm:h-6 bg-white/20" />
+          {/* Seal body — primary green ground with the serrated stamp edge */}
+          <path d={SEAL_EDGE} fill="#1B4332" fillOpacity="0.94" />
 
-            {/* Item 2 */}
-            <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
-              <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-[#8FE05C]/15 border border-[#8FE05C]/30 text-[#8FE05C] flex-shrink-0">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 sm:w-4 sm:h-4">
-                  <path d="M12 4V2M5 18h14a1 1 0 0 0 1-1v-2a7 7 0 0 0-14 0v2a1 1 0 0 0 1 1Z" />
-                  <path d="M12 4a5 5 0 0 1 5 5v2H7V9a5 5 0 0 1 5-5Z" />
-                </svg>
-              </div>
-              <span className="text-[9px] sm:text-[10px] md:text-[11px] lg:text-xs font-bold uppercase tracking-[0.2em] text-white/80 whitespace-nowrap">
-                Perfect for Any Occasion
-              </span>
-            </div>
+          {/* Double keyline in the secondary gold, inset from the edge */}
+          <g fill="none" stroke="#E8B020">
+            <circle cx="100" cy="100" r="87" strokeWidth="2" />
+            <circle cx="100" cy="100" r="82.5" strokeWidth="0.8" />
+          </g>
 
-            {/* Divider */}
-            <div className="hidden sm:block w-[1px] h-5 sm:h-6 bg-white/20" />
+          <g ref={sealRef} fill="#8FE05C">
+            <text
+              fontFamily="'Antonio', sans-serif"
+              fontSize="16"
+              fontWeight="700"
+              letterSpacing="2.4"
+            >
+              <textPath href="#seal-arc-top" startOffset="50%" textAnchor="middle">
+                ATLANTIC CATERING
+              </textPath>
+            </text>
 
-            {/* Item 3 */}
-            <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
-              <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-[#8FE05C]/15 border border-[#8FE05C]/30 text-[#8FE05C] flex-shrink-0">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 sm:w-4 sm:h-4">
-                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 8a7 7 0 0 1-9 10Z" />
-                  <path d="M9 22v-4" />
-                </svg>
-              </div>
-              <span className="text-[9px] sm:text-[10px] md:text-[11px] lg:text-xs font-bold uppercase tracking-[0.2em] text-white/80 whitespace-nowrap">
-                Fresh Ingredients, Exceptional Taste
-              </span>
-            </div>
-          </div>
-        </div>
+            <text
+              fontFamily="'Antonio', sans-serif"
+              fontSize="14"
+              fontWeight="700"
+              letterSpacing="2"
+            >
+              <textPath href="#seal-arc-bottom" startOffset="50%" textAnchor="middle">
+                ISO 22000 CERTIFIED
+              </textPath>
+            </text>
+
+            {/* Star separators at the seams between the two arcs */}
+            <text x="25" y="105" fontSize="12" textAnchor="middle" fill="#E8B020">★</text>
+            <text x="175" y="105" fontSize="12" textAnchor="middle" fill="#E8B020">★</text>
+          </g>
+
+          {/* Centre medallion — colours inverted, gold ground carrying the primary mark */}
+          <circle cx="100" cy="100" r="52" fill="#E8B020" />
+          <path
+            d="M 84,90 L 95,102 L 118,78"
+            fill="none"
+            stroke="#1B4332"
+            strokeWidth="8"
+            strokeLinecap="square"
+          />
+          <text
+            x="100"
+            y="128"
+            textAnchor="middle"
+            fill="#1B4332"
+            fontFamily="'Antonio', sans-serif"
+            fontSize="16"
+            fontWeight="700"
+            letterSpacing="1.6"
+          >
+            EST. 2014
+          </text>
+        </svg>
       </div>
     </section>
   )
