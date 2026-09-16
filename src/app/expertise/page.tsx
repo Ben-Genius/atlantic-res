@@ -8,6 +8,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SERVICE_ICONS } from '@/components/icons/ServiceIcons'
 import CtaSection from '@/components/home/CtaSection'
+import BrandMarquee from '@/components/about/BrandMarquee'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -167,7 +168,7 @@ function ServiceBlock({ service, index }: { service: (typeof SERVICES)[number]; 
     >
       <div className={`flex flex-col ${flipped ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
         {/* Photograph */}
-        <div className="relative aspect-[4/3] w-full lg:aspect-auto lg:w-[44%] lg:min-h-[480px]">
+        <div className="relative aspect-[4/3] w-full lg:aspect-auto lg:w-[46%] lg:min-h-[540px]">
           <Image
             src={service.image}
             alt={service.name}
@@ -287,23 +288,32 @@ export default function ExpertisePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#0d0d0d]/90 via-[#0d0d0d]/70 to-[#0d0d0d]/40" />
         </div>
 
-        <div className="relative z-10 mx-auto w-full max-w-6xl">
+        <div className="relative z-10 mx-auto w-full max-w-8xl">
           <span className="block text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] text-[#cc9933]">
             Our Suite of Services
           </span>
-          <h1 className="mt-5 font-serif text-[2.5rem] md:text-[4rem] font-semibold leading-[1.05] text-white">
-            Our offerings are vast,<br />our people-first approach<br />is at the core of each one.
+          <h1 className="mt-5 font-serif text-[2.5rem] md:text-[4.4rem] font-semibold leading-[1.05] text-white">
+            Our offerings are vast,<br />
+            <em className="not-italic font-normal italic text-[#D4A556]">our people-first approach</em><br />
+            is at the core of each one.
           </h1>
           <p className="mt-6 max-w-xl text-sm md:text-base leading-relaxed text-white/75">
             Eight core services delivered across offshore, remote-site, aviation and executive
             operations in Ghana and across Africa.
           </p>
         </div>
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-8 z-10 hidden flex-col items-center gap-3 sm:flex">
+          <span className="text-[9px] font-semibold uppercase tracking-[0.42em] text-white/55">
+            Eight core services
+          </span>
+          <span className="block h-10 w-px bg-gradient-to-b from-[#D4A556] to-transparent" />
+        </div>
       </section>
 
       {/* ── Service index ───────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-6 md:px-12 py-14">
-        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <section className="mx-auto max-w-8xl px-6 md:px-12 py-14">
+        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
           {SERVICES.map(service => {
             const Icon = SERVICE_ICONS[service.id]
             return (
@@ -324,7 +334,7 @@ export default function ExpertisePage() {
       </section>
 
       {/* ── Service write-ups ───────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-6 md:px-12 pb-20">
+      <section className="mx-auto max-w-8xl px-6 md:px-12 pb-20">
         <div className="flex flex-col gap-8 md:gap-12">
           {SERVICES.map((service, i) => (
             <ServiceBlock key={service.id} service={service} index={i} />
@@ -332,11 +342,13 @@ export default function ExpertisePage() {
         </div>
       </section>
 
+      <BrandMarquee />
+
       {/* ── Logistics fleet ─────────────────────────────────── */}
       <section className="relative overflow-hidden px-6 md:px-12 py-20 md:py-28">
-        <div className="relative z-10 mx-auto max-w-6xl">
+        <div className="relative z-10 mx-auto max-w-8xl">
           <h2 className="font-serif text-[2rem] md:text-[3rem] font-semibold leading-tight text-[#3C8B36]">
-            Logistics
+            Our <em className="not-italic font-normal italic text-[#cc9933]">Logistics</em>
           </h2>
           <p className="mt-4 max-w-2xl text-sm md:text-base leading-relaxed text-[#0d0d0d]/70">
             Over the past decade, we have expanded our operations to offer comprehensive hospitality

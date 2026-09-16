@@ -120,7 +120,7 @@ export default function Header() {
                   href={item.href}
                   className={cn(
                     'relative px-4 py-1.5 text-[12px] font-semibold uppercase tracking-[0.14em] rounded-full',
-                    'text-[#1a1a1a]/75 hover:text-[#66cc33] hover:bg-[#66cc33]/8 hover:font-bold',
+                    'text-[#1a1a1a]/75 hover:text-[#cc9933]  hover:font-bold',
                     'transition-all duration-200'
                   )}
                 >
@@ -217,14 +217,14 @@ export default function Header() {
               onClick={close}
               className={cn(
                 'flex items-center px-4 py-3 rounded-lg text-[14px] font-semibold uppercase tracking-[0.12em]',
-                'text-[#1a1a1a]/80 hover:text-[#66cc33] hover:bg-[#66cc33]/8',
+                'text-[#1a1a1a]/80 hover:text-[#cc9933] hover:bg-[#cc9933]/10',
                 'transition-all duration-200 group'
               )}
             >
               <span className="flex-1">{item.label}</span>
               <ArrowRight
                 size={14}
-                className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-[#66cc33]"
+                className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-[#cc9933]"
               />
             </Link>
           ))}

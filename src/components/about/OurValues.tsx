@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 /** "Our Value Icons", brand guide p.19. */
 export default function OurValues() {
-  const sectionRef = useRef<HTMLElement>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
 
   useGSAP(() => {
     const mm = gsap.matchMedia()
@@ -33,11 +33,11 @@ export default function OurValues() {
   return (
     <section
       ref={sectionRef}
-      className="scroll-reveal relative w-full overflow-hidden px-6 md:px-16 py-16 md:py-24"
+      className="relative w-full overflow-hidden bg-[#FAF7EF] px-6 py-24 md:px-16 md:py-32"
     >
       <div className="relative z-10 mx-auto max-w-6xl">
         <h2 className="text-center font-serif text-[2rem] md:text-[3rem] font-semibold leading-tight text-[#3C8B36]">
-          Our Values
+          Our <em className="not-italic font-normal italic text-[#cc9933]">Values</em>
         </h2>
         <p className="mt-3 text-center text-sm md:text-base text-[#cc9933] font-semibold">
           They represent what we believe in &amp; how we run our business

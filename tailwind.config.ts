@@ -82,6 +82,10 @@ const config: Config = {
         'display-md': ['clamp(2.25rem, 5vw, 4rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
         'display-sm': ['clamp(1.75rem, 3.5vw, 2.75rem)', { lineHeight: '1.15', letterSpacing: '-0.01em' }],
       },
+      maxWidth: {
+        '8xl': '88rem',
+        '9xl': '96rem',
+      },
       spacing: {
         'section': '8rem',
         'section-sm': '4rem',

@@ -20,7 +20,7 @@ const NUMBERS = [
 ]
 
 export default function CateringNumbers() {
-  const sectionRef = useRef<HTMLElement>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
 
   useGSAP(() => {
     const mm = gsap.matchMedia()
@@ -41,25 +41,28 @@ export default function CateringNumbers() {
   }, { scope: sectionRef })
 
   return (
-    <section ref={sectionRef} className="scroll-reveal w-full px-6 md:px-16 py-16 md:py-24">
+    <section
+      ref={sectionRef}
+      className="relative w-full overflow-hidden bg-[#0E3B2A] px-6 py-24 md:px-16 md:py-32"
+    >
       <div className="mx-auto max-w-6xl">
-        <h2 className="font-serif text-[2rem] md:text-[3rem] font-semibold leading-tight text-[#3C8B36]">
-          Our Catering Numbers
+        <h2 className="font-serif text-[2.25rem] md:text-[3.5rem] font-semibold leading-tight text-white">
+          Our Catering <em className="not-italic font-normal italic text-[#D4A556]">Numbers</em>
         </h2>
-        <p className="mt-4 max-w-2xl text-sm md:text-base leading-relaxed text-[#0d0d0d]/70">
+        <p className="mt-4 max-w-2xl text-sm md:text-base leading-relaxed text-white/65">
           Making &lsquo;nice&rsquo; food is simple. Delivering dishes that invoke genuine emotion and
           leave a lasting impression is different.
         </p>
 
         <div className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
           {NUMBERS.map(item => (
-            <div key={item.label} className="number-cell border-t border-black/10 pt-5">
+            <div key={item.label} className="number-cell border-t border-white/20 pt-5">
               <AnimatedCounter
                 end={item.value}
                 suffix={item.suffix}
-                className="block font-display text-[2rem] md:text-[2.75rem] font-bold leading-none tracking-tight text-[#3C8B36]"
+                className="block font-display text-[2.5rem] md:text-[3.5rem] font-bold leading-none tracking-tight text-[#D4A556]"
               />
-              <p className="mt-2.5 text-[11px] md:text-xs font-semibold uppercase tracking-[0.14em] leading-snug text-[#0d0d0d]/55">
+              <p className="mt-2.5 text-[11px] md:text-xs font-semibold uppercase tracking-[0.14em] leading-snug text-white/55">
                 {item.label}
               </p>
             </div>

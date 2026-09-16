@@ -626,7 +626,7 @@ export default function ServicesSection() {
                       {dish.name.split(' ')[0]}
                     </span>
                     <span
-                      className={`block font-black tracking-tight -mt-1 md:-mt-2 ${accentSizeClass(dish.name)}`}
+                      className={`block font-bold tracking-tight -mt-1 md:-mt-2 ${accentSizeClass(dish.name)}`}
                       style={{ color: dish.accentColor }}
                     >
                       {dish.name.split(' ').slice(1).join(' ')}

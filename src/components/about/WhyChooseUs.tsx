@@ -36,7 +36,7 @@ const REASONS = [
 ]
 
 export default function WhyChooseUs() {
-  const sectionRef = useRef<HTMLElement>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
 
   useGSAP(() => {
     const mm = gsap.matchMedia()
@@ -59,20 +59,20 @@ export default function WhyChooseUs() {
   return (
     <section
       ref={sectionRef}
-      className="scroll-reveal w-full px-6 md:px-16 py-16 md:py-24 bg-[#0E3B2A] text-white"
+      className="relative w-full overflow-hidden bg-[#66cc33] px-6 py-24 md:px-16 md:py-32"
     >
       <div className="mx-auto max-w-6xl">
-        <h2 className="font-serif text-[2rem] md:text-[3rem] font-semibold leading-tight text-center">
-          Why Choose Us
+        <h2 className="font-serif text-[2rem] md:text-[3rem] font-semibold leading-tight text-center text-white">
+          Why <em className="not-italic font-normal italic text-[#0E3B2A]">Choose Us</em>
         </h2>
 
         <div className="mt-14 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
           {REASONS.map(({ icon: Icon, title, strap }) => (
             <div key={title} className="reason flex flex-col items-center text-center">
-              <Icon className="h-9 w-9 text-white/90" strokeWidth={1.4} aria-hidden />
-              <h3 className="mt-5 text-sm md:text-base font-bold leading-snug">{title}</h3>
-              <p className="mt-1.5 text-xs md:text-sm leading-snug text-white/70">{strap}</p>
-              <span className="mt-5 block h-px w-14 bg-white/25" />
+              <Icon className="h-9 w-9 text-white" strokeWidth={1.4} aria-hidden />
+              <h3 className="mt-5 text-sm md:text-base font-bold leading-snug text-white">{title}</h3>
+              <p className="mt-1.5 text-xs md:text-sm leading-snug text-white/75">{strap}</p>
+              <span className="mt-5 block h-px w-14 bg-white/35" />
             </div>
           ))}
         </div>

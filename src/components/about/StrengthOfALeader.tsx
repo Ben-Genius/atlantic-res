@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import ParallaxSection from '@/components/about/ParallaxSection'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -36,7 +37,7 @@ const PILLARS = [
 ]
 
 export default function StrengthOfALeader() {
-  const sectionRef = useRef<HTMLElement>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
 
   useGSAP(() => {
     const mm = gsap.matchMedia()
@@ -57,13 +58,18 @@ export default function StrengthOfALeader() {
   }, { scope: sectionRef })
 
   return (
-    <section ref={sectionRef} className="scroll-reveal w-full px-6 md:px-16 py-16 md:py-24">
-      <div className="mx-auto max-w-6xl">
+    <ParallaxSection
+      image="/assets/images/Services/camp.webp"
+      imageAlt="Atlantic remote-site kitchen operations"
+      bleed="left"
+    >
+      <div ref={sectionRef}>
+      <div className="w-full">
         <h2 className="font-serif text-[2rem] md:text-[3rem] font-semibold leading-tight text-[#3C8B36]">
-          The Strength<br />of a Leader
+          The Strength<br /><em className="not-italic font-normal italic text-[#cc9933]">of a Leader</em>
         </h2>
 
-        <div className="mt-12 grid grid-cols-1 gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-x-12 gap-y-10 sm:grid-cols-2">
           {PILLARS.map((pillar, i) => (
             <div key={pillar.title} className="pillar">
               <span className="block font-display text-sm font-bold tabular-nums text-[#cc9933]">
@@ -80,6 +86,7 @@ export default function StrengthOfALeader() {
           ))}
         </div>
       </div>
-    </section>
+      </div>
+    </ParallaxSection>
   )
 }

@@ -63,10 +63,24 @@ export default function HeroSection() {
 
       gsap.from(contentRef.current, {
         opacity: 0,
-        y: 20,
+        y: 28,
         duration: 1.2,
         ease: 'power3.out',
       })
+
+      gsap.from('.hero-cta', {
+        opacity: 0,
+        y: 18,
+        duration: 0.9,
+        delay: 0.45,
+        ease: 'power3.out',
+      })
+
+      gsap.fromTo(
+        '.hero-scroll-run',
+        { yPercent: -100 },
+        { yPercent: 200, duration: 2.1, ease: 'power1.inOut', repeat: -1, repeatDelay: 0.5 }
+      )
 
       if (sealRef.current) {
         gsap.to(sealRef.current, {
@@ -106,43 +120,62 @@ export default function HeroSection() {
           <source src="/assets/video/heroVid.MP4" type="video/mp4" />
         </video>
 
-        {/* Scrim weighted to the centre band so the headline always has
-            ground under it, whatever frame of the footage is showing */}
-        <div className="absolute inset-0 bg-[#0B1014]/25" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0B1014]/55 via-[#0B1014]/35 to-[#0B1014]/60" />
+        {/* Copy sits bottom-left, so only that corner is grounded. The
+            centre of the frame stays clear and the footage reads true. */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1014]/45 via-[#0B1014]/0 to-transparent" />
       </div>
 
       {/* Main Content Area */}
-      <div className="relative z-20 flex-1 flex items-center justify-center px-5 sm:px-8 py-12">
+      <div className="relative z-20 flex-1 flex items-end justify-start px-6 sm:px-10 lg:px-16 pb-16 sm:pb-20 lg:pb-24">
         <div
           ref={contentRef}
-          className="relative z-10 w-full max-w-[1000px] text-center flex flex-col items-center"
+          className="relative z-10 w-full max-w-[820px] text-left flex flex-col items-start"
         >
-          <span className="hero-eyebrow text-[12px] sm:text-[15px] font-bold uppercase tracking-[0.28em] text-[#D4A556] mb-5 sm:mb-6 select-none">
+          <span className="hero-eyebrow text-[11px] sm:text-[13px] font-bold uppercase tracking-[0.3em] text-[#D4A556] mb-4 sm:mb-5 select-none">
             Global Cuisine, Unforgettable Experiences
           </span>
 
           <h1
-            className="hero-title font-black uppercase leading-[1.0] tracking-tight text-white select-none"
+            className="hero-title font-black uppercase leading-[0.95] tracking-tight text-white select-none"
             style={{ fontFamily: "'Antonio', sans-serif" }}
           >
-            <span className="block text-[3rem] sm:text-[4.8rem] lg:text-[6.2rem]">
+            <span className="block text-[2.4rem] sm:text-[3.4rem] lg:text-[4.4rem]">
               GREAT FOOD MADE FOR
             </span>
-            <span className="block text-[3rem] sm:text-[4.8rem] lg:text-[6.2rem] min-h-[1.1em] mt-1 sm:mt-2 text-[#D4A556]/90">
+            <span className="block text-[2.4rem] sm:text-[3.4rem] lg:text-[4.4rem] min-h-[1.1em] mt-1 text-[#D4A556]">
               <span ref={textRef} className="inline-block">
                 EVERY MOMENT
               </span>
             </span>
           </h1>
 
+          <a
+            href="/expertise"
+            className="hero-cta mt-8 inline-flex items-center gap-3 border border-white/45 px-7 py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white transition-colors duration-300 hover:border-white hover:bg-white hover:text-[#0B1014]"
+          >
+            Explore our services
+            <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
 
 
         </div>
       </div>
 
+      {/* Scroll cue — bottom centre, between the copy and the seal */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-7 z-20 hidden flex-col items-center gap-3 sm:flex">
+        <span className="text-[9px] font-semibold uppercase tracking-[0.42em] text-white/55">
+          Begin the story
+        </span>
+        <span className="relative block h-12 w-px overflow-hidden bg-white/20">
+          <span className="hero-scroll-run absolute inset-x-0 top-0 block h-1/2 bg-[#D4A556]" />
+        </span>
+      </div>
+
       {/* Certification seal — bottom right */}
-      <div className="hidden sm:block absolute z-20 bottom-8 right-8 lg:bottom-12 lg:right-12 w-[132px] lg:w-[164px] select-none pointer-events-none">
+      <div className="hidden sm:block absolute z-20 bottom-8 right-8 lg:bottom-32 lg:right-12 w-[132px] lg:w-[134px] select-none pointer-events-none">
         <svg viewBox="0 0 200 200" className="w-full h-full" role="img" aria-label="ISO 22000 certified — Atlantic Catering & Logistics, established 2014">
           <defs>
             <path id="seal-arc-top" d="M 28,100 A 72,72 0 0 1 172,100" fill="none" />
