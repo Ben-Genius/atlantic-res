@@ -4,8 +4,8 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const CARDS = [
-  { label: 'Our Mission', color: '#EF9419', title: 'QUALITY MEALS', body: 'To provide quality, healthy, nutritious, and hygienically-prepared meals and excellent services to our clients and partners.' },
-  { label: 'Our Vision', color: '#10B981', title: 'AFRICAN LEADERSHIP', body: 'To lead the hospitality and food industry in Africa and beyond while maintaining our quality, reliability, uniqueness, excellence, and creativity in our product and service delivery.' },
+  { label: 'Our Mission', color: '#cc9933', title: 'QUALITY MEALS', body: 'To provide quality, healthy, nutritious, and hygienically-prepared meals and excellent services to our clients and partners.' },
+  { label: 'Our Vision', color: '#3C8B36', title: 'AFRICAN LEADERSHIP', body: 'To lead the hospitality and food industry in Africa and beyond while maintaining our quality, reliability, uniqueness, excellence, and creativity in our product and service delivery.' },
   { label: 'Our Goal', color: '#60A5FA', title: 'TOP STANDARDS', body: 'To ensure maximum customer satisfaction by completing every aspect of our production process to the highest industry standards in line with ACLL’s Integrated Management Systems Program' },
 ]
 
@@ -104,8 +104,8 @@ export default function MissionVision() {
     <section className="scroll-reveal w-full px-6 md:px-16 py-16">
 
       <div className="quote-line flex items-center gap-3">
-        <div className="w-8 h-px bg-[#EF9419]" />
-        <span className="font-inter text-[#EF9419] text-xs font-bold uppercase tracking-[0.35em]">
+        <div className="w-8 h-px bg-[#cc9933]" />
+        <span className="font-inter text-[#cc9933] text-xs font-bold uppercase tracking-[0.35em]">
           Message from the CEO
         </span>
       </div>
@@ -140,7 +140,7 @@ export default function MissionVision() {
               {/* Big Play Button overlay if video was paused by browser autoplay restriction */}
               {!isPlaying && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-20 transition-opacity">
-                  <div className="w-16 h-16 rounded-full bg-[#EF9419] flex items-center justify-center text-white shadow-lg transform group-hover:scale-110 transition-transform">
+                  <div className="w-16 h-16 rounded-full bg-[#cc9933] flex items-center justify-center text-white shadow-lg transform group-hover:scale-110 transition-transform">
                     <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M8 5v14l11-7z" />
                     </svg>
@@ -173,19 +173,19 @@ export default function MissionVision() {
 
         </div>
       </section>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-black/10">
         {CARDS.map((card, i) => (
           <div
             key={i}
-            className="p-8 md:p-10 border-b md:border-b-0 md:border-r border-white/10 last:border-r-0 last:border-b-0 group hover:bg-white/[0.03] transition-colors"
+            className="p-8 md:p-10 border-b md:border-b-0 md:border-r border-black/10 last:border-r-0 last:border-b-0 group hover:bg-black/[0.03] transition-colors"
           >
             <span className="block font-inter text-xs font-bold uppercase tracking-widest mb-4" style={{ color: card.color }}>
               {card.label}
             </span>
-            <h3 className="font-black text-3xl md:text-4xl uppercase tracking-tight text-white leading-none mb-5">
+            <h3 className="font-black text-3xl md:text-4xl uppercase tracking-tight text-[#0d0d0d] leading-none mb-5">
               {card.title}
             </h3>
-            <p className="font-inter text-white/60 text-sm leading-relaxed">
+            <p className="font-inter text-[#0d0d0d]/65 text-sm leading-relaxed">
               {card.body}
             </p>
           </div>

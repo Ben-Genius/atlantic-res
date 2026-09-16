@@ -16,9 +16,9 @@ interface ServiceCardProps {
 
 function Tag({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-2 w-fit px-3 py-1.5 rounded-sm bg-[#35b435]/10 border border-[#35b435]/20">
-      <span className="block h-[6px] w-[6px] rounded-full bg-[#35b435] shrink-0" />
-      <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#35b435]">
+    <div className="flex items-center gap-2 w-fit px-3 py-1.5 rounded-sm bg-[#66cc33]/10 border border-[#66cc33]/20">
+      <span className="block h-[6px] w-[6px] rounded-full bg-[#66cc33] shrink-0" />
+      <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#66cc33]">
         {label}
       </span>
     </div>
@@ -47,8 +47,8 @@ function NotchArrow({ cardBg, href }: { cardBg: string; href: string }) {
         className={cn(
           "absolute bottom-1 right-1 flex items-center justify-center",
           "w-[51px] h-[48px] overflow-hidden group/arrow",
-          "bg-[#EF9419] text-white shadow-sm transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
-          "hover:bg-[#35b435]"
+          "bg-[#cc9933] text-white shadow-sm transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
+          "hover:bg-[#66cc33]"
         )}
         style={{
           clipPath: "path('M6.728 9.09A12 12 0 0 1 18.369 0H39c6.627 0 12 5.373 12 12v24c0 6.627-5.373 12-12 12H12.37C4.561 48-1.167 40.663.727 33.09l6-24Z')"

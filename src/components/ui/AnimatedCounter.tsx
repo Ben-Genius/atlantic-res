@@ -24,11 +24,19 @@ export function AnimatedCounter({ end, prefix = '', suffix = '', duration = 2, c
   const ref = useRef<HTMLSpanElement>(null)
   const decimals = Number.isInteger(end) ? 0 : 1
 
+  /* Large figures (2,190,000+ meals annually) are unreadable without
+     grouping; values under a thousand are unaffected. */
+  const render = (n: number) =>
+    `${prefix}${n.toLocaleString('en-GB', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    })}${suffix}`
+
   useGSAP(() => {
     const mm = gsap.matchMedia()
 
     mm.add('(prefers-reduced-motion: reduce)', () => {
-      if (ref.current) ref.current.textContent = `${prefix}${end.toFixed(decimals)}${suffix}`
+      if (ref.current) ref.current.textContent = render(end)
     })
 
     mm.add('(prefers-reduced-motion: no-preference)', () => {
@@ -43,7 +51,7 @@ export function AnimatedCounter({ end, prefix = '', suffix = '', duration = 2, c
           once: true,
         },
         onUpdate: () => {
-          if (ref.current) ref.current.textContent = `${prefix}${counter.val.toFixed(decimals)}${suffix}`
+          if (ref.current) ref.current.textContent = render(counter.val)
         },
       })
       return () => tween.kill()

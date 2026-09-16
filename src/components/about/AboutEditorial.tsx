@@ -1,9 +1,14 @@
 'use client'
 
-import React from 'react'
+import React, { useRef } from 'react'
+import { useGSAP } from '@gsap/react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { GlobePulse } from '@/components/ui/globe-pulse'
 import { AnimatedCounter } from '@/components/ui/AnimatedCounter'
 import Image from 'next/image'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const STATS: { value: number; suffix: string; label: string; image: string }[] = [
   { value: 10, suffix: '+', label: 'Years Operating', image: '/assets/images/About Us/bg.png' },
@@ -13,8 +18,47 @@ const STATS: { value: number; suffix: string; label: string; image: string }[] =
 ]
 
 export default function AboutEditorial() {
+  const sectionRef = useRef<HTMLElement>(null)
+
+  /* The figures count up on their own (AnimatedCounter). This is the other
+     half of the ask: each panel wipes up from its base and the number rides
+     in behind it, so the strip arrives rather than simply being there. */
+  useGSAP(() => {
+    const mm = gsap.matchMedia()
+
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+          once: true,
+        },
+      })
+
+      tl.from('.stat-bg', {
+        clipPath: 'inset(100% 0 0 0)',
+        duration: 1.1,
+        stagger: 0.15,
+        ease: 'power4.out',
+      })
+
+      tl.from('.stat-content', {
+        y: 40,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.15,
+        ease: 'power3.out',
+      }, 0.25)
+
+      return () => tl.kill()
+    })
+
+    return () => mm.revert()
+  }, { scope: sectionRef })
+
   return (
     <section
+      ref={sectionRef}
       className="scroll-reveal relative w-[95%] mx-auto overflow-hidden mt-10 "
       style={{ minHeight: '600px' }}
     >
@@ -22,7 +66,7 @@ export default function AboutEditorial() {
           1. Brand green multiply so it ties into your site palette
           2. Dark gradient — heavy left (text side), lighter right (visual breathing room)
           3. Noise grain for texture consistency                                    */}
-      {/* <div className="absolute inset-0 bg-[#134E4A] mix-blend-multiply opacity-90 z-0 pointer-events-none" /> */}
+      {/* <div className="absolute inset-0 bg-[#0E3B2A] mix-blend-multiply opacity-90 z-0 pointer-events-none" /> */}
       {/* <div className="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-black/85 via-black/50 to-transparent z-0 pointer-events-none" />
       <div
         className="absolute inset-0 opacity-[0.035] pointer-events-none z-0"
@@ -37,7 +81,7 @@ export default function AboutEditorial() {
 
 
           <div className="order-2 lg:order-1 max-w-md mx-auto lg:mx-0 text-center lg:text-left">
-            <span className="block font-inter text-[#EF9419] text-sm font-bold uppercase tracking-[0.4em] mb-5">
+            <span className="block font-inter text-[#cc9933] text-sm font-bold uppercase tracking-[0.4em] mb-5">
               Atlantic Catering and Logistics Limited
             </span>
             <p className="font-inter text-white/90 text-sm md:text-base leading-relaxed mb-5">
@@ -71,7 +115,7 @@ export default function AboutEditorial() {
                 </span>
               </span>
               <span className="block overflow-hidden py-1">
-                <span className="block text-[10vw] sm:text-[9vw] md:text-[8vw] lg:text-[7rem] text-[#EF9419]">
+                <span className="block text-[10vw] sm:text-[9vw] md:text-[8vw] lg:text-[7rem] text-[#cc9933]">
                   ARE.
                 </span>
               </span>

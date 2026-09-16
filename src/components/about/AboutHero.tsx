@@ -75,7 +75,7 @@ export default function AboutHero() {
         <div className="hero-cta flex flex-wrap items-center justify-center gap-4 mt-10 mx-auto">
           <Link
             href="/contact"
-            className="bg-[#EF9419] hover:bg-[#D97F0C] text-white font-inter font-medium py-3.5 px-8 rounded-md transition-colors duration-200 shadow-sm"
+            className="bg-[#cc9933] hover:bg-[#B37B29] text-white font-inter font-medium py-3.5 px-8 rounded-md transition-colors duration-200 shadow-sm"
           >
             Get In Touch
           </Link>
@@ -105,7 +105,7 @@ export default function AboutHero() {
                 draggable={false}
               />
             </div>
-            <div className="bg-[#1B4332] text-white p-6 rounded-[20px] h-40 flex items-end shadow-sm">
+            <div className="bg-[#0E3B2A] text-white p-6 rounded-[20px] h-40 flex items-end shadow-sm">
               <p className="font-inter font-medium text-lg leading-tight text-left">
                 {GRID_CAPTIONS.premium}
               </p>
@@ -159,7 +159,7 @@ export default function AboutHero() {
                 draggable={false}
               />
             </div>
-            <div className="bg-[#1B4332] text-white p-6 rounded-[20px] h-40 flex items-end shadow-sm">
+            <div className="bg-[#0E3B2A] text-white p-6 rounded-[20px] h-40 flex items-end shadow-sm">
               <p className="font-inter font-medium text-lg leading-tight text-left">
                 {GRID_CAPTIONS.trusted}
               </p>

@@ -36,7 +36,7 @@ export default function AboutMarquee() {
               <span className="font-black text-2xl md:text-3xl uppercase tracking-tight text-white">
                 {item}
               </span>
-              <span className="font-black text-2xl md:text-3xl text-[#EF9419]">·</span>
+              <span className="font-black text-2xl md:text-3xl text-[#cc9933]">·</span>
             </span>
           ))}
         </div>

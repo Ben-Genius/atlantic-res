@@ -9,7 +9,7 @@ import CtaButton from '@/components/ui/CtaButton'
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin)
 
-const CYCLING_WORDS = ['EVERY MOMENT', 'CATERING', 'LOGISTICS', 'HOSPITALITY']
+const CYCLING_WORDS = ['EVERY MOMENT', 'HOSPITALITY', 'EVERY CREW', 'EVERY SITE']
 
 /* Serrated stamp edge — n shallow outward bumps around a circle, as on a postage seal */
 function scallopedPath(cx: number, cy: number, r: number, n: number) {
@@ -114,9 +114,9 @@ export default function HeroSection() {
       <div className="relative z-20 flex-1 flex items-center justify-center px-5 sm:px-8 py-12">
         <div
           ref={contentRef}
-          className="relative z-10 w-full max-w-[760px] text-center flex flex-col items-center"
+          className="relative z-10 w-full max-w-[1000px] text-center flex flex-col items-center"
         >
-          <span className="hero-eyebrow text-[10px] sm:text-[12px] font-bold uppercase tracking-[0.28em] text-[#8FE05C] mb-4 sm:mb-5 select-none">
+          <span className="hero-eyebrow text-[12px] sm:text-[15px] font-bold uppercase tracking-[0.28em] text-[#D4A556] mb-5 sm:mb-6 select-none">
             Global Cuisine, Unforgettable Experiences
           </span>
 
@@ -124,10 +124,10 @@ export default function HeroSection() {
             className="hero-title font-black uppercase leading-[1.0] tracking-tight text-white select-none"
             style={{ fontFamily: "'Antonio', sans-serif" }}
           >
-            <span className="block text-[2.75rem] sm:text-[4.2rem] lg:text-[5.5rem]">
+            <span className="block text-[3rem] sm:text-[4.8rem] lg:text-[6.2rem]">
               GREAT FOOD MADE FOR
             </span>
-            <span className="block text-[2.75rem] sm:text-[4.2rem] lg:text-[5.5rem] min-h-[1.1em] mt-1 sm:mt-2 text-[#8FE05C]">
+            <span className="block text-[3rem] sm:text-[4.8rem] lg:text-[6.2rem] min-h-[1.1em] mt-1 sm:mt-2 text-[#D4A556]/90">
               <span ref={textRef} className="inline-block">
                 EVERY MOMENT
               </span>
@@ -148,15 +148,15 @@ export default function HeroSection() {
           </defs>
 
           {/* Seal body — primary green ground with the serrated stamp edge */}
-          <path d={SEAL_EDGE} fill="#1B4332" fillOpacity="0.94" />
+          <path d={SEAL_EDGE} fill="#0E3B2A" fillOpacity="0.94" />
 
           {/* Double keyline in the secondary gold, inset from the edge */}
-          <g fill="none" stroke="#E8B020">
+          <g fill="none" stroke="#cc9933">
             <circle cx="100" cy="100" r="87" strokeWidth="2" />
             <circle cx="100" cy="100" r="82.5" strokeWidth="0.8" />
           </g>
 
-          <g ref={sealRef} fill="#8FE05C">
+          <g ref={sealRef} fill="#A4D79C">
             <text
               fontFamily="'Antonio', sans-serif"
               fontSize="16"
@@ -180,16 +180,16 @@ export default function HeroSection() {
             </text>
 
             {/* Star separators at the seams between the two arcs */}
-            <text x="25" y="105" fontSize="12" textAnchor="middle" fill="#E8B020">★</text>
-            <text x="175" y="105" fontSize="12" textAnchor="middle" fill="#E8B020">★</text>
+            <text x="25" y="105" fontSize="12" textAnchor="middle" fill="#cc9933">★</text>
+            <text x="175" y="105" fontSize="12" textAnchor="middle" fill="#cc9933">★</text>
           </g>
 
           {/* Centre medallion — colours inverted, gold ground carrying the primary mark */}
-          <circle cx="100" cy="100" r="52" fill="#E8B020" />
+          <circle cx="100" cy="100" r="52" fill="#cc9933" />
           <path
             d="M 84,90 L 95,102 L 118,78"
             fill="none"
-            stroke="#1B4332"
+            stroke="#0E3B2A"
             strokeWidth="8"
             strokeLinecap="square"
           />
@@ -197,7 +197,7 @@ export default function HeroSection() {
             x="100"
             y="128"
             textAnchor="middle"
-            fill="#1B4332"
+            fill="#0E3B2A"
             fontFamily="'Antonio', sans-serif"
             fontSize="16"
             fontWeight="700"

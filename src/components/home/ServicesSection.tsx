@@ -5,6 +5,11 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { getLenis, smoothScrollTo } from '@/lib/lenis'
+import { SERVICE_ICONS } from '@/components/icons/ServiceIcons'
+
+/** Brand gold, as specified in the guide, and its resting state on the carousel. */
+const BRAND_GOLD = '#cc9933'
+const GOLD_DIM = 'rgba(200,150,12,0.55)'
 
 /**
  * Per-service accents are drawn only from the ACLL brand guide (Rev 1):
@@ -21,9 +26,6 @@ const DISHES = [
     img: '/assets/images/Services/fit/support.webp',
     accentColor: '#cc9933', // Brand gold
     arcColor: 'rgba(204, 153, 51, 0.25)',
-    rating: '4.9',
-    ratingColor: 'bg-[#cc9933]',
-    ratingTextClass: 'text-white',
     description: 'Dependable 24/7 support services ensuring seamless operations across all facilities.',
     tag: '#1 Core Service',
     division: 'Support Division'
@@ -35,9 +37,6 @@ const DISHES = [
     img: '/assets/images/Services/oNSHORE2.webp',
     accentColor: '#296ed6', // Accent blue
     arcColor: 'rgba(41, 110, 214, 0.25)',
-    rating: '4.9',
-    ratingColor: 'bg-[#296ed6]',
-    ratingTextClass: 'text-white',
     description: 'ACLL offers a full suite of timely, dependable offshore catering and supply services for the oil and gas industry.',
     tag: '#2 Core Service',
     division: 'Offshore Division'
@@ -49,9 +48,6 @@ const DISHES = [
     img: '/assets/images/Services/fit/inflight.webp',
     accentColor: '#b048b8', // Accent purple
     arcColor: 'rgba(176, 72, 184, 0.25)',
-    rating: '4.8',
-    ratingColor: 'bg-[#b048b8]',
-    ratingTextClass: 'text-white',
     description: 'Premium inflight catering delivering exceptional culinary experiences for aviation clients.',
     tag: '#3 Core Service',
     division: 'Aviation Division'
@@ -63,9 +59,6 @@ const DISHES = [
     img: '/assets/images/Services/fit/event-planning.webp',
     accentColor: '#D4A556', // Gold light
     arcColor: 'rgba(212, 165, 86, 0.25)',
-    rating: '4.9',
-    ratingColor: 'bg-[#D4A556]',
-    ratingTextClass: 'text-[#1a1a1a]',
     description: 'Professional event planning and management for galas, business retreats, and special corporate events.',
     tag: '#4 Core Service',
     division: 'Event Management'
@@ -77,9 +70,6 @@ const DISHES = [
     img: '/assets/images/Services/fit/ship-chandelling.webp',
     accentColor: '#A4D79C', // Green light
     arcColor: 'rgba(164, 215, 156, 0.25)',
-    rating: '4.7',
-    ratingColor: 'bg-[#A4D79C]',
-    ratingTextClass: 'text-[#1a1a1a]',
     description: 'Your reliable partner for complete ship chandelling, supplying provisions and stores to vessels of every kind.',
     tag: '#5 Core Service',
     division: 'Maritime Supplies'
@@ -91,9 +81,6 @@ const DISHES = [
     img: '/assets/images/Services/fit/housekeeping.webp',
     accentColor: '#B37B29', // Gold dark
     arcColor: 'rgba(179, 123, 41, 0.25)',
-    rating: '4.8',
-    ratingColor: 'bg-[#B37B29]',
-    ratingTextClass: 'text-white',
     description: 'Maintaining safe and clean living conditions with our comprehensive housekeeping, laundry, and cleaning services.',
     tag: '#6 Core Service',
     division: 'Facility Management'
@@ -105,9 +92,6 @@ const DISHES = [
     img: '/assets/images/Services/fit/camp.webp',
     accentColor: '#ffffff', // Brand white
     arcColor: 'rgba(255, 255, 255, 0.25)',
-    rating: '4.9',
-    ratingColor: 'bg-white',
-    ratingTextClass: 'text-[#1a1a1a]',
     description: 'Expert camp management services ensuring seamless daily operations for remote sites and large-scale facilities.',
     tag: '#7 Core Service',
     division: 'Camp Operations'
@@ -119,14 +103,43 @@ const DISHES = [
     img: '/assets/images/Services/fit/vip-catering.webp',
     accentColor: '#cc9933', // Reuse Brand Gold
     arcColor: 'rgba(204, 153, 51, 0.25)',
-    rating: '5.0',
-    ratingColor: 'bg-[#cc9933]',
-    ratingTextClass: 'text-white',
     description: 'Exquisite VIP catering tailored for executives, dignitaries, and high-profile private dining experiences.',
     tag: '#8 Core Service',
     division: 'Executive Division'
   }
 ]
+
+/**
+ * Type scale for the accent line of a service heading.
+ *
+ * The heading never breaks inside a word, so a long name like
+ * "Ship Chandelling" has to be given room by stepping the size down rather
+ * than by letting CHANDELLING split across lines.
+ */
+function firstLineSizeClass(name: string) {
+  if (name.includes('Housekeeping')) {
+    return 'text-[1.6rem] sm:text-[2.5rem] md:text-[3.5rem] lg:text-[clamp(2.1rem,4vw,5.4rem)]'
+  }
+  return 'text-[1.9rem] sm:text-[2.9rem] md:text-[3.9rem] lg:text-[clamp(2.5rem,4.4vw,5.8rem)]'
+}
+
+function accentSizeClass(name: string) {
+  if (name.includes('Housekeeping')) {
+    return 'text-[2rem] sm:text-[3.2rem] md:text-[4.4rem] lg:text-[clamp(2.8rem,5.2vw,6.8rem)]'
+  }
+  const longest = Math.max(
+    ...name.split(' ').slice(1).map(word => word.length),
+    0
+  )
+
+  if (longest >= 11) {
+    return 'text-[2rem] sm:text-[3rem] md:text-[4rem] lg:text-[clamp(2.8rem,4.6vw,6rem)]'
+  }
+  if (longest >= 9) {
+    return 'text-[2.2rem] sm:text-[3.3rem] md:text-[4.4rem] lg:text-[clamp(3rem,5vw,6.6rem)]'
+  }
+  return 'text-[2.4rem] sm:text-[3.6rem] md:text-[4.8rem] lg:text-[clamp(3.2rem,5.6vw,7.2rem)]'
+}
 
 /**
  * Every plate gets its own move instead of one repeated spin: `enter` is the
@@ -303,14 +316,12 @@ export default function ServicesSection() {
         // Initial setup for Slide 0
         gsap.set('.dish-plate-0', { ...PLATE_RESET })
         gsap.set('.dish-content-0', { x: 0, opacity: 1 })
-        gsap.set('.dish-card-0', { x: 0, opacity: 1 })
 
         // Park every other plate in its own entry pose
         DISHES.forEach((_, idx) => {
           if (idx > 0) {
             gsap.set(`.dish-plate-${idx}`, { ...PLATE_RESET, ...move(PLATE_MOVES[idx].enter) })
             gsap.set(`.dish-content-${idx}`, { x: -600, opacity: 0 })
-            gsap.set(`.dish-card-${idx}`, { x: 200, opacity: 0 })
           }
         })
 
@@ -384,17 +395,6 @@ export default function ServicesSection() {
             ease: 'power2.in',
           }, label)
 
-          // 3. Previous card exits right
-          tl.to(`.dish-card-${prevIdx}`, {
-            x: 200,
-            duration: EXIT,
-            ease: 'power2.in',
-          }, label)
-          tl.to(`.dish-card-${prevIdx}`, {
-            opacity: 0,
-            duration: EXIT * FADE_OUT_RATIO,
-            ease: 'power2.in',
-          }, label)
 
           // 4. Arc border colour crosses the whole hand-off
           tl.to(arcRef.current, {
@@ -428,17 +428,6 @@ export default function ServicesSection() {
             enterAt
           )
 
-          // 7. New card slides in from right
-          tl.fromTo(`.dish-card-${idx}`,
-            { x: 200 },
-            { x: 0, duration: ENTER, ease: 'power3.out' },
-            enterAt
-          )
-          tl.fromTo(`.dish-card-${idx}`,
-            { opacity: 0 },
-            { opacity: 1, duration: ENTER * FADE_IN_RATIO, ease: 'power2.out' },
-            enterAt
-          )
 
           // 8. Carousel thumbnail active style transition
           tl.to(`.carousel-thumb-${prevIdx}`, {
@@ -449,6 +438,11 @@ export default function ServicesSection() {
           tl.to(`.carousel-thumb-${prevIdx} .thumb-circle-container`, {
             borderColor: 'rgba(255, 255, 255, 0.2)',
             scale: 0.85,
+            duration: EXIT,
+            ease: 'power1.inOut'
+          }, label)
+          tl.to(`.carousel-thumb-${prevIdx} .thumb-icon`, {
+            color: GOLD_DIM,
             duration: EXIT,
             ease: 'power1.inOut'
           }, label)
@@ -469,6 +463,11 @@ export default function ServicesSection() {
           tl.to(`.carousel-thumb-${idx} .thumb-circle-container`, {
             borderColor: '#ffffff',
             scale: 1,
+            duration: ENTER,
+            ease: 'power1.inOut'
+          }, enterAt)
+          tl.to(`.carousel-thumb-${idx} .thumb-icon`, {
+            color: BRAND_GOLD,
             duration: ENTER,
             ease: 'power1.inOut'
           }, enterAt)
@@ -587,12 +586,12 @@ export default function ServicesSection() {
       <div ref={contentRef} className="relative w-full h-full flex flex-col justify-center z-20">
 
         {/* Top row: dish + text + card */}
-        <div className="flex flex-col lg:flex-row items-center ml-4 sm:ml-6 md:ml-[25px] lg:ml-[45px] xl:ml-[10px] gap-6 lg:gap-[30px] flex-1 relative mt-16 md:mt-24 w-[calc(100%-2rem)]">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-14 flex-1 relative mt-16 md:mt-24 w-full max-w-[1500px] mx-auto px-6 sm:px-8 lg:px-12">
 
           {/* A ─ Dish plates stacked absolutely */}
           {/* Box matches the 4:3 canvas every cutout is normalised onto, so
               object-contain frames each subject identically — no cropping. */}
-          <div className="relative z-20 pointer-events-none shrink-0 aspect-[4/3] w-[320px] sm:w-[430px] md:w-[540px] lg:w-[min(clamp(300px,calc(75vw_-_430px),1200px),calc((100vh_-_14rem)*4/3))] mx-auto lg:mx-0">
+          <div className="relative z-20 pointer-events-none shrink-0 aspect-[4/3] w-[370px] sm:w-[500px] md:w-[620px] lg:w-[min(clamp(420px,48vw,1000px),calc((100vh_-_12rem)*4/3))] mx-auto lg:mx-0">
             {DISHES.map((dish, idx) => (
               <div
                 key={dish.id}
@@ -611,42 +610,37 @@ export default function ServicesSection() {
           {/* B ─ Text/Content stacked absolutely */}
           {/* min-w-0 lets this column actually shrink inside the flex row, so
               max-w-full on the heading resolves to the space left by the card */}
-          <div className="relative z-20 flex-1 min-w-0 h-[250px] sm:h-[300px] md:h-[350px] lg:h-[min(500px,calc(100vh_-_15rem))] w-full mt-4 lg:mt-0">
+          <div className="relative z-20 flex-1 min-w-0 h-[300px] sm:h-[350px] md:h-[400px] lg:h-[min(560px,calc(100vh_-_13rem))] w-full mt-4 lg:mt-0">
             {DISHES.map((dish, idx) => (
               <div
                 key={dish.id}
                 className={`dish-content dish-content-${idx} absolute inset-0 flex flex-col justify-start lg:justify-center items-center lg:items-start text-center lg:text-left gap-3 lg:gap-[15%] w-full`}
               >
                 <div className="w-full min-w-0 max-w-full">
-                  <p className="font-outfit text-[10px] md:text-sm font-semibold tracking-[0.25em] md:tracking-[0.3em] uppercase text-white/70 mb-1 lg:mb-2">
+                  <p className="font-outfit text-[11px] md:text-base font-semibold tracking-[0.25em] md:tracking-[0.3em] uppercase text-white/70 mb-2 lg:mb-3">
                     {dish.tag}
                   </p>
 
-                  <h2 className="font-outfit leading-[1.0] uppercase w-full max-w-full break-words">
-                    <span className="block font-extralight tracking-[0.03em] text-[1.5rem] sm:text-[2.2rem] md:text-[3.2rem] lg:text-[clamp(2rem,3.2vw,4.4rem)] text-white/95 py-2">
+                  <h2 className="font-outfit leading-[1.0] uppercase w-full max-w-full break-normal hyphens-none [overflow-wrap:normal]">
+                    <span className="block font-extralight tracking-[0.03em] text-[1.9rem] sm:text-[2.9rem] md:text-[3.9rem] lg:text-[clamp(2.5rem,4.4vw,5.8rem)] text-white/95 py-2">
                       {dish.name.split(' ')[0]}
                     </span>
                     <span
-                      className="block font-black tracking-tight text-[1.8rem] sm:text-[2.8rem] md:text-[3.8rem] lg:text-[clamp(2.4rem,4vw,5.4rem)] -mt-1 md:-mt-2"
+                      className={`block font-black tracking-tight -mt-1 md:-mt-2 ${accentSizeClass(dish.name)}`}
                       style={{ color: dish.accentColor }}
                     >
                       {dish.name.split(' ').slice(1).join(' ')}
                     </span>
                   </h2>
+                  {/* Service description — was the Overview card's body copy */}
+                  <p className="font-inter mt-4 lg:mt-6 max-w-[34rem] mx-auto lg:mx-0 text-[12px] md:text-[14px] leading-relaxed text-white/70">
+                    {dish.description}
+                  </p>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-12 mt-4 lg:mt-10 font-inter">
-                  <a href="#" className="group flex items-center gap-3 md:gap-4 text-white/80 hover:text-white transition-all">
-                    <div className="flex items-center justify-center w-8 h-8 md:w-12 md:h-12 rounded-full border border-white/20 group-hover:border-white/60 transition-colors bg-white/5 backdrop-blur-sm">
-                      <svg className="w-2.5 h-2.5 md:w-4 md:h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                    <span className="font-medium text-[10px] md:text-sm tracking-widest uppercase">Contact</span>
-                  </a>
-
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-12 mt-4 lg:mt-8 font-inter">
                   <a
-                    href="#"
+                    href="/contact"
                     className="group flex items-center gap-3 md:gap-4 text-white/80 hover:text-white transition-all"
                   >
                     <div
@@ -667,94 +661,10 @@ export default function ServicesSection() {
             ))}
           </div>
 
-          {/* E ─ Overview card stacked absolutely */}
-          <div className="relative hidden lg:block w-[300px] xl:w-[320px] h-[400px] shrink-0 ml-auto mr-0 self-center mt-[1rem]">
-            {DISHES.map((dish, idx) => {
-              return (
-                <div
-                  key={dish.id}
-                  className={`dish-card dish-card-${idx} absolute inset-0 flex flex-col rounded-2xl overflow-hidden bg-black/50 backdrop-blur-md border border-white/15`}
-                >
-                  {/* Tab row */}
-                  <div className="flex border-b border-white/15">
-                    <button className="flex-1 py-3 text-[11px] xl:text-xs font-semibold tracking-widest uppercase text-white bg-white/10 font-inter">
-                      Overview
-                    </button>
-                    <button className="flex-1 py-3 text-[11px] xl:text-xs font-semibold tracking-widest uppercase text-white/40 hover:text-white/70 transition-colors font-inter">
-                      Atlantic
-                    </button>
-                  </div>
-
-                  <div className="flex flex-col gap-4 p-5 xl:p-6">
-                    {/* Rating */}
-                    <div className="flex items-center gap-4">
-                      <div className={`flex items-center justify-center w-14 h-14 xl:w-16 xl:h-16 rounded-2xl shrink-0 ${dish.ratingColor}`}>
-                        <span className={`font-outfit font-black text-xl xl:text-2xl leading-none ${dish.ratingTextClass}`}>{dish.rating}</span>
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <div className="flex gap-0.5">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <svg
-                              key={star}
-                              className="w-3 h-3"
-                              fill={star <= Math.floor(parseFloat(dish.rating)) ? dish.accentColor : 'rgba(255, 255, 255, 0.25)'}
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                            </svg>
-                          ))}
-                        </div>
-                        <span className="text-[10px] xl:text-[11px] text-white/50 tracking-wide uppercase font-medium font-inter">Rating</span>
-                      </div>
-                    </div>
-
-                    <div className="w-full h-px bg-white/10" />
-
-                    {/* Name */}
-                    <div className="flex flex-col gap-0.5">
-                      <p className="font-outfit font-bold text-white text-sm xl:text-base leading-snug">
-                        {dish.name}
-                      </p>
-                      <p
-                        className="text-[10px] xl:text-[11px] tracking-widest uppercase font-semibold font-inter"
-                        style={{ color: dish.accentColor }}
-                      >
-                        {dish.division}
-                      </p>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-[11px] xl:text-xs text-white/60 leading-relaxed font-inter">
-                      {dish.description}
-                    </p>
-
-                    <div className="w-full h-px bg-white/10" />
-
-                    {/* Thumbs */}
-                    <div className="flex items-center gap-3">
-                      <button className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/15 transition-colors text-white/70 hover:text-white">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017a2 2 0 01-1.789-1.106L5 10H3V5a2 2 0 012-2h2.5" />
-                        </svg>
-                        <span className="text-[11px] font-semibold font-inter">24</span>
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/15 transition-colors text-white/70 hover:text-white">
-                        <svg className="w-4 h-4 rotate-180" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017a2 2 0 01-1.789-1.106L5 10H3V5a2 2 0 012-2h2.5" />
-                        </svg>
-                        <span className="text-[11px] font-semibold font-inter">2</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-
         </div>
 
         {/* F ─ Dish carousel — bottom strip */}
-        <div className="flex w-full items-center justify-center ml-4 sm:ml-6 md:ml-[20px] lg:ml-[40px] xl:ml-[8rem] pb-8 shrink-0">
+        <div className="flex w-full items-center justify-center px-6 pb-8 shrink-0">
           <div className="hidden md:flex items-center gap-6 xl:gap-8 z-20 mt-4">
             {/* Prev arrow */}
             <button
@@ -775,20 +685,23 @@ export default function ServicesSection() {
                   className={`carousel-thumb-${idx} flex flex-col items-center gap-2 group transition-all`}
                   style={{ opacity: idx === 0 ? 1 : 0.6 }}
                 >
-                  {/* Thumbnail circle */}
+                  {/* Brand service icon — the line set from the Brand Profile */}
                   <div
-                    className={`thumb-circle-container rounded-full overflow-hidden bg-white/5 transition-all duration-300 ring-offset-2 ring-offset-transparent border-[1.5px]
+                    className={`thumb-circle-container grid place-items-center rounded-full bg-white/5 transition-all duration-300 ring-offset-2 ring-offset-transparent border-[1.5px]
                       ${idx === 0
                         ? 'w-[72px] h-[72px] xl:w-[84px] xl:h-[84px] border-white'
                         : 'w-[56px] h-[56px] xl:w-[64px] xl:h-[64px] border-white/20'
                       }`}
                   >
-                    <img
-                      src={dish.img}
-                      alt={dish.name}
-                      className="w-full h-full object-contain scale-[1.18]"
-                      draggable={false}
-                    />
+                    {(() => {
+                      const Icon = SERVICE_ICONS[dish.id]
+                      return Icon ? (
+                        <Icon
+                          className={`thumb-icon ${idx === 0 ? 'w-[60%] h-[60%]' : 'w-[58%] h-[58%]'}`}
+                          style={{ color: idx === 0 ? BRAND_GOLD : GOLD_DIM }}
+                        />
+                      ) : null
+                    })()}
                   </div>
 
                   {/* Label */}

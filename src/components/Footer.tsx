@@ -172,7 +172,7 @@ export default function Footer() {
           }}
         >
           {/* Overlay to ensure text legibility on the pattern */}
-          <div className="absolute inset-0 bg-white/50 pointer-events-none" style={{ zIndex: 0 }} />
+          <div className="absolute inset-0 bg-white/[0.78] pointer-events-none" style={{ zIndex: 0 }} />
 
           {/* Subtle ambient tint */}
           <div aria-hidden="true" style={{
@@ -247,8 +247,15 @@ export default function Footer() {
 
               {/* Services column */}
               <div>
-                <h4 className="col-header" style={{ fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#1a1a1a', marginBottom: '1.5rem' }}>
-                  Services
+                <h4 className="col-header" style={{ fontSize: '0.95rem', fontWeight: 800, letterSpacing: '0.13em', textTransform: 'uppercase', color: '#1a1a1a', marginBottom: '1.5rem' }}>
+                  <Link
+                    href="/services"
+                    style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.25s' }}
+                    onMouseEnter={e => { e.currentTarget.style.color = '#cc9933' }}
+                    onMouseLeave={e => { e.currentTarget.style.color = 'inherit' }}
+                  >
+                    Services
+                  </Link>
                 </h4>
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
                   {services.map(item => (
@@ -269,7 +276,7 @@ export default function Footer() {
 
               {/* Company column */}
               <div>
-                <h4 className="col-header" style={{ fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#1a1a1a', marginBottom: '1.5rem' }}>
+                <h4 className="col-header" style={{ fontSize: '0.95rem', fontWeight: 800, letterSpacing: '0.13em', textTransform: 'uppercase', color: '#1a1a1a', marginBottom: '1.5rem' }}>
                   Company
                 </h4>
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
@@ -291,7 +298,7 @@ export default function Footer() {
 
               {/* Contact column */}
               <div>
-                <h4 className="col-header" style={{ fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#1a1a1a', marginBottom: '1.5rem' }}>
+                <h4 className="col-header" style={{ fontSize: '0.95rem', fontWeight: 800, letterSpacing: '0.13em', textTransform: 'uppercase', color: '#1a1a1a', marginBottom: '1.5rem' }}>
                   Contact
                 </h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>

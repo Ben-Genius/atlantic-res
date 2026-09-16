@@ -81,7 +81,7 @@ export default function ContactPage() {
             className="absolute inset-0 z-0 bg-cover bg-center bg-fixed"
             style={{ backgroundImage: "url('/images/premium-green-texture.png')" }}
           />
-          <div className="absolute inset-0 bg-[#35b435] mix-blend-multiply opacity-90 pointer-events-none z-0" />
+          <div className="absolute inset-0 bg-[#0E3B2A] mix-blend-multiply opacity-90 pointer-events-none z-0" />
           <div className="absolute inset-0 bg-black/10 pointer-events-none z-0" />
           <div
             className="absolute inset-0 opacity-[0.035] pointer-events-none z-0"
@@ -174,7 +174,7 @@ export default function ContactPage() {
 
           {/* Hero Middle: Big Header and Wavy Line */}
           <div className="max-w-4xl mx-auto text-center space-y-4 relative z-20">
-            <span className="text-[10px] md:text-sm font-bold text-[#EF9419] uppercase tracking-[0.35em] mb-2 block">
+            <span className="text-[10px] md:text-sm font-bold text-[#cc9933] uppercase tracking-[0.35em] mb-2 block">
               Reach Out to Us
             </span>
 
@@ -190,7 +190,7 @@ export default function ContactPage() {
 
               <span className="block overflow-hidden py-1">
                 <span
-                  className="block text-[14vw] sm:text-[11vw] md:text-[9vw] lg:text-[8rem] text-[#EF9419]"
+                  className="block text-[14vw] sm:text-[11vw] md:text-[9vw] lg:text-[8rem] text-[#cc9933]"
                 >
                   US
                 </span>
@@ -288,7 +288,7 @@ export default function ContactPage() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="example@mail.com"
-                      className="w-full bg-[#CFDAD9]/40 hover:bg-[#CFDAD9]/65 focus:bg-white text-slate-800 text-xs rounded-md py-3 px-4 outline-none border border-transparent focus:border-green smooth-transition"
+                      className="w-full bg-[#D8E8D2]/40 hover:bg-[#D8E8D2]/65 focus:bg-white text-slate-800 text-xs rounded-md py-3 px-4 outline-none border border-transparent focus:border-green smooth-transition"
                     />
                   </div>
                   {/* Phone field (rounded-md) */}
@@ -299,7 +299,7 @@ export default function ContactPage() {
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       placeholder="+233 501 502 441"
-                      className="w-full bg-[#CFDAD9]/40 hover:bg-[#CFDAD9]/65 focus:bg-white text-slate-800 text-xs rounded-md py-3 px-4 outline-none border border-transparent focus:border-green smooth-transition"
+                      className="w-full bg-[#D8E8D2]/40 hover:bg-[#D8E8D2]/65 focus:bg-white text-slate-800 text-xs rounded-md py-3 px-4 outline-none border border-transparent focus:border-green smooth-transition"
                     />
                   </div>
                 </div>
@@ -313,7 +313,7 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Enter your complete name"
-                    className="w-full bg-[#CFDAD9]/40 hover:bg-[#CFDAD9]/65 focus:bg-white text-slate-800 text-xs rounded-md py-3 px-4 outline-none border border-transparent focus:border-green smooth-transition"
+                    className="w-full bg-[#D8E8D2]/40 hover:bg-[#D8E8D2]/65 focus:bg-white text-slate-800 text-xs rounded-md py-3 px-4 outline-none border border-transparent focus:border-green smooth-transition"
                   />
                 </div>
 
@@ -324,7 +324,7 @@ export default function ContactPage() {
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     required
-                    className="w-full bg-[#CFDAD9]/40 hover:bg-[#CFDAD9]/65 focus:bg-white text-slate-800 text-xs rounded-md py-3 pl-4 pr-10 outline-none border border-transparent focus:border-green smooth-transition cursor-pointer appearance-none"
+                    className="w-full bg-[#D8E8D2]/40 hover:bg-[#D8E8D2]/65 focus:bg-white text-slate-800 text-xs rounded-md py-3 pl-4 pr-10 outline-none border border-transparent focus:border-green smooth-transition cursor-pointer appearance-none"
                   >
                     <option value="Offshore Catering">Offshore Catering & Logistics</option>
                     <option value="Corporate Catering">Corporate Catering Services</option>
@@ -345,7 +345,7 @@ export default function ContactPage() {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Describe your requirements..."
-                    className="w-full bg-[#CFDAD9]/40 hover:bg-[#CFDAD9]/65 focus:bg-white text-slate-800 text-xs rounded-md py-3 px-4 outline-none border border-transparent focus:border-green smooth-transition resize-none"
+                    className="w-full bg-[#D8E8D2]/40 hover:bg-[#D8E8D2]/65 focus:bg-white text-slate-800 text-xs rounded-md py-3 px-4 outline-none border border-transparent focus:border-green smooth-transition resize-none"
                   />
                 </div>
 
@@ -364,7 +364,7 @@ export default function ContactPage() {
               </form>
 
               {/* Right Newsletters Card Column (col span 5 - Styled with Brand Green Light) */}
-              <div className="lg:col-span-5 bg-gradient-to-br from-green-light to-[#134E4A] text-white p-6 md:p-8 rounded-md space-y-4 shadow-lg transition-colors duration-300">
+              <div className="lg:col-span-5 bg-gradient-to-br from-green-light to-[#0E3B2A] text-white p-6 md:p-8 rounded-md space-y-4 shadow-lg transition-colors duration-300">
                 <h3 className="text-xl font-bold">Our Newsletters</h3>
                 <p className="text-[12px] leading-relaxed opacity-90 font-light">
                   Sign up for our newsletters to receive the latest updates, event details, offshore catering case studies, and culinary inspiration directly in your inbox.
@@ -382,7 +382,7 @@ export default function ContactPage() {
                   />
                   <button
                     type="submit"
-                    className="w-full bg-[#EF9419] hover:bg-[#FBC02D] text-white font-bold text-xs py-3 px-4 rounded-md shadow smooth-transition cursor-pointer text-center uppercase tracking-wider"
+                    className="w-full bg-[#cc9933] hover:bg-[#FBC02D] text-white font-bold text-xs py-3 px-4 rounded-md shadow smooth-transition cursor-pointer text-center uppercase tracking-wider"
                   >
                     Subscribe
                   </button>
@@ -404,7 +404,7 @@ export default function ContactPage() {
               </div>
 
               {/* Card 2: Email (Styled with Soft Green/Teal Tint) */}
-              <div className="bg-[#CFDAD9]/40 text-[#134E4A] p-6 rounded-md flex flex-col items-center text-center space-y-2.5 shadow-sm hover:scale-[1.02] smooth-transition">
+              <div className="bg-[#D8E8D2]/40 text-[#0E3B2A] p-6 rounded-md flex flex-col items-center text-center space-y-2.5 shadow-sm hover:scale-[1.02] smooth-transition">
                 <div className="w-12 h-12 rounded-full bg-white/65 flex items-center justify-center text-xl text-green mb-1">
                   <Mail size={18} />
                 </div>

@@ -70,7 +70,7 @@
 
 //           {/* Left col: body copy */}
 //           <div className="order-2 lg:order-1 max-w-md">
-//             <span className="block font-inter text-[#EF9419] text-sm font-bold uppercase tracking-[0.4em] mb-5">
+//             <span className="block font-inter text-[#cc9933] text-sm font-bold uppercase tracking-[0.4em] mb-5">
 //               Atlantic Catering and Logistics Limited
 //             </span>
 //             <p className="font-inter text-white/90 text-base md:text-lg leading-relaxed mb-5">
@@ -92,7 +92,7 @@
 //                 { value: '2 FPSOs', label: 'Offshore Sites' },
 //               ].map(stat => (
 //                 <div key={stat.label} className="flex flex-col border border-white/20 bg-black/30 backdrop-blur-sm px-4 py-3 rounded-xl">
-//                   <span className="font-black text-2xl text-[#EF9419] leading-none">{stat.value}</span>
+//                   <span className="font-black text-2xl text-[#cc9933] leading-none">{stat.value}</span>
 //                   <span className="font-inter text-white/55 text-[10px] uppercase tracking-widest mt-1">{stat.label}</span>
 //                 </div>
 //               ))}
@@ -111,7 +111,7 @@
 //                 </span>
 //               </span>
 //               <span className="block overflow-hidden py-1">
-//                 <span className="block text-[14vw] sm:text-[11vw] md:text-[9vw] lg:text-[10rem] text-[#EF9419]">
+//                 <span className="block text-[14vw] sm:text-[11vw] md:text-[9vw] lg:text-[10rem] text-[#cc9933]">
 //                   ARE.
 //                 </span>
 //               </span>

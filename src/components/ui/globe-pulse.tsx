@@ -161,17 +161,17 @@ export function GlobePulse({
         >
           <span style={{
             position: "absolute", inset: 0,
-            border: "2px solid #33ccdd", borderRadius: "50%", opacity: 0,
+            border: "2px solid #66cc33", borderRadius: "50%", opacity: 0,
             animation: `pulse-expand 2s ease-out infinite ${m.delay}s`,
           }} />
           <span style={{
             position: "absolute", inset: 0,
-            border: "2px solid #33ccdd", borderRadius: "50%", opacity: 0,
+            border: "2px solid #66cc33", borderRadius: "50%", opacity: 0,
             animation: `pulse-expand 2s ease-out infinite ${m.delay + 0.5}s`,
           }} />
           <span style={{
-            width: 10, height: 10, background: "#33ccdd", borderRadius: "50%",
-            boxShadow: "0 0 0 3px #111, 0 0 0 5px #33ccdd",
+            width: 10, height: 10, background: "#66cc33", borderRadius: "50%",
+            boxShadow: "0 0 0 3px #111, 0 0 0 5px #66cc33",
           }} />
         </div>
       ))}

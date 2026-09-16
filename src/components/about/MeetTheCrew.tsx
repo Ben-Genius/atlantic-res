@@ -1,67 +1,46 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { Variants, motion, AnimatePresence, useInView } from "framer-motion";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
-import { getLenis, smoothScrollTo } from "@/lib/lenis";
+import LogoA from "@/components/LogoA";
 
-// ─── Animations ──────────────────────────────────────────────────────────
+/**
+ * Meet the Crew — the arch-card treatment shared as the target layout.
+ *
+ * Six portrait arches on a dark ground, each under a soft pastel header
+ * carrying the name and role. The bios the old layout carried are kept: a
+ * card opens its full profile in the panel below the grid rather than losing
+ * the content to the new design.
+ */
 
-const EASE = { smooth: [0.4, 0, 0.2, 1], outExpo: [0.16, 1, 0.3, 1], spring: [0.175, 0.885, 0.32, 1] };
-
-const clipFromRight: Variants = {
-  hidden: { clipPath: "inset(0% 0% 0% 100%)" },
-  show: { clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 1.1, ease: EASE.outExpo } },
-};
-
-const staggerContainer: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
-};
-
-const fadeInLeft: Variants = {
-  hidden: { opacity: 0, x: -30 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.8, ease: EASE.outExpo } },
-};
-
-const fadeInRight: Variants = {
-  hidden: { opacity: 0, x: 30 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.8, ease: EASE.outExpo } },
-};
+const EASE = { outExpo: [0.16, 1, 0.3, 1] };
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
   show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE.outExpo } },
 };
 
-const scaleIn: Variants = {
-  hidden: { opacity: 0, scale: 0.95 },
-  show: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: EASE.outExpo } },
+const archIn: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.75, delay: i * 0.08, ease: EASE.outExpo },
+  }),
 };
-
-const lineReveal: Variants = {
-  hidden: { scaleX: 0 },
-  show: { scaleX: 1, transition: { duration: 0.8, ease: EASE.outExpo } },
-};
-
-// ─── Reveal wrapper ──────────────────────────────────────────────
 
 function Reveal({
   children,
   variants = fadeInUp,
   className,
-  margin = "-80px",
 }: {
   children: React.ReactNode;
   variants?: Variants;
   className?: string;
-  margin?: string;
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: margin as any });
+  const isInView = useInView(ref, { once: true, margin: "-80px" as any });
   return (
     <motion.div
       ref={ref}
@@ -75,396 +54,217 @@ function Reveal({
   );
 }
 
-// ─── Portrait placeholder ────────────────────────────────────────
-
-function MemberPortrait({ image, name, className }: { image?: string; name: string; className?: string }) {
-  return (
-    <div className={cn("rounded-[2rem] overflow-hidden bg-gray-100 flex flex-col items-center justify-center gap-4 relative", className)}>
-      {image && (
-        <img
-          src={image}
-          alt={name}
-          className="w-full h-full object-cover object-top"
-        />
-      )}
-    </div>
-  );
-}
-
-// ─── Data ────────────────────────────────────────────────────────
+/** Soft header grounds, one per arch, in the order of the reference. */
+const PASTELS = ["#F6DFAE", "#F7D6DC", "#CFE3F5", "#CFE7D8", "#DCD6F2", "#F8D9C4"];
 
 const BOARD_MEMBERS = [
   {
-    number: "01",
     initials: "ML",
     name: "Maud Lindsay-Gamrat",
     role: "Chief Executive Officer",
     image: "https://atlanticcatering-gh.com/wp-content/uploads/2025/10/ceo-portrat-7-1.jpg",
-    shortBio: "Maud Lindsay-Gamrat is a seasoned business leader, with over two decades of experience in the Ghanaian landscape. Her multifaceted expertise encompasses key areas such as: Inflight, Camp and Remote Site, Offshore and Onshore Catering Operations.\n\nOver a remarkable twenty-four-year career, Maud has played pivotal roles in Ghana's Inflight and Offshore Catering Operations, contributing significantly to Sales, Marketing, Human Resources and Finance sectors.",
-    fullBio: "Maud Lindsay-Gamrat is a seasoned business leader, with over two decades of experience in the Ghanaian landscape. Her multifaceted expertise encompasses key areas such as: Inflight, Camp and Remote Site, Offshore and Onshore Catering Operations.\n\nOver a remarkable twenty-four-year career, Maud has played pivotal roles in Ghana's Inflight and Offshore Catering Operations, contributing significantly to Sales, Marketing, Human Resources and Finance sectors. Beyond her adeptness in inflight services, she has successfully initiated and managed numerous remote site catering and hospitality projects, all accomplished within the Ghanaian context.\n\nAs the CEO of Atlantic, Maud has championed local capacity development, leading a team of over 150, with an extraordinary 99.9 percent being Ghanaians. The company, under her guidance, excels in delivering specialized catering and virtual services aboard two FPSOs in Ghana and various onsite corporate operations.\n\nHer outstanding achievements have garnered several awards, the most recent including the Most Outstanding Female Owned Business in Ghana’s Upstream Petroleum sector awarded by the Petroleum Commission of Ghana, Glitz Woman of the Year for Catering & Hospitality by Glitz Africa among others.\n\nMaud has also featured on various Business and Entrepreneurship Events, Conferences and Programs, notably appearing on CNN’s \"Passion to Portfolio\", a program highlighting emerging and established global entrepreneurs.\n\nMaud's influence extends beyond the corporate realm. Her fervent advocacy for women’s empowerment is palpable, evidenced by her commitment to empowering female employees for professional and capacity building through self-development training initiatives and courses. She extends this passion to local women food vendors and farmers across Ghana, championing activities that uplift and strengthen local communities.\n\nHer dedication further encompasses environmental sustainability, inclusivity and social responsibility. Maud continually strives to make Atlantic more sustainable and socially responsible.\n\nMaud is married to Jeff, a Co-Founder and Executive Director of Atlantic and blessed with two daughters."
+    bio: "Maud Lindsay-Gamrat is a seasoned business leader, with over two decades of experience in the Ghanaian landscape. Her multifaceted expertise encompasses key areas such as: Inflight, Camp and Remote Site, Offshore and Onshore Catering Operations.\n\nOver a remarkable twenty-four-year career, Maud has played pivotal roles in Ghana's Inflight and Offshore Catering Operations, contributing significantly to Sales, Marketing, Human Resources and Finance sectors. Beyond her adeptness in inflight services, she has successfully initiated and managed numerous remote site catering and hospitality projects, all accomplished within the Ghanaian context.\n\nAs the CEO of Atlantic, Maud has championed local capacity development, leading a team of over 150, with an extraordinary 99.9 percent being Ghanaians. The company, under her guidance, excels in delivering specialized catering and virtual services aboard two FPSOs in Ghana and various onsite corporate operations.\n\nHer outstanding achievements have garnered several awards, the most recent including the Most Outstanding Female Owned Business in Ghana's Upstream Petroleum sector awarded by the Petroleum Commission of Ghana, Glitz Woman of the Year for Catering & Hospitality by Glitz Africa among others.\n\nMaud has also featured on various Business and Entrepreneurship Events, Conferences and Programs, notably appearing on CNN's \"Passion to Portfolio\", a program highlighting emerging and established global entrepreneurs.\n\nMaud's influence extends beyond the corporate realm. Her fervent advocacy for women's empowerment is palpable, evidenced by her commitment to empowering female employees for professional and capacity building through self-development training initiatives and courses. She extends this passion to local women food vendors and farmers across Ghana, championing activities that uplift and strengthen local communities.\n\nHer dedication further encompasses environmental sustainability, inclusivity and social responsibility. Maud continually strives to make Atlantic more sustainable and socially responsible.\n\nMaud is married to Jeff, a Co-Founder and Executive Director of Atlantic and blessed with two daughters.",
   },
   {
-    number: "02",
     initials: "HT",
     name: "Hubert Tossou",
     role: "Operations Director",
     image: "https://atlanticcatering-gh.com/wp-content/uploads/2025/10/Hubbert.png",
-    shortBio: "Hubert Tossou serves as the Operations Director at Atlantic Catering. He has vast knowledge and twenty years of experience in the hospitality industry having worked in some of the most reputable companies in the food industry both in Ghana, Nigeria, and Benin.",
-    fullBio: "Hubert Tossou serves as the Operations Director at Atlantic Catering. He has vast knowledge and twenty years of experience in the hospitality industry having worked in some of the most reputable companies in the food industry both in Ghana, Nigeria, and Benin.\n\nSome of his key responsibilities include Product development, Project start-up, planning and coordination. He is a trained executive Chef with over twelve years experience in in-flight and remote site operations. He holds a Bachelor’s in Hotel and Project Management and is a certified ISO Food Safety Auditor. He is fluent in English and French."
+    bio: "Hubert Tossou serves as the Operations Director at Atlantic Catering. He has vast knowledge and twenty years of experience in the hospitality industry having worked in some of the most reputable companies in the food industry both in Ghana, Nigeria, and Benin.\n\nSome of his key responsibilities include Product development, Project start-up, planning and coordination. He is a trained executive Chef with over twelve years experience in in-flight and remote site operations. He holds a Bachelor's in Hotel and Project Management and is a certified ISO Food Safety Auditor. He is fluent in English and French.",
   },
-
-
   {
-    number: "04",
     initials: "JT",
     name: "Jemima Tagoe",
-    role: "QHSE MANAGER",
+    role: "QHSE Manager",
     image: "https://atlanticcatering-gh.com/wp-content/uploads/2025/10/JJ.png",
-    shortBio: "Jemima Tagoe is a Quality, Health, Safety and Environmental Practitioner and Laboratory Technologist by profession with close to a decade of experience in food safety and five years of experience in Occupational Health & Environmental Safety as well as Internal Auditing.",
-    fullBio: "Jemima Tagoe is a Quality, Health, Safety and Environmental Practitioner and Laboratory Technologist by profession with close to a decade of experience in food safety and five years of experience in Occupational Health & Environmental Safety as well as Internal Auditing.\n\nShe has worked with multinational companies such as First Catering and Newrest Ghana in the capacity of QHSE Manager with key responsibilities such as ensuring the total quality and safety of the company's products and services as well as the health and well-being of its employees before work commences. She is experienced in identifying hazards and providing corrective action for those hazards. She holds a BSE in Food Science."
+    bio: "Jemima Tagoe is a Quality, Health, Safety and Environmental Practitioner and Laboratory Technologist by profession with close to a decade of experience in food safety and five years of experience in Occupational Health & Environmental Safety as well as Internal Auditing.\n\nShe has worked with multinational companies such as First Catering and Newrest Ghana in the capacity of QHSE Manager with key responsibilities such as ensuring the total quality and safety of the company's products and services as well as the health and well-being of its employees before work commences. She is experienced in identifying hazards and providing corrective action for those hazards. She holds a BSE in Food Science.",
   },
   {
-    number: "05",
     initials: "FO",
     name: "Freda Opoku",
-    role: "ADMIN MANAGER",
+    role: "Admin Manager",
     image: "https://atlanticcatering-gh.com/wp-content/uploads/2025/10/Frida.png",
-    shortBio: "Freda Opoku is an HR professional with over a decade wealth of experience spanning People Management, Performance Management, Talent Acquisition, Policy Formulation, Performance Management, Employee Relations, Customer Service and Sales Administration.",
-    fullBio: "Freda Opoku is an HR professional with over a decade wealth of experience spanning People Management, Performance Management, Talent Acquisition, Policy Formulation, Performance Management, Employee Relations, Customer Service and Sales Administration.\n\nShe has served in major professional capacities as HR and Admin Manager, HR Generalist, Sales Manager and Customer Service Executive in the Automobile, Insurance and Aviation Industries respectively.\n\nFreda holds an Executive MBA from the University of Ghana Business School and a Bachelor’s Degree from the Central University College. She is passionate about organizational development, Employee Engagement and Capacity Building and a strong advocate of health and wellness."
+    bio: "Freda Opoku is an HR professional with over a decade wealth of experience spanning People Management, Performance Management, Talent Acquisition, Policy Formulation, Employee Relations, Customer Service and Sales Administration.\n\nShe has served in major professional capacities as HR and Admin Manager, HR Generalist, Sales Manager and Customer Service Executive in the Automobile, Insurance and Aviation Industries respectively.\n\nFreda holds an Executive MBA from the University of Ghana Business School and a Bachelor's Degree from the Central University College. She is passionate about organizational development, Employee Engagement and Capacity Building and a strong advocate of health and wellness.",
   },
   {
-    number: "06",
-    initials: "SVD",
+    initials: "SD",
     name: "Suzan Valentina Dogbe",
-    role: "FINANCE MANAGER",
+    role: "Finance Manager",
     image: "https://atlanticcatering-gh.com/wp-content/uploads/2025/10/suz.png",
-    shortBio: "Suzan is a finance professional with proven expertise in financial management, analysis, and reporting, skilled in budgeting, forecasting, and risk management. Proficient in accounting software and Microsoft Office Suite.",
-    fullBio: "Suzan is a finance professional with proven expertise in financial management, analysis, and reporting, skilled in budgeting, forecasting, and risk management. Proficient in accounting software and Microsoft Office Suite. Demonstrated ability to streamline financial processes and ensure regulatory compliance. Adept at collaborating with cross-functional teams and advising senior management on financial matters."
+    bio: "Suzan is a finance professional with proven expertise in financial management, analysis, and reporting, skilled in budgeting, forecasting, and risk management. Proficient in accounting software and Microsoft Office Suite.\n\nDemonstrated ability to streamline financial processes and ensure regulatory compliance. Adept at collaborating with cross-functional teams and advising senior management on financial matters.",
   },
   {
-    number: "07",
-    initials: "JKS",
+    initials: "JS",
     name: "Joseph Kwesi Sam",
-    role: "HR MANAGER",
+    role: "HR Manager",
     image: "https://atlanticcatering-gh.com/wp-content/uploads/2025/10/kwasi.png",
-    shortBio: "Joseph Kwesi Sam is a seasoned Human Resource professional with expertise in strategic HR management, talent acquisition, and performance optimization. He has extensive experience across various industries, including hospitality, oil and gas, and pharmaceuticals, Fast Moving Consumer Goods and Media.",
-    fullBio: "Joseph Kwesi Sam is a seasoned Human Resource professional with expertise in strategic HR management, talent acquisition, and performance optimization. He has extensive experience across various industries, including hospitality, oil and gas, and pharmaceuticals, Fast Moving Consumer Goods and Media.\n\nCurrently, Joseph serves as HR Manager at Atlantic Catering & Logistics, driving transformative initiatives. He's also a training facilitator, speaker, and volunteer mentor, having worked with Mobile Web Ghana (American Corner) on initiatives like the Get-Ready-for-Work series to equip young professionals with essential skills to prepare them for the world of work. Committed to professional growth and mentorship, Joseph actively volunteers as a workshop facilitator, guiding graduates through the job market, and serves on the selection panel for the Emerging Public Leaders Fellowship of Ghana. With a strong educational foundation, Joseph holds a bachelor’s degree in business administration with specialization in Organization and Human Resource Management, an MBA in HR Management from the University of Cape Coast, and certifications in Alternative Dispute Resolution (ADR) and Project & Innovations Management. He's a Chartered Human Resource Professional and member of the Chartered Institute of Human Resource Management, Ghana.\n\nJoseph is a Project Work Supervisor at the Chartered Institute of Human Resource Management, Ghana, where he mentors Level 4 Human Resource Professionals in developing and submitting insightful, original, and practical projects addressing key HR challenges in their workplaces."
-  }
+    bio: "Joseph Kwesi Sam is a seasoned Human Resource professional with expertise in strategic HR management, talent acquisition, and performance optimization. He has extensive experience across various industries, including hospitality, oil and gas, and pharmaceuticals, Fast Moving Consumer Goods and Media.\n\nCurrently, Joseph serves as HR Manager at Atlantic Catering & Logistics, driving transformative initiatives. He's also a training facilitator, speaker, and volunteer mentor, having worked with Mobile Web Ghana (American Corner) on initiatives like the Get-Ready-for-Work series to equip young professionals with essential skills to prepare them for the world of work.\n\nWith a strong educational foundation, Joseph holds a bachelor's degree in business administration with specialization in Organization and Human Resource Management, an MBA in HR Management from the University of Cape Coast, and certifications in Alternative Dispute Resolution (ADR) and Project & Innovations Management. He's a Chartered Human Resource Professional and member of the Chartered Institute of Human Resource Management, Ghana.",
+  },
 ];
 
-// ─── Member content ──────────────────────────────────────────────
-
-function MemberContent({
+function ArchCard({
   member,
-  expanded,
+  pastel,
+  index,
+  open,
   onToggle,
-  direction,
 }: {
   member: (typeof BOARD_MEMBERS)[number];
-  expanded: boolean;
+  pastel: string;
+  index: number;
+  open: boolean;
   onToggle: () => void;
-  direction: "left" | "right";
 }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" as any });
+  return (
+    <motion.button
+      type="button"
+      custom={index}
+      variants={archIn}
+      onClick={onToggle}
+      aria-expanded={open}
+      className={cn(
+        "group relative block w-full overflow-hidden rounded-t-[999px] text-left",
+        "transition-transform duration-500 ease-out hover:-translate-y-1.5",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#cc9933] focus-visible:ring-offset-2 focus-visible:ring-offset-[#14181B]",
+        open && "-translate-y-1.5"
+      )}
+      style={{ backgroundColor: pastel }}
+    >
+      {/* Pastel header — name and role */}
+      <span className="block px-3 pt-7 pb-3 text-center">
+        <span className="block text-[13px] sm:text-[15px] font-bold leading-tight text-[#1a1a1a]">
+          {member.name.split(" ")[0]}
+        </span>
+        <span className="mt-1 block text-[10px] sm:text-[11px] leading-snug text-[#1a1a1a]/65">
+          {member.role}
+        </span>
+      </span>
 
-  const hasMore = member.shortBio !== member.fullBio;
+      {/* Portrait */}
+      <span className="block relative aspect-[3/4] overflow-hidden bg-[#1a1a1a]/5">
+        <img
+          src={member.image}
+          alt={`${member.name}, ${member.role}`}
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
+          draggable={false}
+        />
+      </span>
+
+      {/* Open affordance */}
+      <span
+        className={cn(
+          "absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full px-3 py-1",
+          "text-[9px] font-bold uppercase tracking-[0.18em]",
+          "bg-black/55 text-white backdrop-blur-sm",
+          "opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100",
+          open && "opacity-100"
+        )}
+      >
+        {open ? "Close" : "Profile"}
+      </span>
+    </motion.button>
+  );
+}
+
+export default function MeetTheCrew() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const gridRef = useRef(null);
+  const gridInView = useInView(gridRef, { once: true, margin: "-80px" as any });
+
+  const active = openIndex === null ? null : BOARD_MEMBERS[openIndex];
 
   return (
-    <motion.div
-      ref={ref}
-      variants={staggerContainer}
-      initial="hidden"
-      animate={isInView ? "show" : "hidden"}
-      className="flex flex-col h-full"
-    >
-      {/* Large number */}
-      <motion.span
-        variants={direction === "left" ? fadeInLeft : fadeInRight}
-        className="block text-[5rem] sm:text-[7rem] leading-none font-black text-gray-200 mb-2 select-none -ml-1"
-      >
-        {member.number}
-      </motion.span>
+    <section className="relative w-full bg-[#14181B] py-20 md:py-28 px-6 md:px-12">
+      <div className="mx-auto max-w-7xl">
+        {/* ── Heading ─────────────────────────────────────────── */}
+        <Reveal className="text-center">
+          <span className="block text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.42em] text-white/45">
+            Meet the Crew
+          </span>
+          <h2 className="mt-5 text-[2rem] sm:text-[2.75rem] lg:text-[3.5rem] leading-[1.1] tracking-tight text-white">
+            <span className="font-bold">People Behind </span>
+            <span className="font-light text-white/85">the Progress</span>
+          </h2>
+          <p className="mt-4 text-sm md:text-base text-white/55">
+            Different skills. One shared purpose.
+          </p>
+        </Reveal>
 
-      {/* Role chip */}
-      <motion.span
-        variants={scaleIn}
-        className="inline-flex w-fit items-center px-3 py-1 rounded-md border border-gray-300 text-[11px] font-bold tracking-widest text-[#EF9419] uppercase bg-gray-50 mb-4"
-      >
-        {member.role}
-      </motion.span>
+        {/* ── Arch grid ───────────────────────────────────────── */}
+        <motion.div
+          ref={gridRef}
+          initial="hidden"
+          animate={gridInView ? "show" : "hidden"}
+          className="mt-14 md:mt-20 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-6 lg:gap-4"
+        >
+          {BOARD_MEMBERS.map((member, i) => (
+            <ArchCard
+              key={member.name}
+              member={member}
+              pastel={PASTELS[i % PASTELS.length]}
+              index={i}
+              open={openIndex === i}
+              onToggle={() => setOpenIndex(openIndex === i ? null : i)}
+            />
+          ))}
+        </motion.div>
 
-      {/* Underline accent */}
-      <motion.div variants={lineReveal} className="h-[2px] w-12 bg-[#EF9419] rounded-md mb-5 origin-left" />
-
-      {/* Name */}
-      <motion.h3
-        variants={direction === "left" ? fadeInLeft : fadeInRight}
-        className="text-3xl sm:text-4xl md:text-5xl font-black text-white uppercase leading-tight mb-6 tracking-tight"
-      >
-        {member.name}
-      </motion.h3>
-
-      {/* Bio */}
-      <div className="relative">
-        <AnimatePresence mode="wait">
-          {expanded ? (
+        {/* ── Profile panel ───────────────────────────────────── */}
+        <AnimatePresence initial={false} mode="wait">
+          {active && (
             <motion.div
-              key="full"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.28, ease: EASE.smooth }}
+              key={active.name}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.45, ease: EASE.outExpo }}
+              className="overflow-hidden"
             >
-              <p className="text-white leading-relaxed text-sm sm:text-base font-inter whitespace-pre-line">
-                {member.fullBio}
-              </p>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="short"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.28, ease: EASE.smooth }}
-            >
-              <p className="text-white leading-relaxed text-sm sm:text-base font-inter whitespace-pre-line">
-                {member.shortBio}
-              </p>
+              <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-10">
+                <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                  <h3 className="text-xl md:text-2xl font-bold text-white">{active.name}</h3>
+                  <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#cc9933]">
+                    {active.role}
+                  </span>
+                </div>
+                <div className="mt-5 space-y-4 max-w-4xl">
+                  {active.bio.split("\n\n").map((para, i) => (
+                    <p key={i} className="text-sm md:text-[15px] leading-relaxed text-white/70">
+                      {para}
+                    </p>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setOpenIndex(null)}
+                  className="mt-7 text-[11px] font-bold uppercase tracking-[0.2em] text-white/50 transition-colors hover:text-white"
+                >
+                  Close profile
+                </button>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
 
-      {/* Read more toggle */}
-      {hasMore && (
-        <motion.button
-          onClick={onToggle}
-          className="mt-5 inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-widest text-[#EF9419] hover:text-[#d88414] transition-colors group w-fit"
-          whileHover={{ x: 3 }}
-          whileTap={{ scale: 0.97 }}
-          transition={{ type: "spring", stiffness: 300, damping: 25 }}
-        >
-          {expanded ? "Read less" : "Read more"}
-          <motion.svg
-            animate={{ rotate: expanded ? 180 : 0 }}
-            transition={{ duration: 0.35, ease: EASE.spring }}
-            className="size-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2.5}
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-          </motion.svg>
-        </motion.button>
-      )}
-    </motion.div>
-  );
-}
-
-// ─── Member row ──────────────────────────────────────────────────
-
-function MemberRow({
-  member,
-}: {
-  member: (typeof BOARD_MEMBERS)[number];
-}) {
-  const [expanded, setExpanded] = useState(false);
-
-  return (
-    <div className="crew-slide w-full lg:h-full lg:shrink-0 flex items-center px-6 md:px-16 py-16 lg:py-0 border-b border-gray-200 lg:border-0 last:border-0">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center w-full max-w-7xl mx-auto">
-        {/* Portrait */}
-        <Reveal variants={clipFromRight} className="lg:col-span-5 relative w-full aspect-[4/5] lg:max-h-[65vh]">
-          <MemberPortrait image={member.image} name={member.name} className="absolute inset-0 w-full h-full shadow-2xl" />
+        {/* ── Footer rule ─────────────────────────────────────── */}
+        <Reveal className="mt-16 md:mt-20 flex flex-col items-center gap-6">
+          <div className="flex items-center gap-4">
+            <span className="h-px w-8 bg-white/25" />
+            <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/45">
+              A stronger tomorrow, together
+            </span>
+            <span className="h-px w-8 bg-white/25" />
+          </div>
+          {/* White logo variation — the approved mark for dark backgrounds */}
+          <LogoA
+            spin="none"
+            variant="white"
+            className="h-12 w-auto opacity-75"
+            style={{ aspectRatio: "1600/983" }}
+          />
         </Reveal>
-        {/* Content — capped and internally scrollable so one long bio never
-            forces the pinned slide taller than the viewport */}
-        <div className="lg:col-span-7 lg:max-h-[70vh] lg:overflow-y-auto lg:pr-2">
-          <MemberContent
-            member={member}
-            expanded={expanded}
-            onToggle={() => setExpanded((p) => !p)}
-            direction="right"
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── Board carousel — horizontal scroll, pinned on desktop ────────
-//
-// Scrolling the page moves the crew sideways instead of stacking seven
-// full bio blocks down the page. Pinned + scrubbed through GSAP exactly
-// like the services carousel, with Lenis driving the snap-to-member and
-// the dot/arrow jumps so it eases with the same curve as the wheel.
-// Below `lg` it just falls back to a plain stacked column — scroll-jacking
-// a long bio on a touch screen is a bad time.
-
-function BoardCarousel() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const total = BOARD_MEMBERS.length;
-
-  useGSAP(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const mm = gsap.matchMedia();
-
-    mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
-      if (!trackRef.current) return;
-
-      // A single timeline owning its own scrollTrigger config (rather than a
-      // bare ScrollTrigger.create() with a tween pointed at that instance)
-      // — the latter can fall out of sync once the pin goes inactive and a
-      // programmatic jump (dot click, snap) scrolls back into range.
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          id: "crew-pin",
-          trigger: sectionRef.current,
-          start: "top top",
-          end: () => `+=${window.innerHeight * (total - 1)}`,
-          pin: true,
-          scrub: 1,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => setActiveIndex(Math.round(self.progress * (total - 1))),
-        },
-      });
-
-      tl.to(trackRef.current, {
-        xPercent: -100 * (total - 1),
-        ease: "none",
-      });
-
-      return () => tl.scrollTrigger?.kill();
-    });
-
-    return () => mm.revert();
-  }, { scope: sectionRef });
-
-  // Snap to the nearest member once the wheel settles — mirrors the
-  // services carousel's Lenis-driven snap so it doesn't fight Lenis for
-  // ownership of the scroll position.
-  useEffect(() => {
-    let snapTimer: ReturnType<typeof setTimeout> | null = null;
-    const settleOnNearestMember = () => {
-      if (snapTimer) clearTimeout(snapTimer);
-      const st = ScrollTrigger.getById("crew-pin");
-      if (!st || !st.isActive) return;
-      snapTimer = setTimeout(() => {
-        const trigger = ScrollTrigger.getById("crew-pin");
-        if (!trigger || !trigger.isActive) return;
-        const step = (trigger.end - trigger.start) / (total - 1);
-        const index = Math.round((trigger.scroll() - trigger.start) / step);
-        const target = trigger.start + index * step;
-        if (Math.abs(target - trigger.scroll()) > 4) smoothScrollTo(target, 0.7);
-      }, 170);
-    };
-
-    const lenis = getLenis();
-    lenis?.on("scroll", settleOnNearestMember);
-    return () => {
-      if (snapTimer) clearTimeout(snapTimer);
-      lenis?.off("scroll", settleOnNearestMember);
-    };
-  }, [total]);
-
-  const goTo = (index: number) => {
-    const trigger = ScrollTrigger.getById("crew-pin");
-    if (!trigger) return;
-    const target = trigger.start + (index / (total - 1)) * (trigger.end - trigger.start);
-    smoothScrollTo(target, 1.2);
-  };
-
-  return (
-    <section ref={sectionRef} className="relative w-full overflow-hidden lg:h-screen bg-black">
-      <div ref={trackRef} className="flex flex-col lg:flex-row lg:h-full lg:will-change-transform ">
-        {BOARD_MEMBERS.map((member) => (
-          <MemberRow key={member.name} member={member} />
-        ))}
-      </div>
-
-      {/* Dots — desktop only, mirrors the pinned scroll */}
-      <div className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 items-center gap-2 z-30">
-        {BOARD_MEMBERS.map((member, index) => (
-          <button
-            key={member.name}
-            onClick={() => goTo(index)}
-            aria-label={`Go to ${member.name}`}
-            className={cn(
-              "h-2 rounded-full transition-all duration-300",
-              activeIndex === index ? "w-8 bg-[#EF9419]" : "w-2 bg-gray-300 hover:bg-gray-400",
-            )}
-          />
-        ))}
       </div>
     </section>
-  );
-}
-
-// ─── Page export ─────────────────────────────────────────────────
-
-export default function MeetTheCrew() {
-  return (
-    <div className="pb-32">
-      {/* ── Introduction ──────────────────────────────────────────── */}
-      <section className="py-4 overflow-hidden relative">
-        {/* Ambient orb */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-          <motion.div
-            className="absolute -top-40 -right-40 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] rounded-md bg-[#EF9419]/10 blur-[100px]"
-            animate={{ scale: [1, 1.12, 1], opacity: [0.3, 0.55, 0.3] }}
-            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col lg:flex-row gap-12 lg:items-start justify-between">
-          <div className="max-w-3xl">
-            <Reveal variants={scaleIn} className="mb-8">
-              <span className="inline-flex items-center px-4 py-1.5 rounded-md border border-gray-300 text-[13px] font-bold tracking-widest uppercase text-[#EF9419] bg-gray-50">
-                Leadership
-              </span>
-            </Reveal>
-
-            {/* Title with underline accent */}
-            <Reveal variants={fadeInUp} className="mb-3">
-              <h2 className="mb-3 text-5xl sm:text-6xl lg:text-[5rem] font-black uppercase text-[#111] leading-none tracking-tight">
-                Meet the{" "}
-                <span className="relative inline-block">
-                  Crew
-                  <motion.span
-                    variants={lineReveal}
-                    className="absolute -bottom-1 left-0 w-full h-1.5 bg-[#EF9419] rounded-md origin-left"
-                  />
-                </span>
-              </h2>
-            </Reveal>
-
-            <Reveal variants={fadeInUp} margin="-40px">
-              <p className="mt-8 text-base sm:text-lg text-gray-600 leading-relaxed font-inter">
-                Our operations model combines the strategic oversight of our dedicated directors with the operational expertise of our team, ensuring that every decision reflects our core values of integrity, profitability, teamwork, growth, and safety.
-              </p>
-              <p className="mt-4 text-gray-500 leading-relaxed font-inter">
-                Working under the guidance of our CEO, our Management Team drives day-to-day operations with a focus on quality delivery, innovation, and efficiency. Their collaborative approach strengthens our organisational structure, empowering every department to perform at its best while ensuring seamless execution across all remote sites and inflight operations.
-              </p>
-            </Reveal>
-          </div>
-
-          <Reveal variants={fadeInUp} className="flex-shrink-0 mx-auto lg:mx-0">
-            <img
-              src="/assets/images/About Us/cert.png"
-              alt="Certification"
-              className="w-full max-w-[350px] lg:max-w-[400px] h-auto object-contain mix-blend-multiply"
-            />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── Board members — horizontal scroll, pinned on desktop ──── */}
-      <BoardCarousel />
-    </div>
   );
 }

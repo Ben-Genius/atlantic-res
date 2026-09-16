@@ -17,7 +17,7 @@ export default function CeoProfile() {
             <p className="font-black text-2xl uppercase tracking-tight text-white leading-none">
               Maud Lindsay-Gamrat
             </p>
-            <p className="font-inter text-[#EF9419] text-xs uppercase tracking-widest font-bold mt-1">
+            <p className="font-inter text-[#cc9933] text-xs uppercase tracking-widest font-bold mt-1">
               Chief Executive Officer
             </p>
           </div>
