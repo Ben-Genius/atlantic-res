@@ -765,7 +765,7 @@ export default function SustainabilityPage() {
           ================================================================ */}
       <section className="gsap-hero-trigger relative w-full px-6 md:px-12 pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden bg-[#FAF7EF] text-[#0d0d0d] transition-colors duration-300 min-h-[90vh] flex items-center justify-center">
         {/* Brand cutlery pattern carries the ground in place of the green */}
-        <CutleryPattern colourway="gold-tint" scale={150} opacity={0.85} />
+        <CutleryPattern colourway="gold-tint" scale={150} opacity={0.45} />
 
         <div className="gsap-hero-dish-left absolute left-0 xl:-left-10 top-12 z-10 w-[260px] h-[260px] md:w-[400px] md:h-[400px] xl:w-[460px] xl:h-[460px]  pointer-events-none select-none hidden lg:block cursor-grab active:cursor-grabbing">
           <Image src="/assets/images/dishes/dish1.png" alt="Premium Culinary Dish" fill className="object-cover" />

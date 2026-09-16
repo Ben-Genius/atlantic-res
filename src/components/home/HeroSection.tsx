@@ -106,8 +106,10 @@ export default function HeroSection() {
           <source src="/assets/video/heroVid.MP4" type="video/mp4" />
         </video>
 
-        {/* Even scrim so centred copy stays legible over the footage */}
-        <div className="absolute inset-0 bg-[#0B1014]/10" />
+        {/* Scrim weighted to the centre band so the headline always has
+            ground under it, whatever frame of the footage is showing */}
+        <div className="absolute inset-0 bg-[#0B1014]/25" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0B1014]/55 via-[#0B1014]/35 to-[#0B1014]/60" />
       </div>
 
       {/* Main Content Area */}

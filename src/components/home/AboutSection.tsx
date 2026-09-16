@@ -318,7 +318,6 @@ export default function AboutSection() {
 
             {/* CTA row */}
             <div className="about-cta-row flex flex-wrap items-center gap-6">
-              <CtaButton href="/expertise" label="Our Expertise" />
 
               <a
                 href="tel:+233302000000"

@@ -3,7 +3,6 @@
 import React, { useRef, useState } from "react";
 import { Variants, motion, AnimatePresence, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
-import LogoA from "@/components/LogoA";
 
 /**
  * Meet the Crew — the arch-card treatment shared as the target layout.
@@ -248,21 +247,12 @@ export default function MeetTheCrew() {
         </AnimatePresence>
 
         {/* ── Footer rule ─────────────────────────────────────── */}
-        <Reveal className="mt-16 md:mt-20 flex flex-col items-center gap-6">
-          <div className="flex items-center gap-4">
-            <span className="h-px w-8 bg-white/25" />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/45">
-              A stronger tomorrow, together
-            </span>
-            <span className="h-px w-8 bg-white/25" />
-          </div>
-          {/* White logo variation — the approved mark for dark backgrounds */}
-          <LogoA
-            spin="none"
-            variant="white"
-            className="h-12 w-auto opacity-75"
-            style={{ aspectRatio: "1600/983" }}
-          />
+        <Reveal className="mt-16 md:mt-20 flex items-center justify-center gap-4">
+          <span className="h-px w-8 bg-white/25" />
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/45">
+            A stronger tomorrow, together
+          </span>
+          <span className="h-px w-8 bg-white/25" />
         </Reveal>
       </div>
     </section>

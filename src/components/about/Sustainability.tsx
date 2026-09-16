@@ -40,7 +40,7 @@ export default function Sustainability() {
           {SDGS.map((sdg, idx) => (
             <div
               key={idx}
-              className="p-6 border-b border-r border-black/10 hover:bg-black/[0.03] transition-colors last:border-b-0"
+              className={`p-6 border-b border-r border-black/10 hover:bg-black/[0.03] transition-colors last:border-b-0 ${idx === SDGS.length - 1 ? 'sm:col-span-2' : ''}`}
             >
               <div className="flex items-center gap-3 mb-2">
                 <span className="font-black text-3xl text-[#A4D79C] leading-none">{sdg.number}</span>

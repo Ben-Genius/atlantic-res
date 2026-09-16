@@ -56,27 +56,27 @@ export default function Loader() {
           <div className="absolute bottom-20 flex flex-col items-center">
             <div className="flex items-baseline">
               <span
-                className="text-orange-600 font-black tracking-tighter tabular-nums"
+                className="font-black tracking-tighter tabular-nums text-[#cc9933]"
                 style={{ fontSize: 'clamp(50px, 8vw, 40px)', lineHeight: 0.8, fontFamily: 'Antonio, sans-serif' }}
               >
                 {displayProgress}
               </span>
               <span
-                className="text-orange-500 font-bold ml-1"
+                className="font-bold ml-1 text-[#cc9933]"
                 style={{ fontSize: '1.5rem', fontFamily: 'Antonio, sans-serif' }}
               >
                 %
               </span>
             </div>
 
-            <div className="mt-6 w-64 h-[2px] bg-orange-500/10 relative overflow-hidden">
+            <div className="mt-6 w-64 h-[2px] bg-[#cc9933]/15 relative overflow-hidden">
               <div
-                className="absolute inset-y-0 left-0 bg-orange-500 transition-all duration-100 ease-linear"
+                className="absolute inset-y-0 left-0 bg-[#cc9933] transition-all duration-100 ease-linear"
                 style={{ width: `${displayProgress}%` }}
               />
             </div>
 
-            <span className="mt-4 text-[10px] font-bold uppercase tracking-[0.5em] text-orange-500">
+            <span className="mt-4 text-[10px] font-bold uppercase tracking-[0.5em] text-[#cc9933]">
               Premium Quality Excellence
             </span>
           </div>
