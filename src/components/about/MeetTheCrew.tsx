@@ -122,7 +122,7 @@ function ArchCard({
       onClick={onToggle}
       aria-expanded={open}
       className={cn(
-        "group relative block w-full overflow-hidden rounded-t-[999px] text-left",
+        "group relative block w-full   overflow-hidden rounded-t-[999px] text-left",
         "transition-transform duration-500 ease-out hover:-translate-y-1.5",
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#cc9933] focus-visible:ring-offset-2 focus-visible:ring-offset-[#14181B]",
         open && "-translate-y-1.5"
@@ -130,17 +130,17 @@ function ArchCard({
       style={{ backgroundColor: pastel }}
     >
       {/* Pastel header — name and role */}
-      <span className="block px-3 pt-7 pb-3 text-center">
-        <span className="block text-[13px] sm:text-[15px] font-bold leading-tight text-[#1a1a1a]">
-          {member.name.split(" ")[0]}
+      <span className="block px-5 pt-10 pb-5 text-center">
+        <span className="block text-[18px] sm:text-[20px] font-bold leading-tight text-[#1a1a1a]">
+          {member.name}
         </span>
-        <span className="mt-1 block text-[10px] sm:text-[11px] leading-snug text-[#1a1a1a]/65">
+        <span className="mt-1.5 block text-[12px] sm:text-[13px] leading-snug text-[#1a1a1a]/65">
           {member.role}
         </span>
       </span>
 
       {/* Portrait */}
-      <span className="block relative aspect-[3/4] overflow-hidden bg-[#1a1a1a]/5">
+      <span className="block relative aspect-[4/5] overflow-hidden bg-[#1a1a1a]/5">
         <img
           src={member.image}
           alt={`${member.name}, ${member.role}`}
@@ -153,8 +153,8 @@ function ArchCard({
       {/* Open affordance */}
       <span
         className={cn(
-          "absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full px-3 py-1",
-          "text-[9px] font-bold uppercase tracking-[0.18em]",
+          "absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full px-4 py-1.5",
+          "text-[10px] font-bold uppercase tracking-[0.18em]",
           "bg-black/55 text-white backdrop-blur-sm",
           "opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100",
           open && "opacity-100"
@@ -178,14 +178,14 @@ export default function MeetTheCrew() {
       <div className="mx-auto max-w-7xl">
         {/* ── Heading ─────────────────────────────────────────── */}
         <Reveal className="text-center">
-          <span className="block text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.42em] text-white/45">
+          <span className="block text-[14px] md:text-[16px] font-semibold uppercase tracking-[0.42em] text-white/45">
             Meet the Crew
           </span>
-          <h2 className="mt-5 text-[2rem] sm:text-[2.75rem] lg:text-[3.5rem] leading-[1.1] tracking-tight text-white">
+          <h2 className="mt-5 text-[3rem] sm:text-[4rem] lg:text-[4.5rem] leading-[1.1] tracking-tight text-white">
             <span className="font-bold">People Behind </span>
-            <span className="font-light text-white/85">the Progress</span>
+            <span className="font-light text-white/95">the Progress</span>
           </h2>
-          <p className="mt-4 text-sm md:text-base text-white/55">
+          <p className="mt-4 text-md md:text-lg text-white/55">
             Different skills. One shared purpose.
           </p>
         </Reveal>
@@ -195,7 +195,7 @@ export default function MeetTheCrew() {
           ref={gridRef}
           initial="hidden"
           animate={gridInView ? "show" : "hidden"}
-          className="mt-14 md:mt-20 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-6 lg:gap-4"
+          className="mt-14 md:mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3 w-full lg:gap-20"
         >
           {BOARD_MEMBERS.map((member, i) => (
             <ArchCard
