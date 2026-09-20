@@ -122,7 +122,6 @@ export default function HeroSection() {
 
         {/* Copy sits bottom-left, so only that corner is grounded. The
             centre of the frame stays clear and the footage reads true. */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1014]/45 via-[#0B1014]/0 to-transparent" />
       </div>
 
       {/* Main Content Area */}

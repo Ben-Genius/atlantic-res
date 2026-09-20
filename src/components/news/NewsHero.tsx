@@ -72,9 +72,7 @@ export default function NewsHero() {
       <div className="nhero-content">
         <p className="nhero-eyebrow"><span>The Atlantic Journal</span></p>
         <h1 aria-label="Newsroom stories from the Atlantic floor">
-          <span className="ln"><span>Newsroom stories</span></span>
-          <span className="ln"><span>from the Atlantic</span></span>
-          <span className="ln"><span>floor</span></span>
+          <span className="ln"><span>Newsroom stories from the Atlantic floor</span></span>
         </h1>
         <p className="nhero-sub">Awards, certifications and sustainability milestones — as they happen.</p>
         <a className="nhero-cta" href="#latest">
@@ -121,7 +119,6 @@ export default function NewsHero() {
           width: 54%;
           overflow: hidden;
           border-radius: 28px 0 0 28px;
-          box-shadow: -1px 0 0 rgba(13,13,13,.06);
         }
         .nhero-media {
           position: absolute;
@@ -164,8 +161,7 @@ export default function NewsHero() {
         }
         .ln { display: block; overflow: hidden; }
         .ln > :global(span) { display: block; transform: translateY(105%); animation: nhTitleIn 1000ms cubic-bezier(.22,1,.36,1) forwards; }
-        .ln:nth-child(2) > :global(span) { animation-delay: 90ms; }
-        .ln:nth-child(3) > :global(span) { animation-delay: 180ms; }
+    
 
         .nhero-sub { margin: 24px 0 30px; font-size: 17px; line-height: 1.45; color: rgba(26,26,26,.6); letter-spacing: -.01em; max-width: 30ch; }
 
@@ -174,11 +170,10 @@ export default function NewsHero() {
           border-radius: 8px; background: #66cc33; color: #fff;
           display: flex; align-items: center; justify-content: space-between;
           text-decoration: none; font-size: 14px; font-weight: 600;
-          box-shadow: 0 10px 26px rgba(102,204,51,.26);
-          transition: transform 450ms cubic-bezier(.32,.72,0,1), background 220ms ease, box-shadow 450ms cubic-bezier(.22,1,.36,1);
+          transition: transform 450ms cubic-bezier(.32,.72,0,1), background 220ms ease;
         }
         .nhero-cta span, .nhero-cta svg { transition: transform 450ms cubic-bezier(.32,.72,0,1); }
-        .nhero-cta:hover { transform: translateY(-2px); background: #cc9933; box-shadow: 0 14px 32px rgba(204,153,51,.32); }
+        .nhero-cta:hover { transform: translateY(-2px); background: #cc9933; }
         .nhero-cta:hover span, .nhero-cta:hover svg { transform: translateX(4px); }
 
         .nhero-cards { position: absolute; inset: 0; z-index: 9; pointer-events: none; }
@@ -190,7 +185,6 @@ export default function NewsHero() {
           border: 1px solid rgba(13,13,13,.06);
           border-radius: 16px;
           background: #ffffff;
-          box-shadow: 0 22px 60px rgba(13,13,13,.18);
           color: #1a1a1a;
           transition: transform 650ms cubic-bezier(.22,1,.36,1), box-shadow 450ms ease;
         }

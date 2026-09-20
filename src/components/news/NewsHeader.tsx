@@ -331,7 +331,7 @@ export default function NewsHeader() {
           color: #fff; background: #66cc33;
           border-radius: 8px; text-decoration: none;
           font-size: 13px; font-weight: 600;
-          transition: background 240ms ease, box-shadow 240ms ease;
+          transition: background 240ms ease;
         }
         .nh-cta:hover { background: #cc9933; s }
         .nh-cta span { transition: transform 500ms cubic-bezier(.22,1,.36,1); }
