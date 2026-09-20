@@ -1,0 +1,412 @@
+/* Geometry mirrors the reference: the top hairline traces the section edge,
+   notches down at 63.6% and turns right again at 31% height — that turn is the
+   silver card's only frame. The photo card fills the column below it. */
+.track {
+  position: relative;
+  width: 100%;
+  min-height: 260vh;
+  background: #e7e6e4;
+  scroll-margin-top: 104px;
+}
+
+.feature {
+  --edge: clamp(12px, 1.1vw, 22px);
+  --col-split: 63.6%;
+  --silver-h: 31%;
+  --hairline-inset: clamp(24px, 4vh, 56px);
+
+  position: sticky;
+  top: 0;
+  width: 100%;
+  min-height: 720px;
+  height: 100vh;
+  padding: clamp(72px, 9vh, 120px) 0 clamp(40px, 5vh, 76px) clamp(20px, 6.4vw, 128px);
+  background: #e7e6e4;
+  color: #0d0d0d;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hairlineTop {
+  position: absolute;
+  top: var(--hairline-inset);
+  left: 0;
+  width: 100%;
+  height: calc(var(--silver-h) - var(--hairline-inset));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bottomLine {
+  position: absolute;
+  left: 0;
+  bottom: var(--edge);
+  width: var(--col-split);
+  height: 1px;
+  background: rgba(57, 48, 39, 0.28);
+}
+
+/* ─── left column ──────────────────────────── */
+.eyebrow {
+  position: relative;
+  z-index: 2;
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: clamp(11px, 0.68vw, 13px);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(57, 48, 39, 0.62);
+}
+
+.text {
+  position: absolute;
+  left: clamp(20px, 6.4vw, 128px);
+  bottom: clamp(70px, 9vh, 134px);
+  width: min(58%, 760px);
+  z-index: 2;
+}
+
+.headline {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: clamp(40px, 4.9vw, 98px);
+  line-height: 1.01;
+  letter-spacing: -0.035em;
+  color: #16161a;
+  margin-bottom: clamp(36px, 7vh, 96px);
+}
+
+.headlineLine {
+  display: block;
+  will-change: transform, filter, opacity;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 190px));
+  gap: clamp(20px, 2.8vw, 54px);
+}
+
+.body p {
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: clamp(14px, 1.02vw, 20px);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: rgba(57, 48, 39, 0.58);
+}
+
+/* ─── right column ─────────────────────────── */
+.cards {
+  position: absolute;
+  top: 0;
+  right: var(--edge);
+  bottom: var(--edge);
+  width: calc(100% - var(--col-split) - var(--edge));
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.silver {
+  flex: 0 0 var(--silver-h);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.4vh, 18px);
+  padding: clamp(96px, 13vh, 150px) 0 0 clamp(20px, 2.3vw, 46px);
+}
+
+.silverEyebrow {
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: clamp(11px, 0.68vw, 13px);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(57, 48, 39, 0.5);
+}
+
+.silverTime {
+  display: flex;
+  align-items: flex-start;
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: clamp(52px, 4.5vw, 92px);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: #9d9a95;
+}
+
+.silverUnit {
+  font-size: 0.34em;
+  font-weight: 600;
+  line-height: 1;
+  margin-left: 3px;
+  margin-right: clamp(10px, 1.1vw, 22px);
+  top: 0.15em;
+}
+
+.photo {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: clamp(16px, 3.2vh, 40px);
+  border-radius: 18px;
+  overflow: hidden;
+  background: #1a2330;
+}
+
+.photoImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform, filter;
+}
+
+/* ─── widget ───────────────────────────────── */
+.widget {
+  position: absolute;
+  left: 3.4%;
+  right: 3.4%;
+  bottom: clamp(10px, 1.4vh, 18px);
+  border-radius: 12px;
+  background: rgba(24, 24, 22, 0.42);
+  backdrop-filter: blur(16px) saturate(1.1);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  overflow: hidden;
+}
+
+.widgetStroke {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.widgetContent {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.1vw, 22px);
+  padding: clamp(10px, 1.3vh, 15px) clamp(14px, 1.3vw, 22px);
+}
+
+.widgetLeft {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.widgetHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.widgetLabel,
+.widgetValue {
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: clamp(9px, 0.56vw, 11px);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.widgetLabel {
+  color: rgba(255, 255, 255, 0.52);
+}
+
+.widgetValue {
+  color: #ffffff;
+}
+
+.widgetBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 9px;
+}
+
+.widgetSeg {
+  height: 100%;
+  border-radius: 2px;
+  transform-origin: left center;
+}
+
+.widgetSeg[data-color='green'] {
+  background: var(--color-brand-green, #66cc33);
+}
+
+.widgetSeg[data-color='cream'] {
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.widgetSeg[data-color='dim'] {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.widgetHatch {
+  flex: 1 1 auto;
+  height: 100%;
+  border-radius: 2px;
+  background-image: repeating-linear-gradient(115deg,
+      rgba(255, 255, 255, 0.3) 0 1px,
+      transparent 1px 5px);
+}
+
+.widgetMarker {
+  position: absolute;
+  left: 82%;
+  top: -4px;
+  width: 1px;
+  height: calc(100% + 8px);
+  background: rgba(255, 255, 255, 0.9);
+  transform-origin: center;
+}
+
+.widgetPill {
+  flex: 0 0 auto;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: clamp(9px, 0.56vw, 11px);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+}
+
+.widgetRight {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 7px;
+}
+
+.widgetTime {
+  display: flex;
+  align-items: flex-start;
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: clamp(17px, 1.15vw, 23px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.widgetTime sup {
+  font-size: 0.55em;
+  font-weight: 600;
+  margin-left: 1px;
+  margin-right: 6px;
+  top: 0.1em;
+}
+
+.widgetIcon {
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ─── responsive ───────────────────────────── */
+@media (max-width: 1100px) {
+  .track {
+    min-height: 0;
+  }
+
+  .feature {
+    position: static;
+    height: auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(36px, 7vw, 64px);
+    padding: clamp(40px, 9vw, 72px) clamp(20px, 5vw, 48px);
+  }
+
+  .hairlineTop {
+    display: none;
+  }
+
+  .bottomLine {
+    width: 100%;
+    bottom: 0;
+  }
+
+  .text {
+    position: static;
+    width: 100%;
+    order: 2;
+  }
+
+  .headline {
+    font-size: clamp(38px, 8.4vw, 76px);
+    margin-bottom: clamp(28px, 5vw, 48px);
+  }
+
+  .body {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 560px;
+  }
+
+  .cards {
+    position: static;
+    width: 100%;
+    order: 3;
+    gap: clamp(20px, 4vw, 36px);
+  }
+
+  .silver {
+    flex: 0 0 auto;
+    padding: clamp(20px, 4vw, 32px);
+    border: 1px solid rgba(57, 48, 39, 0.16);
+    border-radius: 18px;
+  }
+
+  .silverTime {
+    font-size: clamp(48px, 10vw, 76px);
+  }
+
+  .photo {
+    margin-top: 0;
+    min-height: 440px;
+  }
+}
+
+@media (max-width: 640px) {
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .photo {
+    min-height: 360px;
+  }
+
+  .widgetContent {
+    flex-wrap: wrap;
+    row-gap: 12px;
+  }
+
+  .widgetLeft {
+    flex: 1 0 100%;
+  }
+
+  .widgetRight {
+    align-items: flex-start;
+  }
+}
+
+.silverNum {
+  font-weight: 500;
+}

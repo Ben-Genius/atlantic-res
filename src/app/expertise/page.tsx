@@ -342,7 +342,7 @@ export default function ExpertisePage() {
         </div>
       </section>
 
-      <BrandMarquee />
+
 
       {/* ── Logistics fleet ─────────────────────────────────── */}
       <section className="relative overflow-hidden px-6 md:px-12 py-20 md:py-28">
@@ -371,7 +371,8 @@ export default function ExpertisePage() {
         </div>
       </section>
 
-      <CtaSection />
+      <div className="bg-white">
+      </div>
     </main>
   )
 }

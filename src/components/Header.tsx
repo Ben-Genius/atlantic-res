@@ -2,13 +2,18 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { gsap } from 'gsap'
 import { Menu, X, ArrowRight } from 'lucide-react'
 import { navigation } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import LogoA from '@/components/LogoA'
 
+/** Routes that ship their own header and must not render the global one. */
+const OWN_HEADER_ROUTES = ['/news-updates']
+
 export default function Header() {
+  const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -69,6 +74,8 @@ export default function Header() {
   }, [mobileOpen])
 
   const close = () => setMobileOpen(false)
+
+  if (OWN_HEADER_ROUTES.some((r) => pathname === r || pathname.startsWith(r + '/'))) return null
 
   return (
     <>

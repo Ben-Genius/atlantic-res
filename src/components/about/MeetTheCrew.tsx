@@ -1,16 +1,23 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { Variants, motion, AnimatePresence, useInView } from "framer-motion";
+import { Variants, motion, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /**
  * Meet the Crew — the arch-card treatment shared as the target layout.
  *
- * Six portrait arches on a dark ground, each under a soft pastel header
- * carrying the name and role. The bios the old layout carried are kept: a
- * card opens its full profile in the panel below the grid rather than losing
- * the content to the new design.
+ * Six tall pill cards on a dark ground. Each card is one pastel pill:
+ *   • the top 28% is the header (name + role, centred, fixed height so every
+ *     portrait starts on the same line even when a name wraps to two lines)
+ *   • the bottom 72% is the portrait, full card width, with its own arch top;
+ *     the card's rounded bottom clips it, so the photo "sits in" the pill.
+ *
+ * Proportions were measured off the reference (1536px wide):
+ *   card ≈ 238 × 555  → aspect 13/30
+ *   gap  ≈ 10px, side margin ≈ 24px
+ * Text is sized in container-query units (cqw) so it scales with the card
+ * and looks the same at any grid width.
  */
 
 const EASE = { outExpo: [0.16, 1, 0.3, 1] };
@@ -122,45 +129,50 @@ function ArchCard({
       onClick={onToggle}
       aria-expanded={open}
       className={cn(
-        "group relative block w-full   overflow-hidden rounded-t-[999px] text-left",
+        // One tall pill. aspect 13/30 ≈ the reference's 238 × 555.
+        "group relative block w-full aspect-[13/30] overflow-hidden rounded-full text-left",
         "transition-transform duration-500 ease-out hover:-translate-y-1.5",
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#cc9933] focus-visible:ring-offset-2 focus-visible:ring-offset-[#14181B]",
         open && "-translate-y-1.5"
       )}
       style={{ backgroundColor: pastel }}
     >
-      {/* Pastel header — name and role */}
-      <span className="block px-5 pt-10 pb-5 text-center">
-        <span className="block text-[18px] sm:text-[20px] font-bold leading-tight text-[#1a1a1a]">
-          {member.name}
+      {/* Container for cqw units — text scales with the card's own width */}
+      <span className="absolute inset-0 block [container-type:inline-size]">
+        {/* Header — fixed 28% band, content centred so portraits always line up */}
+        <span className="absolute inset-x-0 top-0 flex h-[28%] flex-col items-center justify-center px-[9%] pt-[7%] text-center">
+          <span className="block text-[9cqw] font-bold leading-[1.15] text-[#1a1a1a]">
+            {member.name}
+          </span>
+          <span className="mt-[2.5cqw] block text-[6.6cqw] leading-snug text-[#1a1a1a]/65">
+            {member.role}
+          </span>
         </span>
-        <span className="mt-1.5 block text-[12px] sm:text-[13px] leading-snug text-[#1a1a1a]/65">
-          {member.role}
+
+        {/* Portrait — full card width, bottom 72%, arch top.
+            The card's rounded bottom clips it into the pill shape. */}
+        <span className="absolute inset-x-0 bottom-0 block h-[72%] overflow-hidden rounded-t-full bg-[#1a1a1a]/10">
+          <img
+            src={member.image}
+            alt={`${member.name}, ${member.role}`}
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
+            draggable={false}
+          />
         </span>
-      </span>
 
-      {/* Portrait */}
-      <span className="block relative aspect-[4/5] overflow-hidden bg-[#1a1a1a]/5">
-        <img
-          src={member.image}
-          alt={`${member.name}, ${member.role}`}
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
-          draggable={false}
-        />
-      </span>
-
-      {/* Open affordance */}
-      <span
-        className={cn(
-          "absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full px-4 py-1.5",
-          "text-[10px] font-bold uppercase tracking-[0.18em]",
-          "bg-black/55 text-white backdrop-blur-sm",
-          "opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100",
-          open && "opacity-100"
-        )}
-      >
-        {open ? "Close" : "Profile"}
+        {/* Open affordance */}
+        <span
+          className={cn(
+            "absolute bottom-[6%] left-1/2 -translate-x-1/2 rounded-full px-4 py-1.5",
+            "text-[10px] font-bold uppercase tracking-[0.18em]",
+            "bg-black/55 text-white backdrop-blur-sm",
+            "opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100",
+            open && "opacity-100"
+          )}
+        >
+          {open ? "Close" : "Profile"}
+        </span>
       </span>
     </motion.button>
   );
@@ -174,8 +186,10 @@ export default function MeetTheCrew() {
   const active = openIndex === null ? null : BOARD_MEMBERS[openIndex];
 
   return (
-    <section className="relative w-full bg-[#14181B] py-20 md:py-28 px-6 md:px-12">
-      <div className="mx-auto max-w-7xl">
+    <section className="relative w-full bg-[#14181B] py-20 md:py-28 px-6">
+      {/* 1488px = the reference's 1536px canvas minus 24px side margins.
+          Capping here keeps the cards at reference size on very wide screens. */}
+      <div className="mx-auto max-w-[98rem] w-full">
         {/* ── Heading ─────────────────────────────────────────── */}
         <Reveal className="text-center">
           <span className="block text-[14px] md:text-[16px] font-semibold uppercase tracking-[0.42em] text-white/45">
@@ -195,7 +209,7 @@ export default function MeetTheCrew() {
           ref={gridRef}
           initial="hidden"
           animate={gridInView ? "show" : "hidden"}
-          className="mt-14 md:mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3 w-full lg:gap-20"
+          className="mt-12 md:mt-14 grid w-full grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6 lg:gap-2.5"
         >
           {BOARD_MEMBERS.map((member, i) => (
             <ArchCard
@@ -208,43 +222,6 @@ export default function MeetTheCrew() {
             />
           ))}
         </motion.div>
-
-        {/* ── Profile panel ───────────────────────────────────── */}
-        <AnimatePresence initial={false} mode="wait">
-          {active && (
-            <motion.div
-              key={active.name}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.45, ease: EASE.outExpo }}
-              className="overflow-hidden"
-            >
-              <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-10">
-                <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                  <h3 className="text-xl md:text-2xl font-bold text-white">{active.name}</h3>
-                  <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#cc9933]">
-                    {active.role}
-                  </span>
-                </div>
-                <div className="mt-5 space-y-4 max-w-4xl">
-                  {active.bio.split("\n\n").map((para, i) => (
-                    <p key={i} className="text-sm md:text-[15px] leading-relaxed text-white/70">
-                      {para}
-                    </p>
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setOpenIndex(null)}
-                  className="mt-7 text-[11px] font-bold uppercase tracking-[0.2em] text-white/50 transition-colors hover:text-white"
-                >
-                  Close profile
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* ── Footer rule ─────────────────────────────────────── */}
         <Reveal className="mt-16 md:mt-20 flex items-center justify-center gap-4">
