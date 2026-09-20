@@ -108,7 +108,7 @@ export default function HeroSection() {
         <video
           ref={videoRef}
           className="hero-bg-video absolute inset-0 w-full h-full object-cover object-center"
-          poster="/assets/images/backgg.jpeg"
+          poster="/assets/video/heroVid-poster.jpg"
           autoPlay
           muted
           loop
@@ -117,7 +117,7 @@ export default function HeroSection() {
           aria-hidden="true"
         >
           <source src="/assets/video/heroVid.webm" type="video/webm" />
-          <source src="/assets/video/heroVid.MP4" type="video/mp4" />
+          <source src="/assets/video/heroVid.mp4" type="video/mp4" />
         </video>
 
         {/* Copy sits bottom-left, so only that corner is grounded. The
