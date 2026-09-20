@@ -4,7 +4,7 @@
 .track {
   position: relative;
   width: 100%;
-  min-height: 260vh;
+  min-height: 200vh;
   background: #e7e6e4;
   scroll-margin-top: 104px;
 }

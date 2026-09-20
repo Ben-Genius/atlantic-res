@@ -125,18 +125,7 @@ export default function NewsPage() {
           </div>
         </section>
 
-        {/* ── NEWSLETTER ───────────────────────────────── */}
-        <section id="newsletter" style={{ padding: '8rem 0', background: 'var(--color-surface)', textAlign: 'center', scrollMarginTop: '100px' }}>
-          <div className="container-xl" style={{ maxWidth: 600 }}>
-            <Tag style={{ width: 32, height: 32, color: 'var(--color-brand-green)', margin: '0 auto 1.5rem' }} />
-            <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '2.5rem', color: '#0d0d0d', marginBottom: '1rem' }}>Stay Updated</h2>
-            <p style={{ color: 'rgba(26,26,26,0.6)', marginBottom: '2.5rem' }}>Subscribe to our newsletter for the latest insights in hospitality and logistics.</p>
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <input type="email" placeholder="Your email address" aria-label="Your email address" style={{ flex: 1, background: '#ffffff', border: '1px solid var(--color-border)', borderRadius: 8, padding: '1rem', color: '#0d0d0d', outline: 'none' }} />
-              <button className="btn-brand">Subscribe</button>
-            </div>
-          </div>
-        </section>
+
 
         <CtaSection />
       </main>

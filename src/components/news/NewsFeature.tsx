@@ -24,33 +24,36 @@ export default function NewsFeature() {
       const mm = gsap.matchMedia()
       const pad = (n: number) => String(Math.round(n)).padStart(2, '0')
 
-      // Desktop: the track is 260vh tall and the stage sticks to the top. The
-      // scrub starts as the track enters the viewport — not once it is already
-      // pinned — so the section is never sitting fully in view unresolved.
+      // Desktop: two scrubs against the same track.
+      //
+      //  · reveal — 'top bottom' → 'top top': the whole resolve happens while
+      //    the section is travelling into view, so it is already sharp by the
+      //    time it pins. Nothing waits for the section to be fully on screen.
+      //  · widget — runs through the pin, once the scene it annotates is there.
       mm.add('(min-width: 1101px) and (prefers-reduced-motion: no-preference)', () => {
         const counter = { days: 0, hours: 0 }
 
-        const tl = gsap.timeline({
+        const reveal = gsap.timeline({
           defaults: { ease: 'none' },
           scrollTrigger: {
             trigger: trackRef.current,
-            start: 'top 80%',
-            end: 'bottom bottom',
+            start: 'top bottom',
+            end: 'top top',
             scrub: 1,
           },
         })
 
         // 1 — eyebrow settles first
-        tl.fromTo(
+        reveal.fromTo(
           `.${styles.eyebrow}`,
           { opacity: 0, y: 14 },
-          { opacity: 1, y: 0, duration: 0.45 },
+          { opacity: 1, y: 0, duration: 0.4 },
           0
         )
 
         // 2 — headline lines resolve out of blur, staggered top to bottom
         HEADLINE_LINES.forEach((_, i) => {
-          tl.fromTo(
+          reveal.fromTo(
             `.${styles.headlineLine}:nth-child(${i + 1})`,
             { opacity: 0, y: 24, filter: 'blur(12px)' },
             { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.5 },
@@ -58,73 +61,76 @@ export default function NewsFeature() {
           )
         })
 
-        // 3 — photo sharpens and settles across the full scroll
-        tl.fromTo(
-          `.${styles.photo}`,
-          { opacity: 0.3 },
-          { opacity: 1, duration: 0.5 },
-          0
-        ).fromTo(
-          `.${styles.photoImg}`,
-          { filter: 'blur(14px) saturate(0.2) brightness(0.4)', scale: 1.05 },
-          { filter: 'blur(0px) saturate(1) brightness(1)', scale: 1, duration: 0.8 },
-          0
-        )
+        // 3 — photo sharpens as it rises into view
+        reveal
+          .fromTo(`.${styles.photo}`, { opacity: 0.35 }, { opacity: 1, duration: 0.45 }, 0)
+          .fromTo(
+            `.${styles.photoImg}`,
+            { filter: 'blur(14px) saturate(0.2) brightness(0.4)', scale: 1.05 },
+            { filter: 'blur(0px) saturate(1) brightness(1)', scale: 1, duration: 0.82 },
+            0
+          )
 
         // 4 — body copy
-        tl.fromTo(
+        reveal.fromTo(
           `.${styles.body}`,
           { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.25 },
-          0.34
+          { opacity: 1, y: 0, duration: 0.26 },
+          0.36
         )
 
         // 5 — telemetry counter ticks up to the real figure
-        tl.to(
+        reveal.to(
           counter,
           {
             days: LAST_UPDATE.days,
             hours: LAST_UPDATE.hours,
-            duration: 0.4,
+            duration: 0.45,
             onUpdate: () => {
               if (daysRef.current) daysRef.current.textContent = pad(counter.days)
               if (hoursRef.current) hoursRef.current.textContent = pad(counter.hours)
             },
           },
-          0.1
+          0.12
         )
 
-        // 6 — the widget emerges last, segments expanding into place
-        tl.fromTo(
-          `.${styles.widget}`,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.22 },
-          0.42
-        )
+        // 6 — the widget assembles through the pin, over the resolved photo
+        const widget = gsap.timeline({
+          defaults: { ease: 'none' },
+          scrollTrigger: {
+            trigger: trackRef.current,
+            start: 'top top',
+            end: '+=55%',
+            scrub: 1,
+          },
+        })
+
+        widget
+          .fromTo(`.${styles.widget}`, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3 }, 0)
           .fromTo(
             `.${styles.widgetSeg}`,
             { scaleX: 0, filter: 'blur(2px)' },
-            { scaleX: 1, filter: 'blur(0px)', duration: 0.2, stagger: 0.05 },
-            0.48
+            { scaleX: 1, filter: 'blur(0px)', duration: 0.3, stagger: 0.1 },
+            0.18
           )
-          .fromTo(`.${styles.widgetHatch}`, { opacity: 0 }, { opacity: 1, duration: 0.18 }, 0.54)
+          .fromTo(`.${styles.widgetHatch}`, { opacity: 0 }, { opacity: 1, duration: 0.25 }, 0.4)
           .fromTo(
             `.${styles.widgetMarker}`,
             { opacity: 0, scaleY: 0 },
-            { opacity: 1, scaleY: 1, duration: 0.18 },
-            0.58
+            { opacity: 1, scaleY: 1, duration: 0.25 },
+            0.52
           )
           .fromTo(
             `.${styles.widgetPill}`,
             { opacity: 0, scale: 0.7 },
-            { opacity: 1, scale: 1, duration: 0.18 },
-            0.58
+            { opacity: 1, scale: 1, duration: 0.25 },
+            0.52
           )
           .fromTo(
             `.${styles.widgetTime}`,
             { opacity: 0, y: 6, scale: 1.08, filter: 'blur(6px)' },
-            { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.22, ease: 'power2.out' },
-            0.6
+            { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.3, ease: 'power2.out' },
+            0.58
           )
       })
 
@@ -133,7 +139,7 @@ export default function NewsFeature() {
         const counter = { days: 0, hours: 0 }
 
         const tl = gsap.timeline({
-          scrollTrigger: { trigger: trackRef.current, start: 'top 70%', once: true },
+          scrollTrigger: { trigger: trackRef.current, start: 'top 92%', once: true },
         })
 
         tl.from(`.${styles.eyebrow}`, { opacity: 0, y: 14, duration: 0.5, ease: 'power2.out' })
