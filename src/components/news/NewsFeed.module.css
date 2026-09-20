@@ -1,0 +1,360 @@
+/* Split card: photograph on the left with a floating metric card over it,
+   white panel on the right. On desktop the stage pins and each post takes a
+   viewport of scroll, cross-fading in place; below 900px the posts simply
+   stack and scroll normally. */
+.track {
+  position: relative;
+  width: 100%;
+  background: #f4f4f1;
+  scroll-margin-top: 104px;
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 680px;
+  padding: clamp(12px, 1.4vw, 22px);
+}
+
+.card {
+  position: relative;
+  height: 100%;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 48% 1fr;
+  gap: clamp(10px, 1.1vw, 20px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 700ms cubic-bezier(.22, 1, .36, 1), visibility 0s linear 700ms;
+}
+
+.slide[data-active='true'] {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 700ms cubic-bezier(.22, 1, .36, 1), visibility 0s;
+}
+
+/* ─── photograph ───────────────────────────── */
+.photo {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #1a2330;
+}
+
+.photoImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.04);
+  transition: transform 1400ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.slide[data-active='true'] .photoImg { transform: scale(1); }
+
+/* ─── metric card over the photograph ──────── */
+.metric {
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  width: min(330px, 46%);
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(24, 22, 20, 0.52);
+  backdrop-filter: blur(18px) saturate(1.1);
+  -webkit-backdrop-filter: blur(18px) saturate(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #fff;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 700ms cubic-bezier(.22, 1, .36, 1) 180ms,
+    transform 700ms cubic-bezier(.22, 1, .36, 1) 180ms;
+}
+
+.slide[data-active='true'] .metric { opacity: 1; transform: translateY(0); }
+
+.metricHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.metricLabel {
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .62);
+}
+
+.metricPill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .22);
+  background: rgba(255, 255, 255, .12);
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  white-space: nowrap;
+}
+
+.ring {
+  position: relative;
+  width: clamp(104px, 9vw, 132px);
+  margin: 0 auto 18px;
+  aspect-ratio: 1;
+}
+
+.ringSvg { width: 100%; height: 100%; display: block; }
+
+.ringTrack { stroke: rgba(255, 255, 255, .16); }
+
+.ringFill {
+  stroke: var(--color-brand-green, #66cc33);
+  transition: stroke-dashoffset 1100ms cubic-bezier(.22, 1, .36, 1) 260ms;
+}
+
+.ringValue {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.ringNum {
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: clamp(26px, 2.4vw, 34px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+
+.ringCaption {
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  color: rgba(255, 255, 255, .55);
+}
+
+.metricStats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, .14);
+}
+
+.statLabel {
+  display: block;
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  color: rgba(255, 255, 255, .5);
+  margin-bottom: 4px;
+}
+
+.statValue {
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+
+/* ─── white panel ──────────────────────────── */
+.panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: clamp(28px, 4vw, 76px);
+  border-radius: 24px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  max-width: 540px;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 700ms cubic-bezier(.22, 1, .36, 1) 120ms,
+    transform 700ms cubic-bezier(.22, 1, .36, 1) 120ms;
+}
+
+.slide[data-active='true'] .content { opacity: 1; transform: translateY(0); }
+
+.badge {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 2px solid var(--color-brand-green, #66cc33);
+  background: rgba(102, 204, 51, .1);
+  color: var(--color-brand-green-dark, #3C8B36);
+  margin-bottom: clamp(24px, 3vh, 40px);
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.category { color: var(--color-brand-green-dark, #3C8B36); }
+.metaDot { width: 3px; height: 3px; border-radius: 50%; background: rgba(26, 26, 26, .25); }
+.date { color: rgba(26, 26, 26, .42); }
+
+.title {
+  margin: 0 0 20px;
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: clamp(24px, 2.3vw, 38px);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -.03em;
+  color: #0d0d0d;
+}
+
+.desc {
+  margin: 0 0 32px;
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: clamp(14px, 1.05vw, 17px);
+  line-height: 1.55;
+  color: rgba(26, 26, 26, .55);
+}
+
+.read {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #0d0d0d;
+  text-decoration: none;
+}
+
+.read svg { color: var(--color-brand-green, #66cc33); transition: transform 420ms cubic-bezier(.32,.72,0,1); }
+.read:hover svg { transform: translateX(4px); }
+
+/* ─── panel furniture ──────────────────────── */
+.counter {
+  position: absolute;
+  z-index: 2;
+  left: clamp(28px, 4vw, 76px);
+  bottom: clamp(28px, 4vh, 56px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: rgba(26, 26, 26, .4);
+}
+
+.counterBar {
+  width: 96px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(26, 26, 26, .1);
+  overflow: hidden;
+}
+
+.counterFill {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--color-brand-green, #66cc33);
+  transition: width 700ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.brand {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(62%, 520px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.brandLine { display: block; width: 100%; height: auto; }
+
+.brandWord {
+  position: absolute;
+  right: clamp(20px, 2.4vw, 40px);
+  bottom: clamp(10px, 1.4vh, 22px);
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  font-size: clamp(24px, 2.4vw, 38px);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  color: #ececea;
+}
+
+/* ─── stacked layout ───────────────────────── */
+@media (max-width: 900px) {
+  .track { min-height: 0 !important; padding: clamp(40px, 8vw, 72px) 0; }
+
+  .stage {
+    position: static;
+    height: auto;
+    min-height: 0;
+    padding: 0 clamp(16px, 4vw, 28px);
+  }
+
+  .card { display: flex; flex-direction: column; gap: clamp(28px, 6vw, 48px); }
+
+  .slide {
+    position: static;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    opacity: 1;
+    visibility: visible;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .photo { border-radius: 20px 20px 0 0; height: clamp(330px, 68vw, 440px); }
+  .photoImg { transform: scale(1); }
+
+  /* Compact card so it never outgrows the photograph. */
+  .metric { opacity: 1; transform: none; width: min(272px, 76%); right: 5%; bottom: 5%; padding: 13px; }
+  .metricHead { margin-bottom: 10px; }
+  .ring { width: 84px; margin-bottom: 10px; }
+  .ringNum { font-size: 22px; }
+  .metricStats { padding-top: 10px; }
+  .statValue { font-size: 12px; }
+  .panel { border-radius: 0 0 20px 20px; padding: clamp(24px, 6vw, 40px); }
+  .content { opacity: 1; transform: none; max-width: none; }
+  .badge { width: 44px; height: 44px; margin-bottom: 20px; }
+  .counter, .brand { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide, .photoImg, .metric, .content, .ringFill, .counterFill { transition-duration: 1ms; }
+}
