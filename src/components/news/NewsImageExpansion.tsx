@@ -26,6 +26,10 @@ const LINES = ['Built for scale,', 'audited on every', 'site we run']
 
 /** Framing at rest, in per cent of the panel — matches the reference. */
 const REST = { top: 24.9, right: 15, bottom: 5.8, left: 15 }
+/** Narrow or short screens need a wider window, with the copy below it. */
+const REST_STACKED = { top: 18, right: 6, bottom: 30, left: 6 }
+/** Must track the stacked-layout media query in the stylesheet below. */
+const STACKED = '(max-width: 860px), (max-height: 640px)'
 /** Card corner at rest, and the panel corner it resolves into at full bleed. */
 const RADIUS_REST = 20
 const RADIUS_OPEN = 24
@@ -36,6 +40,8 @@ const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2,
 const seg = (p: number, from: number, to: number) => clamp((p - from) / (to - from))
 
 const restClip = `inset(${REST.top}% ${REST.right}% ${REST.bottom}% ${REST.left}% round ${RADIUS_REST}px)`
+const restFraming = () =>
+  typeof window !== 'undefined' && window.matchMedia(STACKED).matches ? REST_STACKED : REST
 
 export default function NewsImageExpansion() {
   const wrapRef = useRef<HTMLElement>(null)
@@ -57,10 +63,11 @@ export default function NewsImageExpansion() {
       /* The window opens. */
       const open = easeInOut(seg(p, 0, 0.55))
       if (cardRef.current) {
-        const t = REST.top * (1 - open)
-        const rgt = REST.right * (1 - open)
-        const btm = REST.bottom * (1 - open)
-        const lft = REST.left * (1 - open)
+        const rest = restFraming()
+        const t = rest.top * (1 - open)
+        const rgt = rest.right * (1 - open)
+        const btm = rest.bottom * (1 - open)
+        const lft = rest.left * (1 - open)
         const rad = RADIUS_REST + (RADIUS_OPEN - RADIUS_REST) * open
         cardRef.current.style.clipPath = `inset(${t}% ${rgt}% ${btm}% ${lft}% round ${rad}px)`
       }
@@ -135,6 +142,7 @@ export default function NewsImageExpansion() {
       <style jsx>{`
         .nie-wrap {
           position: relative;
+          height: 260vh;
           height: 260svh;
           background: #f4f4f1;
         }
@@ -142,6 +150,7 @@ export default function NewsImageExpansion() {
         .nie {
           position: sticky;
           top: 0;
+          height: 100vh;
           height: 100svh;
           padding: clamp(12px, 1.4vw, 22px);
         }
@@ -285,6 +294,7 @@ export default function NewsImageExpansion() {
           border-radius: 50%;
           background: rgba(255, 255, 255, .12);
           backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
         }
 
         @keyframes niePulse {
@@ -293,11 +303,33 @@ export default function NewsImageExpansion() {
           100% { transform: scale(1.65); opacity: 0 }
         }
 
-        @media (max-width: 860px) {
-          .nie-wrap { height: 220svh; }
-          .nie-panel { --pad-x: 24px; --pad-top: 28px; border-radius: 18px; }
-          .nie-headline { max-width: none; right: var(--pad-x); bottom: 34%; font-size: clamp(30px, 8vw, 46px); }
-          .nie-copy { left: var(--pad-x); right: var(--pad-x); width: auto; top: auto; bottom: 8%; gap: 20px; }
+        @media (max-width: 860px), (max-height: 640px) {
+          .nie-wrap { height: 220vh; height: 220svh; }
+          .nie-panel {
+            --pad-x: 24px;
+            --pad-top: clamp(84px, 13vh, 112px);
+            border-radius: 18px;
+            /* Stacked, the headline and copy flow from the bottom instead of
+               being pinned to per-cent offsets, so they cannot collide on a
+               short screen however the type wraps. */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding-bottom: clamp(18px, 4vh, 40px);
+          }
+          .nie-headline {
+            position: static;
+            max-width: none;
+            padding: 0 var(--pad-x);
+            margin-bottom: clamp(14px, 2.6vh, 26px);
+            font-size: clamp(24px, min(7.4vw, 9vh), 44px);
+          }
+          .nie-copy {
+            position: static;
+            width: auto;
+            padding: 0 var(--pad-x);
+            gap: clamp(14px, 2.4vh, 20px);
+          }
           .nie-vrule { display: none; }
           .nie-cue { display: none; }
         }

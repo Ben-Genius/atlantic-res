@@ -27,7 +27,7 @@ export const newsPosts: NewsPost[] = [
     title: 'Atlantic Catering & Logistics Wins at Ghana Business Awards',
     date: 'Oct 24, 2023',
     desc: 'Recognition of our commitment to excellence and operational safety in the hospitality sector.',
-    img: '/images/hero-news.png',
+    img: '/images/hero-burgers`.png',
     category: 'Awards',
     icon: 'award',
     metric: {
@@ -48,7 +48,7 @@ export const newsPosts: NewsPost[] = [
     title: 'Achieving ISO 22000:2018 Recertification',
     date: 'Sep 12, 2023',
     desc: 'Maintaining the highest international standards for food safety management across all our sites.',
-    img: '/images/hero-expertise.png',
+    img: '/images/mining-dump-truck.webp',
     category: 'Quality',
     icon: 'shield',
     metric: {
@@ -69,7 +69,7 @@ export const newsPosts: NewsPost[] = [
     title: 'Empowering Local Farmers: A Sustainability Story',
     date: 'Aug 05, 2023',
     desc: 'How our “Ghana First” policy is transforming rural communities through direct sourcing.',
-    img: '/images/hero-impact.png',
+    img: '/images/offshore-oil-distance.webp',
     category: 'Impact',
     icon: 'sprout',
     metric: {

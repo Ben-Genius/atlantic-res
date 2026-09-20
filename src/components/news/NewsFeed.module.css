@@ -13,7 +13,10 @@
   position: sticky;
   top: 0;
   height: 100vh;
-  min-height: 680px;
+  height: 100svh;
+  /* Matches the short-viewport threshold below, so a pinned stage is never
+     taller than the screen. */
+  min-height: 640px;
   padding: clamp(12px, 1.4vw, 22px);
 }
 
@@ -112,6 +115,7 @@
 .ring {
   position: relative;
   width: clamp(104px, 9vw, 132px);
+  height: clamp(104px, 9vw, 132px);
   margin: 0 auto 18px;
   aspect-ratio: 1;
 }
@@ -316,7 +320,7 @@
 }
 
 /* ─── stacked layout ───────────────────────── */
-@media (max-width: 900px) {
+@media (max-width: 900px), (max-height: 640px) {
   .track { min-height: 0 !important; padding: clamp(40px, 8vw, 72px) 0; }
 
   .stage {
@@ -326,7 +330,7 @@
     padding: 0 clamp(16px, 4vw, 28px);
   }
 
-  .card { display: flex; flex-direction: column; gap: clamp(28px, 6vw, 48px); }
+  .card { display: flex; flex-direction: column; gap: clamp(24px, min(6vw, 5vh), 48px); }
 
   .slide {
     position: static;
@@ -339,13 +343,13 @@
     background: #fff;
   }
 
-  .photo { border-radius: 20px 20px 0 0; height: clamp(330px, 68vw, 440px); }
+  .photo { border-radius: 20px 20px 0 0; height: clamp(250px, min(68vw, 64vh), 440px); }
   .photoImg { transform: scale(1); }
 
   /* Compact card so it never outgrows the photograph. */
   .metric { opacity: 1; transform: none; width: min(272px, 76%); right: 5%; bottom: 5%; padding: 13px; }
   .metricHead { margin-bottom: 10px; }
-  .ring { width: 84px; margin-bottom: 10px; }
+  .ring { width: 84px; height: 84px; margin-bottom: 10px; }
   .ringNum { font-size: 22px; }
   .metricStats { padding-top: 10px; }
   .statValue { font-size: 12px; }
@@ -357,4 +361,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .slide, .photoImg, .metric, .content, .ringFill, .counterFill { transition-duration: 1ms; }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .metric { background: rgba(24, 22, 20, 0.88); }
 }

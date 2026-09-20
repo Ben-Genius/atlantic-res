@@ -30,7 +30,7 @@ export default function NewsFeature() {
       //    the section is travelling into view, so it is already sharp by the
       //    time it pins. Nothing waits for the section to be fully on screen.
       //  · widget — runs through the pin, once the scene it annotates is there.
-      mm.add('(min-width: 1101px) and (prefers-reduced-motion: no-preference)', () => {
+      mm.add('(min-width: 1101px) and (min-height: 641px) and (prefers-reduced-motion: no-preference)', () => {
         const counter = { days: 0, hours: 0 }
 
         const reveal = gsap.timeline({
@@ -134,8 +134,11 @@ export default function NewsFeature() {
           )
       })
 
-      // Stacked layout: same beats, fired once on entry rather than scrubbed.
-      mm.add('(max-width: 1100px) and (prefers-reduced-motion: no-preference)', () => {
+      // Stacked layout — narrow screens, and any viewport too short to pin a
+      // full-height stage: same beats, fired once on entry rather than scrubbed.
+      mm.add(
+        '(max-width: 1100px) and (prefers-reduced-motion: no-preference), (max-height: 640px) and (prefers-reduced-motion: no-preference)',
+        () => {
         const counter = { days: 0, hours: 0 }
 
         const tl = gsap.timeline({

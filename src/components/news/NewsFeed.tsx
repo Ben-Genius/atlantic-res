@@ -26,7 +26,7 @@ export default function NewsFeed({ posts }: { posts: NewsPost[] }) {
 
       // Each post owns a viewport of scroll while the stage is pinned; the
       // trailing viewport of the track holds the last post in place.
-      mm.add('(min-width: 901px)', () => {
+      mm.add('(min-width: 901px) and (min-height: 641px)', () => {
         const trigger = ScrollTrigger.create({
           trigger: trackRef.current,
           start: 'top top',
@@ -39,8 +39,9 @@ export default function NewsFeed({ posts }: { posts: NewsPost[] }) {
         return () => trigger.kill()
       })
 
-      // Stacked layout shows every post at once, so nothing steps.
-      mm.add('(max-width: 900px)', () => {
+      // Stacked layout — narrow or short viewports — shows every post at once,
+      // so nothing steps.
+      mm.add('(max-width: 900px), (max-height: 640px)', () => {
         setActive(0)
       })
 

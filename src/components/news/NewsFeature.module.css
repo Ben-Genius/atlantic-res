@@ -18,8 +18,11 @@
   position: sticky;
   top: 0;
   width: 100%;
-  min-height: 720px;
+  /* 640px is the same threshold the short-viewport rule unpins at, so the
+     sticky stage can never be taller than the screen holding it. */
+  min-height: 640px;
   height: 100vh;
+  height: 100svh;
   padding: clamp(72px, 9vh, 120px) 0 clamp(40px, 5vh, 76px) clamp(20px, 6.4vw, 128px);
   background: #e7e6e4;
   color: #0d0d0d;
@@ -320,7 +323,7 @@
 }
 
 /* ─── responsive ───────────────────────────── */
-@media (max-width: 1100px) {
+@media (max-width: 1100px), (max-height: 640px) {
   .track {
     min-height: 0;
   }
@@ -329,10 +332,11 @@
     position: static;
     height: auto;
     min-height: 0;
+    min-height: 0;
     display: flex;
     flex-direction: column;
-    gap: clamp(36px, 7vw, 64px);
-    padding: clamp(40px, 9vw, 72px) clamp(20px, 5vw, 48px);
+    gap: clamp(24px, min(7vw, 5vh), 64px);
+    padding: clamp(32px, min(9vw, 7vh), 72px) clamp(20px, 5vw, 48px);
   }
 
   .hairlineTop {
@@ -351,8 +355,8 @@
   }
 
   .headline {
-    font-size: clamp(38px, 8.4vw, 76px);
-    margin-bottom: clamp(28px, 5vw, 48px);
+    font-size: clamp(30px, min(8.4vw, 9vh), 68px);
+    margin-bottom: clamp(20px, min(5vw, 4vh), 48px);
   }
 
   .body {
@@ -409,4 +413,9 @@
 
 .silverNum {
   font-weight: 500;
+}
+/* Browsers without backdrop-filter get a solid panel instead of a see-through
+   one, so the widget's white type keeps its contrast. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .widget { background: rgba(24, 24, 22, 0.86); }
 }
