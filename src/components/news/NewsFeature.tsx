@@ -246,12 +246,12 @@ export default function NewsFeature() {
           </h2>
           <div className={styles.body}>
             <p>
-              Awards, recertifications and the people behind them — published as they happen, not
-              polished into a yearly brochure.
+              Anniversaries, certifications, awards and the suppliers behind them — published as
+              they happen, not polished into a yearly brochure.
             </p>
             <p>
-              Follow the work across our offshore galleys, corporate kitchens and the Ghanaian farms
-              that supply them.
+              Twelve years on from five employees, follow the work across our offshore galleys,
+              corporate kitchens and the Ghanaian farms that supply them.
             </p>
           </div>
         </div>
@@ -321,7 +321,7 @@ export default function NewsFeature() {
                 <div className={styles.widgetLeft}>
                   <div className={styles.widgetHead}>
                     <span className={styles.widgetLabel}>Stories this year</span>
-                    <span className={styles.widgetValue}>24</span>
+                    <span className={styles.widgetValue}>04</span>
                   </div>
                   <div className={styles.widgetBar}>
                     <div className={styles.widgetSeg} data-color="green" style={{ width: '22%' }} />

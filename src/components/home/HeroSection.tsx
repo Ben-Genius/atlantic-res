@@ -108,7 +108,7 @@ export default function HeroSection() {
         <video
           ref={videoRef}
           className="hero-bg-video absolute inset-0 w-full h-full object-cover object-center"
-          poster="/assets/video/heroVid-poster.jpg"
+          poster="/assets/images/backgg.jpeg"
           autoPlay
           muted
           loop
@@ -117,20 +117,21 @@ export default function HeroSection() {
           aria-hidden="true"
         >
           <source src="/assets/video/heroVid.webm" type="video/webm" />
-          <source src="/assets/video/heroVid.mp4" type="video/mp4" />
+          <source src="/assets/video/heroVid.MP4" type="video/mp4" />
         </video>
 
         {/* Copy sits bottom-left, so only that corner is grounded. The
             centre of the frame stays clear and the footage reads true. */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1014]/45 via-[#0B1014]/0 to-transparent" />
       </div>
 
       {/* Main Content Area */}
-      <div className="relative z-20 flex-1 flex items-end justify-start px-6 sm:px-10 lg:px-16 pb-16 sm:pb-20 lg:pb-24">
+      <div className="relative z-20 flex-1 flex items-end justify-start px-5 sm:px-8 lg:px-14 pb-8 sm:pb-10 lg:pb-12">
         <div
           ref={contentRef}
-          className="relative z-10 w-full max-w-[820px] text-left flex flex-col items-start"
+          className="relative z-10 w-full max-w-[580px] text-left flex flex-col items-start rounded-xl sm:rounded-xl p-6 sm:p-8 bg-[#0B1014]/20 backdrop-blur-xs  "
         >
-          <span className="hero-eyebrow text-[11px] sm:text-[13px] font-bold uppercase tracking-[0.3em] text-[#D4A556] mb-4 sm:mb-5 select-none">
+          <span className="hero-eyebrow text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.28em] text-[#D4A556] mb-2.5 sm:mb-3 select-none">
             Global Cuisine, Unforgettable Experiences
           </span>
 
@@ -138,10 +139,10 @@ export default function HeroSection() {
             className="hero-title font-black uppercase leading-[0.95] tracking-tight text-white select-none"
             style={{ fontFamily: "'Antonio', sans-serif" }}
           >
-            <span className="block text-[2.4rem] sm:text-[3.4rem] lg:text-[4.4rem]">
+            <span className="block text-[1.9rem] sm:text-[2.5rem] lg:text-[3.1rem]">
               GREAT FOOD MADE FOR
             </span>
-            <span className="block text-[2.4rem] sm:text-[3.4rem] lg:text-[4.4rem] min-h-[1.1em] mt-1 text-[#D4A556]">
+            <span className="block text-[1.9rem] sm:text-[2.5rem] lg:text-[3.1rem] min-h-[1.1em] mt-1 text-[#D4A556]">
               <span ref={textRef} className="inline-block">
                 EVERY MOMENT
               </span>
@@ -150,16 +151,13 @@ export default function HeroSection() {
 
           <a
             href="/expertise"
-            className="hero-cta mt-8 inline-flex items-center gap-3 border border-white/45 px-7 py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white transition-colors duration-300 hover:border-white hover:bg-white hover:text-[#0B1014]"
+            className="hero-cta mt-5 sm:mt-6 inline-flex items-center gap-3 rounded-lg border border-white/40 bg-white/5 backdrop-blur-sm px-5 sm:px-6 py-2.5 sm:py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:border-[#D4A556] hover:bg-[#D4A556] hover:text-[#0B1014] "
           >
             Explore our services
             <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </a>
-
-
-
         </div>
       </div>
 

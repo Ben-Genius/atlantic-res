@@ -24,52 +24,58 @@ type Slide = {
   /** 0–1, how much of the tick meter reads as filled. */
   fill: number
   readout: string
+  /** Suffix on the readout — per cent, millions, or a plain '+'. */
+  unit: string
 }
 
 const slides: Slide[] = [
   {
-    eyebrow: 'Ghana First',
-    title: 'Sourced within \na day of the kitchen',
-    img: '/images/news/jollof-plate.png',
-    alt: 'Jollof rice with grilled chicken and plantain',
-    metricLabel: 'Local sourcing',
-    metricValue: '82% bought in Ghana',
-    metricNote: 'Up 14 points on last season',
-    fill: 0.82,
-    readout: '82',
+    eyebrow: 'Offshore & remote site',
+    title: 'Two million meals,\nevery single year',
+    img: '/images/news/offshore-platform.webp',
+    alt: 'Offshore drilling platform at sea',
+    metricLabel: 'Meals served a year',
+    metricValue: '2,190,000+ meals',
+    metricNote: 'Oil and gas, mining and corporate sites',
+    fill: 0.92,
+    readout: '2.19',
+    unit: 'M',
   },
   {
-    eyebrow: 'Offshore',
-    title: 'Three hot services\na day, 60 km out',
-    img: '/images/news/prawns-plate.png',
-    alt: 'Grilled prawns plated with herbs and lemon',
-    metricLabel: 'Service uptime',
-    metricValue: '99.4% on schedule',
-    metricNote: 'Across FPSO and rig contracts',
-    fill: 0.994,
-    readout: '99',
+    eyebrow: 'Our kitchens',
+    title: 'Eight kitchens,\nsix regions, one standard',
+    img: '/images/news/industrial-kitchen.webp',
+    alt: 'Stainless steel range in an industrial kitchen',
+    metricLabel: 'Industrial kitchens',
+    metricValue: '8 state-of-the-art kitchens',
+    metricNote: '15 locations across 6 regions of Ghana',
+    fill: 0.55,
+    readout: '08',
+    unit: '',
   },
   {
-    eyebrow: 'Corporate',
-    title: 'Boardroom plates\nthat hold a room',
-    img: '/images/news/steak-plate.png',
-    alt: 'Sliced steak plated with jus and micro herbs',
-    metricLabel: 'Client retention',
-    metricValue: '9 of 10 renew',
-    metricNote: 'GC100 and multinational accounts',
-    fill: 0.9,
-    readout: '90',
+    eyebrow: 'Local content',
+    title: 'Ninety-eight per cent\nof the team is local',
+    img: '/images/news/local-team.webp',
+    alt: 'Kitchen team plating dishes together on the pass',
+    metricLabel: 'Local employment',
+    metricValue: '98% hired locally',
+    metricNote: '600 people on the Atlantic team',
+    fill: 0.98,
+    readout: '98',
+    unit: '%',
   },
   {
     eyebrow: 'Events',
-    title: 'Four hundred guests,\none service window',
-    img: '/images/news/canape-tray.png',
-    alt: 'Tray of assorted canapés',
-    metricLabel: 'Peak covers',
-    metricValue: '400 in 45 minutes',
-    metricNote: 'State and private functions',
-    fill: 0.68,
-    readout: '68',
+    title: 'Two hundred events\na year, start to finish',
+    img: '/images/news/events-banquet.webp',
+    alt: 'Banquet table dressed for a formal event',
+    metricLabel: 'Events & conferences',
+    metricValue: '200+ every year',
+    metricNote: 'State, corporate and private functions',
+    fill: 0.7,
+    readout: '200',
+    unit: '+',
   },
 ]
 
@@ -146,7 +152,7 @@ export default function NewsShowcase() {
         <div className="nsw-stage">
           {slides.map((s, i) => (
             <div className={`nsw-slide${i === index ? ' is-active' : ''}`} key={s.img} aria-hidden={i !== index}>
-              <Image src={s.img} alt={s.alt} fill sizes="(max-width: 860px) 90vw, 56vw" className="nsw-img" />
+              <Image src={s.img} alt={s.alt} fill sizes="(max-width: 860px) 86vw, 94vw" className="nsw-img" />
             </div>
           ))}
         </div>
@@ -183,7 +189,7 @@ export default function NewsShowcase() {
                   <span key={t} className={t / TICKS < active.fill ? 'on' : undefined} />
                 ))}
               </div>
-              <div className="nsw-readout">{active.readout}<sup>%</sup></div>
+              <div className="nsw-readout">{active.readout}{active.unit && <sup>{active.unit}</sup>}</div>
             </div>
           </aside>
         </div>
@@ -223,20 +229,24 @@ export default function NewsShowcase() {
           transition: transform 600ms cubic-bezier(.22,1,.36,1);
         }
 
-        .nsw-stage { position: relative; flex: 1 1 auto; min-height: 0; }
+        .nsw-stage { position: relative; flex: 1 1 auto; min-height: 0; padding: 10px 0 18px; }
+        /* Photography, not cutouts: the frame fills the stage and the image is
+           cover-cropped into it rather than floated in the middle. */
         .nsw-slide {
           position: absolute;
           left: 50%; top: 50%;
-          height: min(54vh, 560px);
-          aspect-ratio: 1;
+          width: min(94%, 1340px);
+          height: calc(100% - 28px);
           transform: translate(-50%, -54%) scale(.94);
           opacity: 0;
+          overflow: hidden;
+          border-radius: 18px;
+          box-shadow: 0 34px 70px rgba(13,13,13,.22);
           transition: opacity 700ms cubic-bezier(.22,1,.36,1), transform 900ms cubic-bezier(.22,1,.36,1);
           will-change: opacity, transform;
-          filter: drop-shadow(0 40px 60px rgba(13,13,13,.18));
         }
         .nsw-slide.is-active { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        .nsw-slide :global(.nsw-img) { object-fit: contain; }
+        .nsw-slide :global(.nsw-img) { object-fit: cover; }
 
         .nsw-foot {
           position: relative;
@@ -321,8 +331,8 @@ export default function NewsShowcase() {
           .nsw-wrap { height: auto; z-index: 2; }
           .nsw { position: relative; height: auto; border-radius: 32px 32px 0 0; padding-bottom: 40px; }
           .nsw-progress { gap: 12px; padding: 88px 7vw 0; }
-          .nsw-stage { height: 48vh; }
-          .nsw-slide { height: min(44vh, 360px); }
+          .nsw-stage { height: 52vh; padding: 8px 0 12px; }
+          .nsw-slide { width: 86%; height: calc(100% - 20px); border-radius: 14px; }
           .nsw-foot {
             flex-direction: column; align-items: stretch; gap: 0;
             padding: 0 0 var(--foot-gap) 7vw;

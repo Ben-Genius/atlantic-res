@@ -22,7 +22,7 @@ import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const LINES = ['Built for scale,', 'audited on every', 'site we run']
+const LINES = ['Certified to', 'deliver, on every', 'site we run']
 
 /** Framing at rest, in per cent of the panel — matches the reference. */
 const REST = { top: 24.9, right: 15, bottom: 5.8, left: 15 }
@@ -118,7 +118,7 @@ export default function NewsImageExpansion() {
           </h2>
 
           <div className="nie-copy">
-            <p>ISO 22000 kitchens, cold chain and crews — checked end to end, on every site we run.</p>
+            <p>ISO 22000, ISO 45001 and ISO 14001 — independently certified by G-CERTI across our catering, housekeeping and logistics operations.</p>
             <Link href="/expertise" className="nie-cta">
               <span>Our expertise</span>
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">

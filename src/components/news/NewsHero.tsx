@@ -74,7 +74,7 @@ export default function NewsHero() {
         <h1 aria-label="Newsroom stories from the Atlantic floor">
           <span className="ln"><span>Newsroom stories from the Atlantic floor</span></span>
         </h1>
-        <p className="nhero-sub">Awards, certifications and sustainability milestones — as they happen.</p>
+        <p className="nhero-sub">Milestones, certifications, awards and responsible sourcing — as they happen.</p>
         <a className="nhero-cta" href="#latest">
           <span>Read the latest</span>
           <svg width="17" height="17" viewBox="0 0 18 18" fill="none">
@@ -90,9 +90,9 @@ export default function NewsHero() {
           <div className="bar"><i className="green" style={{ width: '100%' }} /></div>
         </article>
         <article className="nhero-card two">
-          <div className="ch"><span>Local sourcing</span><span className="pill gold">+14%</span></div>
-          <div className="cv">82% Ghana First</div>
-          <div className="bar"><i className="gold" style={{ width: '82%' }} /></div>
+          <div className="ch"><span>Our people</span><span className="pill gold">600 staff</span></div>
+          <div className="cv">98% hired locally</div>
+          <div className="bar"><i className="gold" style={{ width: '98%' }} /></div>
         </article>
       </div>
 

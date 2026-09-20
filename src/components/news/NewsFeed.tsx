@@ -5,13 +5,13 @@ import Link from 'next/link'
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Award, ShieldCheck, Sprout, ArrowRight } from 'lucide-react'
+import { Award, ShieldCheck, Sprout, Quote, ArrowRight } from 'lucide-react'
 import type { NewsPost } from '@/data/news'
 import styles from './NewsFeed.module.css'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
-const ICONS = { award: Award, shield: ShieldCheck, sprout: Sprout }
+const ICONS = { award: Award, shield: ShieldCheck, sprout: Sprout, quote: Quote }
 
 /** Circumference of the r=52 ring, for the stroke-dash fill. */
 const RING_LENGTH = 2 * Math.PI * 52
@@ -138,7 +138,7 @@ export default function NewsFeed({ posts }: { posts: NewsPost[] }) {
                     <h3 className={styles.title}>{post.title}</h3>
                     <p className={styles.desc}>{post.desc}</p>
 
-                    <Link href={`/news-updates#${post.id}`} className={styles.read} tabIndex={isActive ? 0 : -1}>
+                    <Link href={`/news-updates/${post.id}`} className={styles.read} tabIndex={isActive ? 0 : -1}>
                       Read article
                       <ArrowRight size={16} aria-hidden="true" />
                     </Link>

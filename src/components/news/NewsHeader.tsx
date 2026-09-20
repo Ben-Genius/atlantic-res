@@ -11,14 +11,17 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import LogoA from '@/components/LogoA'
 
 const NAV_H = 56
+/* `hash` is what the scrollspy observes on the index; `href` is resolved
+   against the current route, so these still work from an article page. */
 const links = [
-  { label: 'Latest', href: '#latest' },
-  { label: 'Awards', href: '#awards' },
-  { label: 'Quality', href: '#quality' },
-  { label: 'Impact', href: '#impact' },
+  { label: 'Latest', hash: '#latest' },
+  { label: 'Compliance', hash: '#certifications' },
+  { label: 'Awards', hash: '#awards' },
+  { label: 'Sourcing', hash: '#sourcing' },
 ]
 
 const clamp = (v: number, a = 0, b = 1) => Math.max(a, Math.min(b, v))
@@ -41,6 +44,12 @@ export default function NewsHeader() {
 
   const [mobileOpen, setMobileOpen] = useState(false)
   const [active, setActive] = useState<string>('#latest')
+
+  /* On a story page the sections live back on the index, so the anchors are
+     absolute; on the index itself they stay plain hashes. */
+  const pathname = usePathname()
+  const onIndex = pathname === '/news-updates'
+  const hrefFor = (hash: string) => (onIndex ? hash : `/news-updates${hash}`)
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -148,7 +157,7 @@ export default function NewsHeader() {
 
     /* Active-section feedback */
     const sections = links
-      .map((l) => document.querySelector(l.href))
+      .map((l) => document.querySelector(l.hash))
       .filter(Boolean) as Element[]
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) setActive('#' + e.target.id) }),
@@ -189,9 +198,9 @@ export default function NewsHeader() {
           <nav className="nh-links" aria-label="News sections">
             {links.map((l, i) => (
               <a
-                key={l.href}
-                href={l.href}
-                className={`nh-link${active === l.href ? ' is-active' : ''}`}
+                key={l.hash}
+                href={hrefFor(l.hash)}
+                className={`nh-link${onIndex && active === l.hash ? ' is-active' : ''}`}
                 ref={(el) => { linkRefs.current[i] = el }}
               >
                 {l.label}
@@ -226,7 +235,7 @@ export default function NewsHeader() {
         <div className="nh-sheet" onClick={() => setMobileOpen(false)}>
           <nav onClick={(e) => e.stopPropagation()}>
             {links.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)}>{l.label}</a>
+              <a key={l.hash} href={hrefFor(l.hash)} onClick={() => setMobileOpen(false)}>{l.label}</a>
             ))}
             <Link href="/contact" onClick={() => setMobileOpen(false)} className="nh-sheet-cta">Contact us</Link>
           </nav>

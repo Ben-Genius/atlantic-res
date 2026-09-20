@@ -135,10 +135,11 @@ export default function AboutPage() {
           <MissionVision />
           <AboutEditorial />
           <CateringNumbers />
-          <OurValues />
+          <MeetTheCrew />
+          {/* <OurValues /> */}
           <StrengthOfALeader />
           <WhyChooseUs />
-          <MeetTheCrew />
+
           <Sustainability />
           {/* <AboutContact /> */}
         </div>

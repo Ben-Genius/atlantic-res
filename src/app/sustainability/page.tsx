@@ -35,6 +35,23 @@ const CUTOUTS = {
 } as const
 
 /* ===================================================================
+   SUSTAINABILITY IMAGERY
+   Subject-matched photography, one per ESG pillar and project.
+   =================================================================== */
+const SUSTAIN = {
+  esg: '/assets/images/sustainability/pillar-esg.webp',
+  environment: '/assets/images/sustainability/pillar-environment.webp',
+  social: '/assets/images/sustainability/pillar-social.webp',
+  governance: '/assets/images/sustainability/pillar-governance.webp',
+  projects: '/assets/images/sustainability/pillar-projects.webp',
+  certified: '/assets/images/sustainability/standards-certified.webp',
+  streetBites: '/assets/images/sustainability/project-street-bites.webp',
+  palm: '/assets/images/sustainability/project-palm.webp',
+  women: '/assets/images/sustainability/project-women.webp',
+  soap: '/assets/images/sustainability/project-soap.webp',
+} as const
+
+/* ===================================================================
    THEME SYSTEM
    =================================================================== */
 type Theme = {
@@ -67,8 +84,8 @@ const pillars: {
         { value: '100%', label: 'Biodegradable packaging' },
       ],
       note: 'framework\nfirst',
-      dish: CUTOUTS.jollof,
-      dishAlt: 'Jollof rice with grilled chicken and plantain',
+      dish: SUSTAIN.esg,
+      dishAlt: 'Kitchen brigade working to certified food-safety standards',
       theme: { solid: '#0E3B2A', tint: '#EDF6E8', accent: '#0E3B2A', onDark: true },
     },
     {
@@ -81,8 +98,8 @@ const pillars: {
         { value: '60%', label: 'Freshwater reduction' },
       ],
       note: 'zero\nwaste',
-      dish: CUTOUTS.prawns,
-      dishAlt: 'Grilled tiger prawns with herbs and lemon',
+      dish: SUSTAIN.environment,
+      dishAlt: 'Hands planting a seedling in open soil',
       theme: { solid: '#2d5f3f', tint: '#e8f0ea', accent: '#2d5f3f', onDark: true },
     },
     {
@@ -95,8 +112,8 @@ const pillars: {
         { value: '$24M', label: 'Community invested' },
       ],
       note: 'people\npowered',
-      dish: CUTOUTS.lobster,
-      dishAlt: 'Butter-poached lobster tail with micro herbs',
+      dish: SUSTAIN.social,
+      dishAlt: 'Ghanaian schoolchildren gathered on a school field',
       theme: { solid: '#7d4e6d', tint: '#f2e8ee', accent: '#7d4e6d', onDark: true },
     },
     {
@@ -109,8 +126,8 @@ const pillars: {
         { value: '0', label: 'Audit findings' },
       ],
       note: 'trust\nverified',
-      dish: CUTOUTS.steak,
-      dishAlt: 'Seared beef fillet with watercress and jus',
+      dish: SUSTAIN.governance,
+      dishAlt: 'Handshake between two business partners closing an agreement',
       theme: { solid: '#1A2330', tint: '#EDEFF3', accent: '#1A2330', onDark: true },
     },
     {
@@ -123,8 +140,8 @@ const pillars: {
         { value: '2014', label: 'Operating since' },
       ],
       note: 'impact\nmeasured',
-      dish: CUTOUTS.jollof,
-      dishAlt: 'Jollof rice with grilled chicken and plantain',
+      dish: SUSTAIN.projects,
+      dishAlt: 'Volunteers carrying food aid boxes for community distribution',
       theme: { solid: '#cc9933', tint: '#FBF3E3', accent: '#B37B29', onDark: true },
     },
   ]
@@ -144,7 +161,8 @@ const projects = [
     video: 'https://atlanticcatering-gh.com/wp-content/uploads/2025/10/MAUD-SPEECH-HIGHLIGHTS-AKYEM.mp4',
     youtube: '',
     hasVideo: true,
-    dish: '/assets/images/dishes/dish1.png',
+    dish: SUSTAIN.streetBites,
+    dishAlt: 'Street food vendor at a busy Ghanaian market',
   },
   {
     id: 2,
@@ -155,7 +173,8 @@ const projects = [
     desc: 'Sustainable palm oil value chain development supporting smallholder farmers with technical training and market access.',
     longDesc: 'We partner with local smallholder farmers to provide agricultural resources, sustainable harvesting techniques, and guaranteed market channels.',
     hasVideo: false,
-    dish: '/assets/images/dishes/dish4.png',
+    dish: SUSTAIN.palm,
+    dishAlt: 'Aerial view of an oil palm plantation canopy',
   },
   {
     id: 3,
@@ -166,7 +185,8 @@ const projects = [
     desc: 'Skills training, financial literacy, and enterprise development for women entrepreneurs in rural communities.',
     longDesc: 'We provide structured mentorship, micro-business grants, and financial literacy training programs to women-led cooperatives, bolstering local economies.',
     hasVideo: false,
-    dish: '/assets/images/dishes/dish6.png',
+    dish: SUSTAIN.women,
+    dishAlt: 'Woman entrepreneur at her handmade-goods market stall',
   },
   {
     id: 4,
@@ -177,7 +197,8 @@ const projects = [
     desc: 'Used cooking oil collected from all kitchens is converted into hygienic, local soap products through community partnerships.',
     longDesc: 'This circular economy initiative turns liquid kitchen waste into useful community hygiene products, mitigating waste footprint while improving local hygiene standards.',
     hasVideo: false,
-    dish: '/assets/images/dishes/dish3.png',
+    dish: SUSTAIN.soap,
+    dishAlt: 'Bars of handmade soap tied with twine',
   },
 ]
 
@@ -196,6 +217,26 @@ const localContentItems = [
 /* ===================================================================
    SHARED PRIMITIVES
    =================================================================== */
+/* Full-bleed plate photography: the image fills the whole plate, the concentric
+   rings stay as an overlay ornament, and a tinted scrim keeps the captions legible. */
+function PlatePhoto({ src, alt, tint, imgKey }: { src: string; alt: string; tint: string; imgKey?: React.Key }) {
+  return (
+    <>
+      <div key={imgKey} className="sus-drift absolute -inset-10 z-0">
+        <img src={src} alt={alt} className="w-full h-full object-cover" draggable={false} />
+      </div>
+      <div
+        className="absolute inset-0 z-[5] pointer-events-none"
+        style={{ background: `linear-gradient(180deg, rgba(0,0,0,0.58) 0%, ${tint}59 36%, ${tint}59 64%, rgba(0,0,0,0.58) 100%)` }}
+      />
+      <div className="relative z-10 w-[82%] max-w-[620px] aspect-square pointer-events-none">
+        <div className="absolute inset-0 rounded-full border-2 border-white/55" />
+        <div className="absolute inset-[-9%] rounded-full border border-white/35" />
+      </div>
+    </>
+  )
+}
+
 function QuoteMark({ className = '', color = '#0E3B2A' }: { className?: string; color?: string }) {
   return (
     <div className={`inline-flex items-center justify-center rounded-full text-white ${className}`} style={{ background: color }}>
@@ -639,12 +680,8 @@ export default function SustainabilityPage() {
 
     /* -------- PLATE 1: Standards -------- */
     <div key="r1" className="w-full shrink-0 relative flex items-center justify-center overflow-hidden" style={{ height: panelHeight, background: '#0E3B2A' }}>
-      <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-      <div className="relative z-10 w-[60%] max-w-[380px] aspect-square flex items-center justify-center">
-        <div className="absolute inset-0 rounded-full border border-white/30" />
-        <div className="absolute inset-[-9%] rounded-full border border-white/20" />
-        <img src={CUTOUTS.steak} alt="Certified quality" className="sus-drift relative w-[90%] h-auto drop-shadow-2xl" draggable={false} />
-      </div>
+      <div className="absolute inset-0 z-[6] pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+      <PlatePhoto src={SUSTAIN.certified} alt="Chef gloving up under certified food-safety protocol" tint={'#0E3B2A'} />
       <div className="absolute z-20 flex flex-col top-[13%] left-[7%] items-start">
         <span className="font-serif text-[15px] xl:text-base font-semibold leading-tight whitespace-pre-line" style={{ fontStyle: 'italic', color: '#ffffff' }}>{'globally\ncertified'}</span>
         <CurvedArrow color="#ffffff" className="mt-1" />
@@ -654,12 +691,8 @@ export default function SustainabilityPage() {
 
     /* -------- PLATE 2: Local Content -------- */
     <div key="r2" className="w-full shrink-0 relative flex items-center justify-center overflow-hidden" style={{ height: panelHeight, background: '#2d5f3f' }}>
-      <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-      <div className="relative z-10 w-[60%] max-w-[380px] aspect-square flex items-center justify-center">
-        <div className="absolute inset-0 rounded-full border border-white/30" />
-        <div className="absolute inset-[-9%] rounded-full border border-white/20" />
-        <img src={CUTOUTS.prawns} alt="Community alliances" className="sus-drift relative w-[90%] h-auto drop-shadow-2xl" draggable={false} />
-      </div>
+      <div className="absolute inset-0 z-[6] pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+      <PlatePhoto src={SUSTAIN.women} alt="Local supplier at her market stall" tint={'#2d5f3f'} />
       <div className="absolute z-20 flex flex-col top-[13%] right-[7%] items-end">
         <span className="font-serif text-[15px] xl:text-base font-semibold leading-tight whitespace-pre-line text-right" style={{ fontStyle: 'italic', color: '#ffffff' }}>{'community\nalliances'}</span>
         <CurvedArrow color="#ffffff" flip className="mt-1" />
@@ -669,12 +702,8 @@ export default function SustainabilityPage() {
 
     /* -------- PLATE 3: Projects -------- */
     <div key="r3" className="w-full shrink-0 relative flex items-center justify-center overflow-hidden" style={{ height: panelHeight, background: '#cc9933' }}>
-      <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-      <div className="relative z-10 w-[60%] max-w-[380px] aspect-square flex items-center justify-center">
-        <div className="absolute inset-0 rounded-full border border-white/30" />
-        <div className="absolute inset-[-9%] rounded-full border border-white/20" />
-        <img src={CUTOUTS.jollof} alt="Impact projects" className="sus-drift relative w-[90%] h-auto drop-shadow-2xl" draggable={false} />
-      </div>
+      <div className="absolute inset-0 z-[6] pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+      <PlatePhoto src={projects[currentProjectIndex].dish} alt={projects[currentProjectIndex].dishAlt} tint={'#cc9933'} imgKey={currentProjectIndex} />
       <div className="absolute z-20 flex flex-col top-[13%] left-[7%] items-start">
         <span className="font-serif text-[15px] xl:text-base font-semibold leading-tight whitespace-pre-line" style={{ fontStyle: 'italic', color: '#ffffff' }}>{'impact\nprojects'}</span>
         <CurvedArrow color="#ffffff" className="mt-1" />
@@ -684,12 +713,8 @@ export default function SustainabilityPage() {
 
     /* -------- PLATE 4: Pillar 4 -------- */
     <div key="r4" className="w-full shrink-0 relative flex items-center justify-center overflow-hidden" style={{ height: panelHeight, background: pillars[4].theme.solid }}>
-      <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-      <div className="relative z-10 w-[60%] max-w-[380px] aspect-square flex items-center justify-center">
-        <div className="absolute inset-0 rounded-full border border-white/30" />
-        <div className="absolute inset-[-9%] rounded-full border border-white/20" />
-        <img src={pillars[4].dish} alt={pillars[4].dishAlt} className="sus-drift relative w-[90%] h-auto drop-shadow-2xl" draggable={false} />
-      </div>
+      <div className="absolute inset-0 z-[6] pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+      <PlatePhoto src={pillars[4].dish} alt={pillars[4].dishAlt} tint={pillars[4].theme.solid} />
       <div className="absolute z-20 flex flex-col top-[13%] right-[7%] items-end">
         <span className="font-serif text-[15px] xl:text-base font-semibold leading-tight whitespace-pre-line text-right" style={{ fontStyle: 'italic', color: '#ffffff' }}>{pillars[4].note}</span>
         <CurvedArrow color="#ffffff" flip className="mt-1" />
@@ -699,12 +724,8 @@ export default function SustainabilityPage() {
 
     /* -------- PLATE 5: Pillar 3 -------- */
     <div key="r5" className="w-full shrink-0 relative flex items-center justify-center overflow-hidden" style={{ height: panelHeight, background: pillars[3].theme.solid }}>
-      <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-      <div className="relative z-10 w-[60%] max-w-[380px] aspect-square flex items-center justify-center">
-        <div className="absolute inset-0 rounded-full border border-white/30" />
-        <div className="absolute inset-[-9%] rounded-full border border-white/20" />
-        <img src={pillars[3].dish} alt={pillars[3].dishAlt} className="sus-drift relative w-[90%] h-auto drop-shadow-2xl" draggable={false} />
-      </div>
+      <div className="absolute inset-0 z-[6] pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+      <PlatePhoto src={pillars[3].dish} alt={pillars[3].dishAlt} tint={pillars[3].theme.solid} />
       <div className="absolute z-20 flex flex-col top-[13%] left-[7%] items-start">
         <span className="font-serif text-[15px] xl:text-base font-semibold leading-tight whitespace-pre-line" style={{ fontStyle: 'italic', color: '#ffffff' }}>{pillars[3].note}</span>
         <CurvedArrow color="#ffffff" className="mt-1" />
@@ -714,12 +735,8 @@ export default function SustainabilityPage() {
 
     /* -------- PLATE 6: Pillar 2 -------- */
     <div key="r6" className="w-full shrink-0 relative flex items-center justify-center overflow-hidden" style={{ height: panelHeight, background: pillars[2].theme.solid }}>
-      <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-      <div className="relative z-10 w-[60%] max-w-[380px] aspect-square flex items-center justify-center">
-        <div className="absolute inset-0 rounded-full border border-white/30" />
-        <div className="absolute inset-[-9%] rounded-full border border-white/20" />
-        <img src={pillars[2].dish} alt={pillars[2].dishAlt} className="sus-drift relative w-[90%] h-auto drop-shadow-2xl" draggable={false} />
-      </div>
+      <div className="absolute inset-0 z-[6] pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+      <PlatePhoto src={pillars[2].dish} alt={pillars[2].dishAlt} tint={pillars[2].theme.solid} />
       <div className="absolute z-20 flex flex-col top-[13%] right-[7%] items-end">
         <span className="font-serif text-[15px] xl:text-base font-semibold leading-tight whitespace-pre-line text-right" style={{ fontStyle: 'italic', color: '#ffffff' }}>{pillars[2].note}</span>
         <CurvedArrow color="#ffffff" flip className="mt-1" />
@@ -729,12 +746,8 @@ export default function SustainabilityPage() {
 
     /* -------- PLATE 7: Pillar 1 -------- */
     <div key="r7" className="w-full shrink-0 relative flex items-center justify-center overflow-hidden" style={{ height: panelHeight, background: pillars[1].theme.solid }}>
-      <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-      <div className="relative z-10 w-[60%] max-w-[380px] aspect-square flex items-center justify-center">
-        <div className="absolute inset-0 rounded-full border border-white/30" />
-        <div className="absolute inset-[-9%] rounded-full border border-white/20" />
-        <img src={pillars[1].dish} alt={pillars[1].dishAlt} className="sus-drift relative w-[90%] h-auto drop-shadow-2xl" draggable={false} />
-      </div>
+      <div className="absolute inset-0 z-[6] pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+      <PlatePhoto src={pillars[1].dish} alt={pillars[1].dishAlt} tint={pillars[1].theme.solid} />
       <div className="absolute z-20 flex flex-col top-[13%] left-[7%] items-start">
         <span className="font-serif text-[15px] xl:text-base font-semibold leading-tight whitespace-pre-line" style={{ fontStyle: 'italic', color: '#ffffff' }}>{pillars[1].note}</span>
         <CurvedArrow color="#ffffff" className="mt-1" />
@@ -744,12 +757,8 @@ export default function SustainabilityPage() {
 
     /* -------- PLATE 8: Pillar 0 -------- */
     <div key="r8" className="w-full shrink-0 relative flex items-center justify-center overflow-hidden" style={{ height: panelHeight, background: pillars[0].theme.solid }}>
-      <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-      <div className="relative z-10 w-[60%] max-w-[380px] aspect-square flex items-center justify-center">
-        <div className="absolute inset-0 rounded-full border border-white/30" />
-        <div className="absolute inset-[-9%] rounded-full border border-white/20" />
-        <img src={pillars[0].dish} alt={pillars[0].dishAlt} className="sus-drift relative w-[90%] h-auto drop-shadow-2xl" draggable={false} />
-      </div>
+      <div className="absolute inset-0 z-[6] pointer-events-none" style={{ opacity: 0.13, backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.85) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+      <PlatePhoto src={pillars[0].dish} alt={pillars[0].dishAlt} tint={pillars[0].theme.solid} />
       <div className="absolute z-20 flex flex-col top-[13%] right-[7%] items-end">
         <span className="font-serif text-[15px] xl:text-base font-semibold leading-tight whitespace-pre-line text-right" style={{ fontStyle: 'italic', color: '#ffffff' }}>{pillars[0].note}</span>
         <CurvedArrow color="#ffffff" flip className="mt-1" />
