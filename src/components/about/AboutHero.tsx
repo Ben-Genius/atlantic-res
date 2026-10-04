@@ -1,172 +1,319 @@
-import React from 'react'
-import Link from 'next/link'
+import React, { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const AVATARS = [
-  { src: '/assets/images/About Us/atlanticcatering-gh.com_e3584ba9-8991-4cf1-83ec-baf88d1a6276.zip_1/jemima.png', alt: 'Jemima Tagoe, QHSE Manager' },
-  { src: '/assets/images/About Us/atlanticcatering-gh.com_e3584ba9-8991-4cf1-83ec-baf88d1a6276.zip_1/joseph.png', alt: 'Joseph, Operations Team' },
-  { src: '/assets/images/About Us/atlanticcatering-gh.com_e3584ba9-8991-4cf1-83ec-baf88d1a6276.zip_1/suz.png', alt: 'Suz, Client Services' },
-]
-
-const GRID_CAPTIONS = {
-  premium: 'A decade of premium culinary excellence, served fresh across Ghana.',
-  overlay: 'Every plate certified. Every service excellent.',
-  trusted: 'Trusted by offshore rigs, corporate clients & global brands.',
+interface SlideItem {
+  id: string;
+  index: string;
+  category: string;
+  locationBadge: string;
+  title: string;
+  statLabel: string;
+  statValue: string;
+  secondaryLabel: string;
+  secondaryValue: string;
+  primaryImage: string;
+  fallbackImage: string;
+  accentColor: string;
 }
 
+// 5 strategic pillars for Atlantic Catering & Logistics
+const SLIDES: SlideItem[] = [
+  {
+    id: 'offshore',
+    index: '01',
+    category: 'Offshore Catering & Marine Chandelling',
+    locationBadge: 'FPSO Kwame Nkrumah MV21 • Jubilee Field',
+    title: "Feeding Ghana's Offshore Crews",
+    statLabel: 'DAILY PRODUCTION',
+    statValue: '6,000+ Meals/Day',
+    secondaryLabel: 'COMPLIANCE',
+    secondaryValue: 'ISO 22000 & HACCP',
+    primaryImage: '/assets/images/About%20Us/AboutUsHero/Atlantic%20Catering%20Kitchen%20at%20Sea.webp',
+    fallbackImage: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=2600&q=80',
+    accentColor: '#10B981',
+  },
+  {
+    id: 'camp-management',
+    index: '02',
+    category: '360° Remote Camp Management',
+    locationBadge: '15 Remote Sites • 6 Regions in Ghana',
+    title: 'Remote Sites, Fully Managed',
+    statLabel: 'FOOTPRINT',
+    statValue: 'Gold & Mineral Sites',
+    secondaryLabel: 'FACILITIES',
+    secondaryValue: 'Housekeeping, Laundry & Pest Control',
+    primaryImage: '/assets/images/About%20Us/AboutUsHero/Golden-Hour%20Mining%20Logistics%20Operation.webp',
+    fallbackImage: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2600&q=80',
+    accentColor: '#F59E0B',
+  },
+  {
+    id: 'cold-chain',
+    index: '03',
+    category: 'Cold-Chain & Heavy Fleet Logistics',
+    locationBadge: 'DNV Certified Maritime Reefer Fleet',
+    title: 'Cold Chain, Unbroken',
+    statLabel: 'FLEET ASSETS',
+    statValue: '28ft Mobile Trailers',
+    secondaryLabel: 'DISTRIBUTION',
+    secondaryValue: '2 Cold Warehouses',
+    primaryImage: '/assets/images/About%20Us/AboutUsHero/Branded%20Port%20Logistics%20Operations.webp',
+    fallbackImage: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2600&q=80',
+    accentColor: '#38BDF8',
+  },
+  {
+    id: 'vip-banqueting',
+    index: '04',
+    category: 'VIP Banqueting & Inflight Hospitality',
+    locationBadge: 'Executive Charters & Diplomatic Galas',
+    title: 'Hospitality at Every Altitude',
+    statLabel: 'EVENTS',
+    statValue: '200+ Galas Annually',
+    secondaryLabel: 'CULINARY BRIGADE',
+    secondaryValue: '440+ Professional Chefs',
+    primaryImage: '/assets/images/About%20Us/AboutUsHero/Atlantic%20Maritime%20Operations%20Center.webp',
+    fallbackImage: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=2600&q=80',
+    accentColor: '#FB7185',
+  },
+  {
+    id: 'people-cares',
+    index: '05',
+    category: 'Atlantic C.A.R.E.S. & Local Content',
+    locationBadge: '98% Ghanaian Workforce • GC100 (#20)',
+    title: '600 Strong. 98% Ghanaian.',
+    statLabel: 'WORKFORCE',
+    statValue: '600+ Full-Time Staff',
+    secondaryLabel: 'SUSTAINABILITY',
+    secondaryValue: 'Recycled Soap & Zero Waste',
+    primaryImage: '/assets/images/About%20Us/AboutUsHero/Atlantic%20Catering%20%26%20Logistics%20at%20Sunrise.webp',
+    fallbackImage: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=2600&q=80',
+    accentColor: '#34D399',
+  },
+];
+
 export default function AboutHero() {
+  const scrollTrackRef = useRef<HTMLDivElement | null>(null);
+  const pinContainerRef = useRef<HTMLElement | null>(null);
+
+  const sectionsRef = useRef<(HTMLElement | null)[]>([]);
+  const outerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const innerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const bgRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const titleRefs = useRef<(HTMLHeadingElement | null)[]>([]);
+
+  const [activeSlide, setActiveSlide] = useState<number>(0);
+  const scrollTriggerInstanceRef = useRef<any>(null);
+
+  useEffect(() => {
+    initScrollAnimation();
+
+    return () => {
+      if (scrollTriggerInstanceRef.current) {
+        scrollTriggerInstanceRef.current.kill();
+      }
+    };
+  }, []);
+
+  const initScrollAnimation = () => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const outerWrappers = outerRefs.current.filter(Boolean);
+    const innerWrappers = innerRefs.current.filter(Boolean);
+    const bgLayers = bgRefs.current.filter(Boolean);
+    const titles = titleRefs.current.filter(Boolean);
+
+    if (!scrollTrackRef.current || !pinContainerRef.current) return;
+
+    // Clean up any existing trigger
+    if (scrollTriggerInstanceRef.current) {
+      scrollTriggerInstanceRef.current.kill();
+    }
+
+    // Set initial position: slide 0 is visible, subsequent slides are hidden below fold
+    for (let i = 1; i < SLIDES.length; i++) {
+      if (outerWrappers[i]) gsap.set(outerWrappers[i], { yPercent: 100 });
+      if (innerWrappers[i]) gsap.set(innerWrappers[i], { yPercent: -100 });
+      if (bgLayers[i]) gsap.set(bgLayers[i], { yPercent: 15 });
+      if (titles[i]) gsap.set(titles[i], { autoAlpha: 0, y: 35 });
+    }
+
+    // Create scrubbed master timeline with snapping between slides
+    const tl = gsap.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: {
+        trigger: scrollTrackRef.current,
+        start: 'top top',
+        end: 'bottom bottom',
+        pin: pinContainerRef.current,
+        scrub: 0.8,
+        snap: {
+          snapTo: 1 / (SLIDES.length - 1),
+          duration: { min: 0.25, max: 0.65 },
+          ease: 'power2.inOut',
+        },
+        onUpdate: (self: any) => {
+          const rawIndex = self.progress * (SLIDES.length - 1);
+          const currentIdx = Math.min(
+            SLIDES.length - 1,
+            Math.max(0, Math.round(rawIndex))
+          );
+          setActiveSlide(currentIdx);
+        },
+      },
+    });
+
+    scrollTriggerInstanceRef.current = tl.scrollTrigger;
+
+    // Add sequential curtain reveals for slides 1 through 4
+    for (let i = 1; i < SLIDES.length; i++) {
+      const stepTime = i - 1;
+
+      // Incoming slide curtain moves in
+      tl.fromTo(
+        outerWrappers[i],
+        { yPercent: 100 },
+        { yPercent: 0, ease: 'power2.inOut', duration: 1 },
+        stepTime
+      )
+        .fromTo(
+          innerWrappers[i],
+          { yPercent: -100 },
+          { yPercent: 0, ease: 'power2.inOut', duration: 1 },
+          stepTime
+        )
+        .fromTo(
+          bgLayers[i],
+          { yPercent: 15 },
+          { yPercent: 0, ease: 'power2.inOut', duration: 1 },
+          stepTime
+        )
+        // Outgoing background subtly moves back
+        .to(
+          bgLayers[i - 1],
+          { yPercent: -15, ease: 'power2.inOut', duration: 1 },
+          stepTime
+        )
+        // Title animation
+        .fromTo(
+          titles[i],
+          { autoAlpha: 0, y: 35 },
+          { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power3.out' },
+          stepTime + 0.3
+        );
+    }
+  };
+
+  const handleDotClick = (targetIndex: number) => {
+    if (!scrollTrackRef.current) return;
+    const totalScrollableDistance =
+      scrollTrackRef.current.offsetHeight - window.innerHeight;
+    const startOffset = scrollTrackRef.current.offsetTop;
+    const targetScrollY =
+      startOffset + (targetIndex / (SLIDES.length - 1)) * totalScrollableDistance;
+
+    window.scrollTo({
+      top: targetScrollY,
+      behavior: 'smooth',
+    });
+  };
+
   return (
-    <section className="relative w-full min-h-screen flex flex-col justify-start items-center text-center overflow-hidden bg-[#FAF9F6] px-6 md:px-16 pt-24 md:pt-28 pb-24">
-      {/* Giant ghost background text — recoloured dark-on-light so it stays feint against
-          the white background, and tucked into the top-left corner rather than centered. */}
-      <div
-        className="ghost-parallax absolute inset-0 flex flex-col justify-start pointer-events-none select-none overflow-hidden top-0 z-0"
-        aria-hidden
+    // Outer scroll track: height gives room to scroll naturally through all 5 slides
+    <div
+      ref={scrollTrackRef}
+      className="relative w-full"
+      style={{ height: `${SLIDES.length * 100}vh` }}
+    >
+      {/* Pinned Viewport Container: Stays locked at top while scrolling */}
+      <section
+        ref={pinContainerRef}
+        className="w-full h-screen overflow-hidden bg-[#060D0A] text-white font-sans select-none"
+        aria-label="Atlantic Catering & Logistics About Us Hero"
       >
-        <span
-          className="block font-black uppercase leading-none tracking-tighter text-[18vw] md:text-[16vw] text-transparent mb-4 ml-[-20rem]"
-          style={{ WebkitTextStroke: '1.5px rgba(26,26,26,0.06)' }}
-        >
-          ATLANTIC
-        </span>
-        <span
-          className="block font-black uppercase leading-none tracking-tighter text-[16vw] md:text-[14vw] text-transparent ml-[3vw]"
-          style={{ WebkitTextStroke: '1.5px rgba(26,26,26,0.05)' }}
-        >
-          CATERING
-        </span>
-      </div>
-
-      {/* Main Typography & CTA Content Container */}
-      <div className="relative z-20 flex flex-col items-center max-w-5xl mx-auto">
-        {/* Trusted-by row — avatar stack + micro-copy */}
-        <div className="hero-eyebrow flex items-center justify-center gap-3 mb-6">
-          <div className="flex -space-x-2">
-            {AVATARS.map((a) => (
-              <img
-                key={a.alt}
-                src={a.src}
-                alt={a.alt}
-                className="w-7 h-7 rounded-full border-2 border-[#FAF9F6] object-cover bg-gray-200"
-                draggable={false}
-              />
-            ))}
-          </div>
-          <p className="font-inter text-[13px] md:text-[15px] text-gray-600 font-medium tracking-tight">
-            55,000+ meals served. Countless clients satisfied. Discover Atlantic today.
-          </p>
-        </div>
-
-        {/* Main headline */}
-        <h1 className="hero-line font-outfit font-bold uppercase tracking-tight leading-[1.1] m-0 text-center text-[#111827] text-5xl md:text-[64px]">
-          Focus On The Work
-          <br />
-          We'll Take Care
-          <br />
-          Of The Rest
-        </h1>
-
-        {/* Subheadline */}
-        <p className="font-inter text-base md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto mt-6">
-          From offshore platforms to corporate boardrooms, we deliver ISO-certified catering
-          and logistics excellence. Because every operation deserves the same standard.
-        </p>
-
-        {/* CTA row */}
-        <div className="hero-cta flex flex-wrap items-center justify-center gap-4 mt-10 mx-auto">
-          <Link
-            href="/contact"
-            className="bg-[#cc9933] hover:bg-[#B37B29] text-white font-inter font-medium py-3.5 px-8 rounded-md transition-colors duration-200 shadow-sm"
+        {/* 5 Stacked Slide Layers with incremental zIndex */}
+        {SLIDES.map((slide, idx) => (
+          <article
+            key={slide.id}
+            ref={(el) => {
+              sectionsRef.current[idx] = el;
+            }}
+            className="absolute inset-0 w-full h-full overflow-hidden"
+            style={{ zIndex: idx + 1, willChange: 'transform' }}
           >
-            Get In Touch
-          </Link>
-          <Link
-            href="/services"
-            className="bg-white border border-gray-200 hover:bg-gray-50 text-gray-800 font-inter font-medium py-3.5 px-6 rounded-md flex items-center gap-2 transition-colors duration-200 shadow-sm"
-          >
-            See Our Services
-            <svg className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
-        </div>
-      </div>
+            {/* Nested counter-sliding wrappers */}
+            <div
+              ref={(el) => {
+                outerRefs.current[idx] = el;
+              }}
+              className="w-full h-full overflow-hidden"
+            >
+              <div
+                ref={(el) => {
+                  innerRefs.current[idx] = el;
+                }}
+                className="w-full h-full overflow-hidden"
+              >
+                {/* Background layer without dark overlay */}
+                <div
+                  ref={(el) => {
+                    bgRefs.current[idx] = el;
+                  }}
+                  className="relative w-full h-full bg-cover bg-center flex flex-col justify-between"
+                  style={{
+                    backgroundImage: `url('${slide.primaryImage}')`,
+                  }}
+                >
+                  <img
+                    src={slide.primaryImage}
+                    alt={slide.title}
+                    className="hidden"
+                    onError={(e) => {
+                      const targetEl = e.currentTarget as HTMLElement;
+                      const parent = targetEl.parentElement;
+                      if (parent) {
+                        parent.style.backgroundImage = `url('${slide.fallbackImage}')`;
+                      }
+                    }}
+                  />
 
-      {/* Photo grid — the same service cutouts used on the Services section,
-          asymmetric masonry, sized up slightly from the first pass */}
-      <div className="relative z-20 w-full max-w-8xl mx-auto mt-16 px-16">
-        <div className="flex flex-col md:flex-row gap-5 md:gap-6 justify-center">
-          {/* Column 1 */}
-          <div className="float-img flex flex-col gap-4 md:w-[27%]">
-            <div className="rounded-[20px] overflow-hidden shadow-sm h-[500px] bg-[#fab75f]">
-              <img
-                src="/assets/images/Services/fit/vip-catering.webp"
-                alt="VIP catering — plated course revealed under a silver cloche"
-                className="w-full h-full object-cover"
-                draggable={false}
-              />
-            </div>
-            <div className="bg-[#0E3B2A] text-white p-6 rounded-[20px] h-40 flex items-end shadow-sm">
-              <p className="font-inter font-medium text-lg leading-tight text-left">
-                {GRID_CAPTIONS.premium}
-              </p>
-            </div>
-          </div>
+                  {/* Legibility gradient (bottom-left weighted) */}
+                  <div
+                    className="absolute inset-0 pointer-events-none"
 
-          {/* Column 2 — pushed down slightly */}
-          <div className="float-img flex flex-col md:w-[23%] md:self-end">
-            <div className="rounded-[20px] overflow-hidden shadow-sm h-[450px] bg-[#F5F5F3]">
-              <img
-                src="/assets/images/Services/fit/event-planning.webp"
-                alt="Event planning — gold chiavari table setting"
-                className="w-full h-full object-cover"
-                draggable={false}
-              />
-            </div>
-          </div>
+                  />
 
-          {/* Column 3 — pushed down furthest */}
-          <div className="float-img flex flex-col gap-4 md:w-[23%] md:mt-24">
-            <div className="rounded-[20px] overflow-hidden shadow-sm h-[220px] bg-[#F5F5F3]">
-              <img
-                src="/assets/images/Services/fit/camp.webp"
-                alt="Camp management — Atlantic-branded camp, tents and vehicles"
-                className="w-full h-full object-cover"
-                draggable={false}
-              />
+                  {/* Left-aligned hero title, sits beside the indicator */}
+                  <div className="absolute left-12 md:left-[5.25rem] right-6 md:right-12 top-1/2 -translate-y-1/2 z-10 max-w-[18ch] sm:max-w-xl md:max-w-2xl">
+                    <h1
+                      ref={(el) => {
+                        titleRefs.current[idx] = el;
+                      }}
+                      className="text-4xl sm:text-5xl md:text-6xl lg:text-[3rem] font-normal tracking-tight text-white leading-[1.08] m-0 drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]"
+                    >
+                      {slide.title}
+                    </h1>
+                  </div>
+                </div>
+              </div>
             </div>
+          </article>
+        ))}
 
-            <div className="relative w-full h-[300px] rounded-[20px] overflow-hidden shadow-sm bg-[#F5F5F3]">
-              <img
-                src="/assets/images/Services/fit/support.webp"
-                alt="24/7 support services — crew, equipment and vessel supply"
-                className="absolute inset-0 w-full h-full object-cover"
-                draggable={false}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-              <p className="absolute bottom-5 left-5 right-5 text-white font-inter font-medium text-[17px] leading-tight text-left">
-                {GRID_CAPTIONS.overlay}
-              </p>
-            </div>
-          </div>
-
-          {/* Column 4 — aligned to top */}
-          <div className="float-img flex flex-col gap-4 md:w-[27%]">
-            <div className="rounded-[20px] overflow-hidden shadow-sm h-[500px] bg-[#F5F5F3]">
-              <img
-                src="/assets/images/Services/oNSHORE2.webp"
-                alt="Offshore catering and supply — vessel at sea"
-                className="w-full h-full object-cover"
-                draggable={false}
-              />
-            </div>
-            <div className="bg-[#0E3B2A] text-white p-6 rounded-[20px] h-40 flex items-end shadow-sm">
-              <p className="font-inter font-medium text-lg leading-tight text-left">
-                {GRID_CAPTIONS.trusted}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
+        {/* Left-side vertical indicator: active = tall bar, inactive = dots */}
+        <aside className="absolute left-6 md:left-12 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-2.5 pointer-events-auto">
+          {SLIDES.map((s, i) => (
+            <button
+              key={s.id}
+              onClick={() => handleDotClick(i)}
+              className={`w-1 rounded-full bg-white transition-all duration-500 ease-out focus:outline-none ${activeSlide === i ? 'h-12 opacity-100' : 'h-1 opacity-70 hover:opacity-100'
+                }`}
+              title={`Jump to ${s.category}`}
+              aria-label={`Jump to slide ${i + 1}`}
+              aria-current={activeSlide === i}
+            />
+          ))}
+        </aside>
+      </section>
+    </div>
+  );
 }
