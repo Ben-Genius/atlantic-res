@@ -384,7 +384,7 @@ export function MissionVision() {
             <div className="flex flex-col items-center justify-center w-full">
               <h1
                 ref={headlinePart1Ref}
-                className="font-sans text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-tight text-[#0d0d0d] leading-none"
+                className="font-sans text-[2.1rem] min-[400px]:text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-tight text-[#0d0d0d] leading-none"
               >
                 Our Operations
               </h1>
@@ -392,19 +392,19 @@ export function MissionVision() {
               {/* Row 2: In + [Video Slot Spacer] + Action */}
               <div
                 ref={headlinePart2Ref}
-                className="flex items-center justify-center gap-3 sm:gap-5 md:gap-7 mt-3 sm:mt-5 w-full"
+                className="flex items-center justify-center gap-2 min-[400px]:gap-3 sm:gap-5 md:gap-7 mt-3 sm:mt-5 w-full"
               >
-                <span className="font-sans text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-tight text-[#0d0d0d] leading-none">
+                <span className="font-sans text-[2.1rem] min-[400px]:text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-tight text-[#0d0d0d] leading-none">
                   In
                 </span>
 
                 {/* Invisible Document-Flow Slot where the floating video starts */}
                 <div
                   ref={videoSlotRef}
-                  className="w-[140px] sm:w-[190px] md:w-[240px] h-[75px] sm:h-[105px] md:h-[130px] rounded-2xl flex-shrink-0 opacity-0 pointer-events-none"
+                  className="w-[120px] min-[400px]:w-[140px] sm:w-[190px] md:w-[240px] h-[66px] min-[400px]:h-[75px] sm:h-[105px] md:h-[130px] rounded-2xl flex-shrink-0 opacity-0 pointer-events-none"
                 />
 
-                <span className="font-sans text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-tight text-[#C8960C] leading-none">
+                <span className="font-sans text-[2.1rem] min-[400px]:text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-tight text-[#C8960C] leading-none">
                   Action
                 </span>
               </div>

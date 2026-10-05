@@ -54,13 +54,13 @@ export default function CateringNumbers() {
           leave a lasting impression is different.
         </p>
 
-        <div className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="mt-10 md:mt-12 grid grid-cols-2 gap-x-5 gap-y-8 sm:gap-x-8 sm:gap-y-10 md:grid-cols-3 lg:grid-cols-4">
           {NUMBERS.map(item => (
             <div key={item.label} className="number-cell border-t border-white/20 pt-5">
               <AnimatedCounter
                 end={item.value}
                 suffix={item.suffix}
-                className="block font-display text-[2.5rem] md:text-[3.5rem] font-bold leading-none tracking-tight text-[#D4A556]"
+                className="block font-display text-[clamp(1.75rem,8vw,2.5rem)] md:text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-none tracking-tight break-words text-[#D4A556]"
               />
               <p className="mt-2.5 text-[11px] md:text-xs font-semibold uppercase tracking-[0.14em] leading-snug text-white/55">
                 {item.label}

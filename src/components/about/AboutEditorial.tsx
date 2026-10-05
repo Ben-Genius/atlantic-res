@@ -119,7 +119,7 @@ export default function AboutEditorial() {
             OUR VISION
         ================================================= */}
 
-        <div className="mv-row relative grid min-h-0 grid-cols-12 items-start py-[1vh]">
+        <div className="mv-row relative grid min-h-0 grid-cols-12 items-start py-6 md:py-[1vh]">
 
           {/* TITLE */}
 
@@ -156,7 +156,7 @@ export default function AboutEditorial() {
               width={1024}
               height={1024}
               className="
-                -my-10
+                -my-4 md:-my-10
                 h-auto
                 w-full
                 max-w-[380px]
@@ -206,7 +206,7 @@ export default function AboutEditorial() {
             min-h-0
             grid-cols-12
             items-center
-            py-[1vh]
+            py-6 md:py-[1vh]
           "
         >
 
@@ -215,9 +215,11 @@ export default function AboutEditorial() {
           <div
             className="
               mv-copy
-              order-2
+              order-3
               col-span-12
+              mt-4
               md:order-1
+              md:mt-0
               md:col-span-4
             "
           >
@@ -239,7 +241,7 @@ export default function AboutEditorial() {
           <div
             className="
               mv-image
-              order-1
+              order-2
               col-span-12
               flex
               justify-center
@@ -253,7 +255,7 @@ export default function AboutEditorial() {
               width={1024}
               height={1024}
               className="
-                -my-10
+                -my-4 md:-my-10
                 h-auto
                 w-full
                 max-w-[380px]
@@ -267,11 +269,12 @@ export default function AboutEditorial() {
           <div
             className="
               mv-heading
-              order-3
+              order-1
               col-span-12
-              mt-8
+              mb-2
+              md:order-3
               md:col-span-4
-              md:mt-0
+              md:mb-0
               md:text-right
             "
           >
@@ -302,7 +305,7 @@ export default function AboutEditorial() {
             min-h-0
             grid-cols-12
             items-center
-            py-[1vh]
+            py-6 md:py-[1vh]
           "
         >
 
@@ -340,7 +343,7 @@ export default function AboutEditorial() {
               width={1024}
               height={1024}
               className="
-                -my-10
+                -my-4 md:-my-10
                 h-auto
                 w-full
                 max-w-[380px]

@@ -37,6 +37,7 @@ const REASONS = [
 
 export default function WhyChooseUs() {
   const sectionRef = useRef<HTMLDivElement>(null)
+  const barRef = useRef<HTMLDivElement>(null)
 
   useGSAP(() => {
     const mm = gsap.matchMedia()
@@ -61,20 +62,36 @@ export default function WhyChooseUs() {
       ref={sectionRef}
       className="relative w-full overflow-hidden bg-[#66cc33] px-6 py-24 md:px-16 md:py-32"
     >
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-8xl">
         <h2 className="font-serif text-[2rem] md:text-[3rem] font-semibold leading-tight text-center text-white">
           Why <em className="not-italic font-normal italic text-[#0E3B2A]">Choose Us</em>
         </h2>
 
-        <div className="mt-14 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Mobile: swipeable snap rail. sm and up: grid. */}
+        <div
+          onScroll={(e) => {
+            const el = e.currentTarget
+            const max = el.scrollWidth - el.clientWidth
+            if (barRef.current) barRef.current.style.width = `${max > 0 ? 18 + (el.scrollLeft / max) * 82 : 100}%`
+          }}
+          className="mt-10 md:mt-14 -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-x-10 sm:gap-y-12 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4 [&>*:last-child:nth-child(odd)]:sm:col-span-2 lg:[&>*:last-child:nth-child(odd)]:col-span-1"
+        >
           {REASONS.map(({ icon: Icon, title, strap }) => (
-            <div key={title} className="reason flex flex-col items-center text-center">
+            <div
+              key={title}
+              className="reason flex w-[72vw] max-w-[280px] shrink-0 snap-center flex-col items-center rounded-2xl bg-white/10 px-5 py-8 text-center ring-1 ring-white/20 sm:w-auto sm:max-w-none sm:shrink sm:rounded-none sm:bg-transparent sm:p-0 sm:ring-0"
+            >
               <Icon className="h-9 w-9 text-white" strokeWidth={1.4} aria-hidden />
-              <h3 className="mt-5 text-sm md:text-base font-bold leading-snug text-white">{title}</h3>
-              <p className="mt-1.5 text-xs md:text-sm leading-snug text-white/75">{strap}</p>
+              <h3 className="mt-5 text-base font-bold leading-snug text-white md:text-base">{title}</h3>
+              <p className="mt-1.5 text-sm leading-snug text-white/80 md:text-sm">{strap}</p>
               <span className="mt-5 block h-px w-14 bg-white/35" />
             </div>
           ))}
+        </div>
+
+        {/* Mobile swipe progress */}
+        <div className="mt-5 h-[3px] w-full overflow-hidden rounded-full bg-white/25 sm:hidden" aria-hidden>
+          <div ref={barRef} className="h-full w-[18%] rounded-full bg-white transition-[width] duration-150" />
         </div>
       </div>
     </section>

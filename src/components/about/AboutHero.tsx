@@ -130,6 +130,8 @@ export default function AboutHero() {
 
   const initScrollAnimation = () => {
     gsap.registerPlugin(ScrollTrigger);
+    // Mobile address-bar show/hide fires resize; don't re-pin on it
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
     const outerWrappers = outerRefs.current.filter(Boolean);
     const innerWrappers = innerRefs.current.filter(Boolean);
