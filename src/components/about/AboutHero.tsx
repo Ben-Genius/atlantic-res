@@ -17,7 +17,7 @@ interface SlideItem {
   accentColor: string;
 }
 
-// 5 strategic pillars for Atlantic Catering & Logistics
+// 6 strategic pillars for Atlantic Catering & Logistics
 const SLIDES: SlideItem[] = [
   {
     id: 'offshore',
@@ -29,13 +29,27 @@ const SLIDES: SlideItem[] = [
     statValue: '6,000+ Meals/Day',
     secondaryLabel: 'COMPLIANCE',
     secondaryValue: 'ISO 22000 & HACCP',
-    primaryImage: '/assets/images/About%20Us/AboutUsHero/Atlantic%20Catering%20Kitchen%20at%20Sea.webp',
+    primaryImage: '/assets/images/About%20Us/AboutUsHero/offshore-rig.webp',
     fallbackImage: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=2600&q=80',
     accentColor: '#10B981',
   },
   {
-    id: 'camp-management',
+    id: 'catering-kitchen',
     index: '02',
+    category: 'Industrial Kitchens & Food Safety',
+    locationBadge: 'Central Production Kitchens • Ghana',
+    title: '6,000 Meals. Every Day.',
+    statLabel: 'DAILY PRODUCTION',
+    statValue: '6,000+ Meals/Day',
+    secondaryLabel: 'COMPLIANCE',
+    secondaryValue: 'ISO 22000 & HACCP',
+    primaryImage: '/assets/images/About%20Us/AboutUsHero/commercial-kitchen.webp',
+    fallbackImage: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=2600&q=80',
+    accentColor: '#10B981',
+  },
+  {
+    id: 'camp-management',
+    index: '03',
     category: '360° Remote Camp Management',
     locationBadge: '15 Remote Sites • 6 Regions in Ghana',
     title: 'Remote Sites, Fully Managed',
@@ -43,13 +57,13 @@ const SLIDES: SlideItem[] = [
     statValue: 'Gold & Mineral Sites',
     secondaryLabel: 'FACILITIES',
     secondaryValue: 'Housekeeping, Laundry & Pest Control',
-    primaryImage: '/assets/images/About%20Us/AboutUsHero/Golden-Hour%20Mining%20Logistics%20Operation.webp',
+    primaryImage: '/assets/images/About%20Us/AboutUsHero/mining-site.webp',
     fallbackImage: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2600&q=80',
     accentColor: '#F59E0B',
   },
   {
     id: 'cold-chain',
-    index: '03',
+    index: '04',
     category: 'Cold-Chain & Heavy Fleet Logistics',
     locationBadge: 'DNV Certified Maritime Reefer Fleet',
     title: 'Cold Chain, Unbroken',
@@ -63,7 +77,7 @@ const SLIDES: SlideItem[] = [
   },
   {
     id: 'vip-banqueting',
-    index: '04',
+    index: '05',
     category: 'VIP Banqueting & Inflight Hospitality',
     locationBadge: 'Executive Charters & Diplomatic Galas',
     title: 'Hospitality at Every Altitude',
@@ -77,7 +91,7 @@ const SLIDES: SlideItem[] = [
   },
   {
     id: 'people-cares',
-    index: '05',
+    index: '06',
     category: 'Atlantic C.A.R.E.S. & Local Content',
     locationBadge: '98% Ghanaian Workforce • GC100 (#20)',
     title: '600 Strong. 98% Ghanaian.',
@@ -148,6 +162,7 @@ export default function AboutHero() {
         scrub: 0.8,
         snap: {
           snapTo: 1 / (SLIDES.length - 1),
+          directional: false,
           duration: { min: 0.25, max: 0.65 },
           ease: 'power2.inOut',
         },
