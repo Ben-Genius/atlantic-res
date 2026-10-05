@@ -5,6 +5,52 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+/* Line-art plate + cutlery, redrawn from the reference sheet (outline only) */
+function BlueprintPlate({ label, className = '', style }: { label: string; className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg
+      viewBox="150 250 1520 1520"
+      className={`blueprint-plate absolute text-[#6BB85A] ${className}`}
+      style={style}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.6}
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {/* Plate rings */}
+      <circle cx="911" cy="1013" r="701" vectorEffect="non-scaling-stroke" />
+      <circle cx="911" cy="1013" r="600" vectorEffect="non-scaling-stroke" />
+      <ellipse cx="911" cy="1042" rx="541" ry="570" vectorEffect="non-scaling-stroke" />
+      {/* Spoon */}
+      <ellipse cx="714" cy="845" rx="180" ry="280" vectorEffect="non-scaling-stroke" />
+      <path d="M687 1080 L666 1495 L763 1534 L740 1080" vectorEffect="non-scaling-stroke" />
+      <path d="M586 812 C580 900 620 975 668 1020 C625 975 590 900 586 812 Z" vectorEffect="non-scaling-stroke" />
+      {/* Fork */}
+      <path
+        d="M1052 590 C1022 680 1003 790 1003 910 C1003 1010 1050 1060 1111 1068 L1088 1525 L1185 1480 L1163 1068 C1225 1060 1272 1010 1272 910 C1272 790 1255 680 1228 590"
+        vectorEffect="non-scaling-stroke"
+      />
+      {[1060, 1105, 1150, 1195].map((x) => (
+        <rect key={x} x={x} y="588" width="21" height="330" rx="10" vectorEffect="non-scaling-stroke" />
+      ))}
+      {/* Blueprint annotations */}
+      <g strokeWidth={1} opacity={0.7}>
+        <line x1="150" y1="1013" x2="190" y2="1013" vectorEffect="non-scaling-stroke" />
+        <line x1="1632" y1="1013" x2="1670" y2="1013" vectorEffect="non-scaling-stroke" />
+        <line x1="911" y1="250" x2="911" y2="292" vectorEffect="non-scaling-stroke" />
+        <line x1="911" y1="1734" x2="911" y2="1770" vectorEffect="non-scaling-stroke" />
+        <line x1="210" y1="1790" x2="1612" y2="1790" strokeDasharray="10 8" vectorEffect="non-scaling-stroke" />
+        <line x1="210" y1="1775" x2="210" y2="1805" vectorEffect="non-scaling-stroke" />
+        <line x1="1612" y1="1775" x2="1612" y2="1805" vectorEffect="non-scaling-stroke" />
+      </g>
+      <text x="1640" y="300" textAnchor="end" fill="currentColor" stroke="none" fontFamily="ui-monospace, monospace" fontSize="46">
+        {label}
+      </text>
+    </svg>
+  )
+}
+
 export function MissionVision() {
   const containerRef = useRef<HTMLDivElement>(null)
   const scrollTrackRef = useRef<HTMLDivElement>(null)
@@ -33,6 +79,20 @@ export function MissionVision() {
       videoRef.current.muted = muted
     }
   }, [muted])
+
+  // Pause the video whenever the section scrolls out of view
+  useEffect(() => {
+    const track = scrollTrackRef.current
+    if (!track) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) safePause()
+      },
+      { threshold: 0 }
+    )
+    observer.observe(track)
+    return () => observer.disconnect()
+  }, [])
 
   // Time format helper
   const formatTime = (seconds: number) => {
@@ -154,6 +214,28 @@ export function MissionVision() {
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         placeInSlot()
 
+        // Slow ambient drift on the blueprint plates
+        const plates = gsap.utils.toArray<SVGElement>('.blueprint-plate')
+        gsap.from(plates, {
+          opacity: 0,
+          scale: 0.92,
+          duration: 2,
+          ease: 'power3.out',
+          stagger: 0.2,
+        })
+        plates.forEach((plate, i) => {
+          const dir = i % 2 === 0 ? 1 : -1
+          gsap.to(plate, {
+            rotation: 5 * dir,
+            x: 26 * dir,
+            y: -20 * dir,
+            duration: 16 + i * 3,
+            ease: 'sine.inOut',
+            repeat: -1,
+            yoyo: true,
+          })
+        })
+
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: scrollTrack,
@@ -192,10 +274,10 @@ export function MissionVision() {
           0
         )
           .to(
-            '.orbital-ring',
+            '.blueprint-layer',
             {
-              opacity: 0.08,
-              scale: 1.1,
+              opacity: 0,
+              scale: 1.05,
               ease: 'power2.inOut',
               duration: 0.5,
             },
@@ -250,7 +332,7 @@ export function MissionVision() {
   )
 
   return (
-    <div ref={containerRef} className="relative w-full bg-[#0b0b0c] text-white">
+    <div ref={containerRef} className="relative w-full bg-[#FAFAF8] text-[#0d0d0d]">
       {/* ══ GSAP Pin & Scrub Scroll Track (320vh total distance) ══ */}
       <div ref={scrollTrackRef} className="relative w-full" style={{ height: '320vh' }}>
         {/* Pinned Viewport Container */}
@@ -258,51 +340,41 @@ export function MissionVision() {
           ref={pinnedViewportRef}
           className="relative top-0 w-full h-screen overflow-hidden flex flex-col items-center justify-center select-none"
         >
-          {/* Concentric Orbital Rings & Background Glow */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
-            {/* Inner dashed ring */}
+          {/* Architectural blueprint background: grid + 4 plate drawings */}
+          <div className="blueprint-layer absolute inset-0 pointer-events-none overflow-hidden">
+            {/* Fine drafting grid */}
             <div
-              className="absolute w-[360px] h-[360px] sm:w-[480px] sm:h-[480px] rounded-full border border-dashed border-white/10"
-              style={{ transform: 'translate(-50%, -50%)', top: '50%', left: '50%' }}
+              className="absolute inset-0 opacity-60"
+              style={{
+                backgroundImage:
+                  'linear-gradient(to right, rgba(107,184,90,0.10) 1px, transparent 1px), linear-gradient(to bottom, rgba(107,184,90,0.10) 1px, transparent 1px)',
+                backgroundSize: '48px 48px',
+              }}
+            />
+            {/* Major grid every 4 cells */}
+            <div
+              className="absolute inset-0 opacity-60"
+              style={{
+                backgroundImage:
+                  'linear-gradient(to right, rgba(107,184,90,0.16) 1px, transparent 1px), linear-gradient(to bottom, rgba(107,184,90,0.16) 1px, transparent 1px)',
+                backgroundSize: '192px 192px',
+              }}
             />
 
-            {/* Middle orbital ring with glowing nodes */}
-            <div
-              className="orbital-ring absolute w-[640px] h-[640px] sm:w-[840px] sm:h-[840px] rounded-full border border-dashed border-white/[0.08]"
-              style={{ transform: 'translate(-50%, -50%)', top: '50%', left: '50%' }}
-            >
-              {/* Planetary node top-left */}
-              <div
-                className="absolute w-3 h-3 rounded-full bg-[#cc9933] shadow-[0_0_16px_rgba(204,153,51,0.9)]"
-                style={{ top: '15%', left: '18%', transform: 'translate(-50%, -50%)' }}
-              />
-              {/* Planetary node right */}
-              <div
-                className="absolute w-3 h-3 rounded-full bg-[#cc9933] shadow-[0_0_16px_rgba(204,153,51,0.9)]"
-                style={{ top: '50%', right: '-6px', transform: 'translate(50%, -50%)' }}
-              />
-              {/* Planetary node bottom-left */}
-              <div
-                className="absolute w-3 h-3 rounded-full bg-[#cc9933] shadow-[0_0_16px_rgba(204,153,51,0.9)]"
-                style={{ bottom: '12%', left: '22%', transform: 'translate(-50%, 50%)' }}
-              />
-            </div>
+            <BlueprintPlate label="016" className="w-[620px] h-[620px] -top-40 -left-32 opacity-50" />
+            <BlueprintPlate label="017" className="w-[460px] h-[460px] -top-20 -right-24 opacity-40" />
+            <BlueprintPlate label="018" className="w-[520px] h-[520px] -bottom-44 left-[14%] opacity-40" />
+            <BlueprintPlate label="019" className="w-[700px] h-[700px] -bottom-56 -right-40 opacity-50" />
 
-            {/* Outer subtle orbital ring */}
-            <div
-              className="orbital-ring absolute w-[1100px] h-[1100px] sm:w-[1300px] sm:h-[1300px] rounded-full border border-white/[0.04]"
-              style={{ transform: 'translate(-50%, -50%)', top: '50%', left: '50%' }}
-            />
-
-            {/* Ambient gold glow vignette */}
-            <div className="absolute w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-[#cc9933]/10 via-transparent to-transparent blur-3xl pointer-events-none" />
+            {/* Soft radial wash so the centred headline stays legible */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(250,250,248,0.92)_0%,rgba(250,250,248,0.6)_38%,rgba(250,250,248,0)_70%)]" />
           </div>
 
           {/* Central Typographic Headline & Intro Content */}
           <div className="relative z-10 w-full max-w-5xl mx-auto px-6 sm:px-8 flex flex-col items-center text-center">
             {/* Top Pill Eyebrow */}
             <div ref={tagBadgeRef} className="mb-4 sm:mb-6">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#cc9933]/30 bg-[#cc9933]/10 text-xs font-mono tracking-widest text-[#cc9933] uppercase backdrop-blur-md">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#C8960C]/40 bg-[#C8960C]/10 text-xs font-mono tracking-widest text-[#8a6508] uppercase backdrop-blur-md">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#cc9933] animate-pulse" />
                 Message from the CEO
               </span>
@@ -312,7 +384,7 @@ export function MissionVision() {
             <div className="flex flex-col items-center justify-center w-full">
               <h1
                 ref={headlinePart1Ref}
-                className="font-sans text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-tight text-white leading-none"
+                className="font-sans text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-tight text-[#0d0d0d] leading-none"
               >
                 Our Operations
               </h1>
@@ -322,7 +394,7 @@ export function MissionVision() {
                 ref={headlinePart2Ref}
                 className="flex items-center justify-center gap-3 sm:gap-5 md:gap-7 mt-3 sm:mt-5 w-full"
               >
-                <span className="font-sans text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-tight text-white leading-none">
+                <span className="font-sans text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-tight text-[#0d0d0d] leading-none">
                   In
                 </span>
 
@@ -332,7 +404,7 @@ export function MissionVision() {
                   className="w-[140px] sm:w-[190px] md:w-[240px] h-[75px] sm:h-[105px] md:h-[130px] rounded-2xl flex-shrink-0 opacity-0 pointer-events-none"
                 />
 
-                <span className="font-sans text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-tight text-[#cc9933] leading-none">
+                <span className="font-sans text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-tight text-[#C8960C] leading-none">
                   Action
                 </span>
               </div>
@@ -341,7 +413,7 @@ export function MissionVision() {
             {/* Description Paragraph */}
             <p
               ref={descRef}
-              className="mt-6 sm:mt-8 max-w-xl text-slate-400 text-xs sm:text-sm md:text-[15px] leading-relaxed font-normal"
+              className="mt-6 sm:mt-8 max-w-xl text-slate-600 text-xs sm:text-sm md:text-[15px] leading-relaxed font-normal"
             >
               From offshore energy rigs on the Atlantic to turnkey remote site dining—experience our
               state-of-the-art culinary production, high standards, and passionate Ghanaian workforce.
@@ -361,7 +433,7 @@ export function MissionVision() {
           <div
             ref={videoCardRef}
             onClick={togglePlay}
-            className="absolute z-30 overflow-hidden shadow-[0_20px_70px_rgba(0,0,0,0.9)] border border-white/10 rounded-2xl cursor-pointer group select-none"
+            className="absolute z-30 overflow-hidden shadow-[0_24px_60px_rgba(13,13,13,0.28)] border border-black/10 rounded-2xl cursor-pointer group select-none"
             style={{ willChange: 'transform, width, height, border-radius' }}
           >
             {/* Native Atlantic Catering MP4 Video */}
@@ -395,9 +467,8 @@ export function MissionVision() {
             {/* Center Frosted Play / Pause Button */}
             <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-auto transition-all duration-300">
               <div
-                className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black/50 backdrop-blur-md border border-white/15 flex items-center justify-center text-white shadow-2xl transition-transform duration-200 group-hover:scale-105 ${
-                  isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'
-                }`}
+                className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black/50 backdrop-blur-md border border-white/15 flex items-center justify-center text-white shadow-2xl transition-transform duration-200 group-hover:scale-105 ${isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'
+                  }`}
               >
                 {isPlaying ? (
                   <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white fill-white" viewBox="0 0 24 24">
