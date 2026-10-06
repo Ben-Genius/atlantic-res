@@ -238,8 +238,11 @@ export default function AboutHero() {
     // Outer scroll track: height gives room to scroll naturally through all 5 slides
     <div
       ref={scrollTrackRef}
-      className="relative w-full"
-      style={{ height: `${SLIDES.length * 100}vh` }}
+      className="relative w-full h-[var(--hero-m)] md:h-[var(--hero-d)]"
+      style={{
+        ['--hero-m' as string]: `${SLIDES.length * 55}vh`,
+        ['--hero-d' as string]: `${SLIDES.length * 100}vh`,
+      }}
     >
       {/* Pinned Viewport Container: Stays locked at top while scrolling */}
       <section
