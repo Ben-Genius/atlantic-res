@@ -7,7 +7,7 @@
  * the separating. Restrained pointer parallax drifts the image inside its
  * frame (the frame itself never moves) and floats the stat cards.
  *
- * Photo: Jay Wennington (https://unsplash.com/@jaywennington), Unsplash License.
+ * Photo: Pexels (https://www.pexels.com/photo/28736727/), Pexels License.
  */
 
 import { useEffect, useRef } from 'react'
@@ -60,7 +60,7 @@ export default function NewsHero() {
         <div className="nhero-media" ref={mediaRef}>
           <Image
             src="/images/news-hero-meal.jpg"
-            alt="A plated Atlantic dish being served at a table setting"
+            alt="A chef serving traditional dishes from a catering buffet"
             fill
             priority
             sizes="(max-width: 860px) 100vw, 56vw"

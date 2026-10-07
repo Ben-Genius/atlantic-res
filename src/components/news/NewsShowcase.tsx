@@ -56,8 +56,8 @@ const slides: Slide[] = [
   {
     eyebrow: 'Local content',
     title: 'Ninety-eight per cent\nof the team is local',
-    img: '/images/news/local-team.webp',
-    alt: 'Kitchen team plating dishes together on the pass',
+    img: '/images/news/local-team.jpg',
+    alt: 'Atlantic catering team in uniform serving a buffet at an event in Ghana',
     metricLabel: 'Local employment',
     metricValue: '98% hired locally',
     metricNote: '600 people on the Atlantic team',
@@ -68,8 +68,8 @@ const slides: Slide[] = [
   {
     eyebrow: 'Events',
     title: 'Two hundred events\na year, start to finish',
-    img: '/images/news/events-banquet.webp',
-    alt: 'Banquet table dressed for a formal event',
+    img: '/images/news/events-catering.jpg',
+    alt: 'Atlantic catering staff serving a buffet at a Ghanaian event',
     metricLabel: 'Events & conferences',
     metricValue: '200+ every year',
     metricNote: 'State, corporate and private functions',

@@ -102,8 +102,8 @@ export default function NewsImageExpansion() {
 
           <div className="nie-card" ref={cardRef} style={{ clipPath: restClip }}>
             <Image
-              src="/images/hero-main.png"
-              alt="Atlantic chefs plating a service line on an offshore installation"
+              src="/images/hero-expertise.png"
+              alt="Atlantic chefs plating dishes in a professional kitchen"
               fill
               sizes="100vw"
               className="nie-img"

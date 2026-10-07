@@ -209,6 +209,8 @@ export function MissionVision() {
         })
       }
 
+      const isPortraitPhone = () => window.innerWidth < 1024 && window.innerHeight > window.innerWidth
+
       const mm = gsap.matchMedia()
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
@@ -286,13 +288,29 @@ export function MissionVision() {
           .to(
             videoCard,
             {
-              top: 0,
+              // Portrait phones: show the whole 16:9 frame (no side crop), centred
+              top: () =>
+                isPortraitPhone()
+                  ? (pinnedViewport.offsetHeight - (pinnedViewport.offsetWidth * 9) / 16) / 2
+                  : 0,
               left: 0,
               width: () => pinnedViewport.offsetWidth,
-              height: () => pinnedViewport.offsetHeight,
+              height: () =>
+                isPortraitPhone()
+                  ? (pinnedViewport.offsetWidth * 9) / 16
+                  : pinnedViewport.offsetHeight,
               borderRadius: '0px',
               borderWidth: '0px',
               boxShadow: 'none',
+              ease: 'power2.inOut',
+              duration: 0.65,
+            },
+            0
+          )
+          .to(
+            pinnedViewport,
+            {
+              backgroundColor: () => (isPortraitPhone() ? '#000000' : 'rgba(0,0,0,0)'),
               ease: 'power2.inOut',
               duration: 0.65,
             },
@@ -333,8 +351,8 @@ export function MissionVision() {
 
   return (
     <div ref={containerRef} className="relative w-full bg-[#FAFAF8] text-[#0d0d0d]">
-      {/* ══ GSAP Pin & Scrub Scroll Track (320vh total distance) ══ */}
-      <div ref={scrollTrackRef} className="relative w-full" style={{ height: '320vh' }}>
+      {/* ══ GSAP Pin & Scrub Scroll Track (200vh mobile / 320vh desktop) ══ */}
+      <div ref={scrollTrackRef} className="relative h-[200vh] w-full md:h-[320vh]">
         {/* Pinned Viewport Container */}
         <section
           ref={pinnedViewportRef}
@@ -448,7 +466,7 @@ export function MissionVision() {
               onTimeUpdate={handleTimeUpdate}
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
-              className="w-full h-full object-cover"
+              className="h-full w-full object-cover"
             />
 
             {/* Soft Ambient Vignette */}
